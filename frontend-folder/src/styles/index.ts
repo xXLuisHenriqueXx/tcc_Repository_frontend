@@ -21,10 +21,10 @@ export const darkTheme: DefaultTheme =  {
         white: "#FFFFFF",
     },
     images: {
-        bgMain: require("../../assets/bgDark_mainPages.jpg"),
-        bgSecondary: require("../../assets/bgDark_secondaryPages.jpg"),
-        bgModalDelete: require("../../assets/bgDark_ModalDelete.png"),
-        catImage: require("../../assets/cute_cat.png"),
+        bgMain: require("../assets/bgDark_mainPages.jpg"),
+        bgSecondary: require("../assets/bgDark_secondaryPages.jpg"),
+        bgModalDelete: require("../assets/bgDark_ModalDelete.png"),
+        catImage: require("../assets/cute_cat.png"),
 
     }
 };
@@ -50,8 +50,8 @@ export const lightTheme: DefaultTheme = {
         white: "#FFFFFF",
     },
     images: {
-        bgMain: require("../../assets/bgLight_mainPages.jpg"),
-        bgSecondary: require("../../assets/bgLight_secondaryPages.jpg"),
-        catImage: require("../../assets/cute_cat.png")
+        bgMain: require("../assets/bgLight_mainPages.jpg"),
+        bgSecondary: require("../assets/bgLight_secondaryPages.jpg"),
+        catImage: require("../assets/cute_cat.png")
     }
 };

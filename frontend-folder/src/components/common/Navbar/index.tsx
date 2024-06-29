@@ -22,17 +22,17 @@ export default function Navbar({ screen }: NavbarProps) {
     //     navigation.navigate("Notes");
     // }
 
-    // const navigateToUser = () => {
-    //     navigation.navigate("Usuario");
-    // }
+    const navigateToUser = () => {
+        navigation.navigate("User");
+    }
 
     const size = 30;
     const colorAlarm = screen === "Alarms" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorNote = screen === "Notes" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
-    const colorUser = screen === "Usuario" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
+    const colorUser = screen === "User" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const iconAlarm = screen === "Alarms" ? "bell" : "bell-o";
     const iconNote = screen === "Notes" ? "sticky-note" : "sticky-note-o";
-    const iconUser = screen === "Usuario" ? "user" : "user-o";
+    const iconUser = screen === "User" ? "user" : "user-o";
     
     return (
         <Container>
@@ -41,10 +41,10 @@ export default function Navbar({ screen }: NavbarProps) {
             </IconButton>
             {/* <IconButton onPress={navigateToNotes}>
                 <FontAwesome name={iconNote} size={size} color={colorNote} />
-            </IconButton>
+            </IconButton>*/}
             <IconButton onPress={navigateToUser}>
                 <FontAwesome name={iconUser} size={size} color={colorUser} />
-            </IconButton> */}
+            </IconButton>
         </Container>
     )
 }

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useTheme } from 'styled-components';
-import { BackButton, ButtonAdd, Container, ContainerButtons, ContainerHeader, Title } from './styled';
+import { BackButton, ButtonAdd, Container, ContainerButtons, ContainerHeader, DateButton, DateButtonText, DateButtonTitle, Title } from './styled';
 import { Feather } from '@expo/vector-icons';
 import { saveAlarm } from '../../services/alarmsService';
 import { PropsStack } from '../../routes';
 import uuid from 'react-native-uuid';
+import InputTitle from '../../components/common/InputTitle';
 
 const CreateAlarm = () => {
     const navigation = useNavigation<PropsStack>();
@@ -59,7 +60,7 @@ const CreateAlarm = () => {
                             alert("Digite um título para o alarm");
                             return;
                         } else {
-                            await saveAlarm("@alarms", { _id: uuid.v4().toString(), date: date.toISOString(), title });
+                            await saveAlarm("@alarms", { _id: uuid.v4().toString(), date, title, status: false });
                             navigation.navigate("Alarms", { newAlarm: true });
                         }
                     }}
@@ -69,8 +70,33 @@ const CreateAlarm = () => {
             </ContainerHeader>
 
             <ContainerButtons>
-            </ContainerButtons>
+                <InputTitle title={title} setTitle={setTitle} placeholder={"Digite um título para o alarm..."} />
 
+                <DateButton onPress={showDatepicker} activeOpacity={1}>
+                    <Feather name="calendar" size={30} color={theme.colors.highlightColor} />
+                    <View style={{ alignItems: "center" }}>
+                        <DateButtonTitle>Selecionar data</DateButtonTitle>
+                        <DateButtonText>Data selecionada: {date.toLocaleDateString()}</DateButtonText>
+                    </View>
+                </DateButton>
+                <DateButton onPress={showTimepicker} activeOpacity={1}>
+                    <Feather name="clock" size={30} color={theme.colors.highlightColor} />
+                    <View style={{ alignItems: "center" }}>
+                        <DateButtonTitle>Selecionar hora</DateButtonTitle>
+                        <DateButtonText>Hora selecionada: {date.toLocaleTimeString()}</DateButtonText>
+                    </View>
+                </DateButton>
+            </ContainerButtons>
+            {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                />
+            )}
         </Container>
     )
 }

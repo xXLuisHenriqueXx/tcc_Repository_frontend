@@ -3,7 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export const ContainerButton = styled.View`
     position: absolute;
-    bottom: ${RFValue(100)}px;
+    bottom: ${RFValue(80)}px;
     right: ${RFValue(10)}px;
     z-index: 99;
 `;

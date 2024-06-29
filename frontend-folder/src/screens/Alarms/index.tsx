@@ -5,10 +5,9 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { Alarm } from '../../entities/Alarm';
 import { deleteAlarm, getAlarms, toggleAlarmStatus } from '../../services/alarmsService';
-import { ListRenderItem } from 'react-native';
+import { ListRenderItem, FlatList } from 'react-native';
 import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
 import { Container, DiasText, NormalText, Title } from './styled';
-import { FlatList } from 'react-native-reanimated/lib/typescript/Animated';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
 
@@ -24,7 +23,7 @@ const Alarms = ({ route }: Props) => {
     const isFocused = useIsFocused();
     const theme = useTheme();
 
-    const { newAlarm } = route.params;
+    const { newAlarm } = route.params || {};
     const [alarms, setAlarms] = useState<Alarm[]>([]);
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
 
@@ -44,14 +43,14 @@ const Alarms = ({ route }: Props) => {
         }
     }, [isFocused, newAlarm]);
 
-    const handleDeleteAlarm = async ({ _id }: Alarm) => {
-        const newAlarms = await deleteAlarm(_id);
+    const handleDeleteAlarm = async (alarmId: string) => {
+        const newAlarms = await deleteAlarm(alarmId);
         setAlarms(newAlarms);
         calculateDaysUntilNextAlarm(newAlarms);
     };
 
-    const handleToggleAlarmStatus = async ({ _id, status }: Alarm) => {
-        const newAlarms = await toggleAlarmStatus(_id, status);
+    const handleToggleAlarmStatus = async (alarmId: string, status: boolean) => {
+        const newAlarms = await toggleAlarmStatus(alarmId, status);
         setAlarms(newAlarms);
         calculateDaysUntilNextAlarm(newAlarms);
     };
@@ -82,8 +81,8 @@ const Alarms = ({ route }: Props) => {
     const renderItem: ListRenderItem<Alarm> = ({ item }) => (
         <ContainerAlarm 
             alarm={item}
-            deleteAlarm={handleDeleteAlarm}
-            toggleAlarmStatus={handleToggleAlarmStatus}
+            deleteAlarm={() => handleDeleteAlarm(item._id)}
+            toggleAlarmStatus={() => handleToggleAlarmStatus(item._id, item.status)}
         />
     )
 

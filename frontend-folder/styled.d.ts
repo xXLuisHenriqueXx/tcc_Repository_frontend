@@ -7,7 +7,7 @@ declare module "styled-components" {
             textInactive: string;
             textAlternative: string;
             highlightColor: string;
-            bgColor: string | string[];
+            bgColor: string[];
             bdColor: string;
             bgContainerColorActive: string;
             bgContainerColorInactive: string;
