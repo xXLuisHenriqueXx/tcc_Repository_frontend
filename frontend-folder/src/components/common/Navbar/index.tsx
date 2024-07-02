@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { PropsStack } from '../../../routes';
+import useAuth from '../../../hook/useAuth';
 
 interface NavbarProps {
     screen: string;
@@ -14,6 +15,8 @@ export default function Navbar({ screen }: NavbarProps) {
     const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
 
+    const { token } = useAuth();
+
     const navigateToAlarms = () => {
         navigation.navigate("Alarms", {newAlarm: false});
     };
@@ -23,7 +26,9 @@ export default function Navbar({ screen }: NavbarProps) {
     // }
 
     const navigateToUser = () => {
-        navigation.navigate("User");
+        token === null
+        ? navigation.navigate("Welcome")       
+        : navigation.navigate("User")
     }
 
     const size = 30;
