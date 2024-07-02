@@ -33,8 +33,9 @@ const Alarms = ({ route }: Props) => {
 
     const handleGetAlarms = async () => {
         const alarms = await getAlarms('@alarms');
+        console.log(alarms);
         setAlarms(alarms);
-        calculateDaysUntilNextAlarm(alarms);
+        // calculateDaysUntilNextAlarm(alarms);
     };
 
     useEffect(() => {
@@ -46,37 +47,37 @@ const Alarms = ({ route }: Props) => {
     const handleDeleteAlarm = async (alarmId: string) => {
         const newAlarms = await deleteAlarm(alarmId);
         setAlarms(newAlarms);
-        calculateDaysUntilNextAlarm(newAlarms);
+        // calculateDaysUntilNextAlarm(newAlarms);
     };
 
     const handleToggleAlarmStatus = async (alarmId: string, status: boolean) => {
         const newAlarms = await toggleAlarmStatus(alarmId, status);
         setAlarms(newAlarms);
-        calculateDaysUntilNextAlarm(newAlarms);
+        // calculateDaysUntilNextAlarm(newAlarms);
     };
 
-    const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
-        const todayDate = new Date();
-        const nextAlarm = alarms
-            .filter(item => item.status)
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+    // const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
+    //     const todayDate = new Date();
+    //     const nextAlarm = alarms
+    //         .filter(item => item.status)
+    //         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
 
-        if (nextAlarm) {
-            const timeDiff = new Date(nextAlarm.date).getTime() - todayDate.getTime();
-            const minutesDiff = Math.ceil(timeDiff / 1000);
-            const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
-            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            if (hoursDiff === 0) {
-                setNextAlarm({ value: minutesDiff, unit: 'minutos' });
-            } else if (hoursDiff < 24) {
-                setNextAlarm({ value: hoursDiff, unit: 'horas' });
-            } else {
-                setNextAlarm({ value: daysDiff, unit: 'dias' });
-            }
-        } else {
-            setNextAlarm(null);
-        }
-    }
+    //     if (nextAlarm) {
+    //         const timeDiff = new Date(nextAlarm.date).getTime() - todayDate.getTime();
+    //         const minutesDiff = Math.ceil(timeDiff / 1000);
+    //         const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
+    //         const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    //         if (hoursDiff === 0) {
+    //             setNextAlarm({ value: minutesDiff, unit: 'minutos' });
+    //         } else if (hoursDiff < 24) {
+    //             setNextAlarm({ value: hoursDiff, unit: 'horas' });
+    //         } else {
+    //             setNextAlarm({ value: daysDiff, unit: 'dias' });
+    //         }
+    //     } else {
+    //         setNextAlarm(null);
+    //     }
+    // }
 
     const renderItem: ListRenderItem<Alarm> = ({ item }) => (
         <ContainerAlarm 

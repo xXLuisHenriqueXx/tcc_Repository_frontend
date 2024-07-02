@@ -33,10 +33,19 @@ export const TextHorarioAlarm = styled.Text<SwitchEnabledProps>`
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.text : theme.colors.textInactive};
 `;
 
+export const TextDiasAlarmView = styled.View`
+    flex-direction: row;
+`;
+
 export const TextDiasAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(12)}px;
-    font-weight: normal;
+    font-weight: 300;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.highlightColor : theme.colors.textInactive};
+    margin-right: ${RFValue(5)}px;
+`;
+
+export const TextDiasAlarmHighlight = styled(TextDiasAlarm)`
+    font-weight: bold;
 `;
 
 export const DeleteButton = styled.TouchableOpacity`
