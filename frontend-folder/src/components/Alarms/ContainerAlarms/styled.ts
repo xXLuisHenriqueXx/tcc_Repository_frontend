@@ -6,8 +6,8 @@ interface SwitchEnabledProps {
 }
 
 export const ContainerAlarmView = styled.View<SwitchEnabledProps>`
-    border-radius: ${RFValue(15)}px;
-    width: 95%;
+    border-radius: ${RFValue(5)}px;
+    width: 90%;
     height: ${RFValue(105)}px;
     flex-direction: row;
     justify-content: space-between;
@@ -16,8 +16,6 @@ export const ContainerAlarmView = styled.View<SwitchEnabledProps>`
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
-    border-width: ${RFValue(2)}px;
-    border-color: ${({ theme }) => theme.colors.bdColor};
     background-color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.bgContainerColorActive : theme.colors.bgContainerColorInactive};
 `;
 
@@ -29,7 +27,7 @@ export const TextMaterialAlarm = styled.Text<SwitchEnabledProps>`
 
 export const TextHorarioAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(45)}px;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: ${RFValue(-5)}px;
     margin-top: ${RFValue(-5)}px;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.text : theme.colors.textInactive};

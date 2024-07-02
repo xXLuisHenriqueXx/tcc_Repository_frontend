@@ -1,9 +1,7 @@
 import React from 'react'
 import { Modal } from 'react-native'
 import { useTheme } from 'styled-components'
-import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, NoButton, NoButtonText, YesButton, YesButtonText } from './styled'
-import { LinearGradient } from 'expo-linear-gradient'
-import { RFValue } from 'react-native-responsive-fontsize'
+import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled'
 
 interface ModalDeleteProps {
     item: any
@@ -25,20 +23,7 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
             }}
         >
             <ContainerView>
-                <LinearGradient
-                    colors={theme.colors.bgColor}
-                    style={
-                        {
-                            width: "90%",
-                            height: RFValue(180),
-                            alignItems: "center",
-                            paddingTop: RFValue(20),
-                            borderRadius: RFValue(10),
-                            borderWidth: RFValue(1),
-                            borderColor: theme.colors.bdColor
-                        }
-                    }
-                >
+                <ModalView>
                     <ModalTitle>
                         Tem certeza que deseja excluir o item "<ModalTitleDestaque>{item.title}</ModalTitleDestaque>"?
                     </ModalTitle>
@@ -61,7 +46,7 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
                             <YesButtonText>Sim</YesButtonText>
                         </YesButton>
                     </ContainerButtons>
-                </LinearGradient>
+                </ModalView>
             </ContainerView>
         </Modal>
     )

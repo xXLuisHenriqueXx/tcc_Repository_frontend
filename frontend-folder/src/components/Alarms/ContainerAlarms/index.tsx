@@ -19,7 +19,6 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
     const [modalVisible, setModalVisible] = useState(false);
 
     const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
-    const thumbColor = switchEnabled ? theme.colors.thumbColorActive : theme.colors.thumbColorInactive;
     const iconColor = switchEnabled ? theme.colors.text : theme.colors.textInactive;
 
     return (
@@ -27,7 +26,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             <SwitchButton
                 style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                 trackColor={trackColor}
-                thumbColor={thumbColor}
+                thumbColor={theme.colors.thumbColor}
                 onValueChange={async (newValue) => {
                     setSwitchEnabled(newValue);
                     await toggleAlarmStatus(alarm._id, newValue);

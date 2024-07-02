@@ -2,29 +2,29 @@ import "styled-components";
 
 declare module "styled-components" {
     export interface DefaultTheme {
-        colors: {
-            text: string;
-            textInactive: string;
-            textAlternative: string;
-            highlightColor: string;
-            bgColor: string[];
-            bdColor: string;
-            bgContainerColorActive: string;
-            bgContainerColorInactive: string;
-            fadeBgColor: string;
-            bgBottomTab: string;
-            tintActiveColor: string;
-            tintInactiveColor: string;
-            trackColorInactive: string;
-            trackColorActive: string;
-            thumbColorActive: string;
-            thumbColorInactive: string;
-            white: string;
-        },
-        images: {
-            bgMain: any;
-            bgSecondary: any;
-            catImage: any;
-        }
+        
+    colors: {
+        text: string;
+        textInactive: string;
+        highlightColor: string;
+        highlightColorInactive: string;
+        bgColor: string; 
+        bdColor: string;
+        bgContainerColorActive: string;
+        bgContainerColorInactive: string;
+        fadeBgColor: string;
+        bgModal: string;
+        bgBottomTab: string;
+        tintActiveColor: string;
+        tintInactiveColor: string;
+        trackColorInactive: string;
+        trackColorActive: string;
+        thumbColor: string;
+        white: string;
+    },
+    images: {
+        bgMain: any;
+        catImage: any;
+    }
     }
 }
