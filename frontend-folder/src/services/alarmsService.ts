@@ -8,7 +8,7 @@ export async function getAlarms(key: string): Promise<Alarm[]> {
 
         myAlarmsParsed = myAlarmsParsed.map(item => ({
             ...item,
-            date: new Date(item.date)
+            date: new Date(item.hour)
         }));
 
         return myAlarmsParsed;

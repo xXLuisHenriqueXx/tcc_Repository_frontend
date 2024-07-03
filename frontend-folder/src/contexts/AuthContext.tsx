@@ -1,6 +1,6 @@
+import { ReactNode, createContext, useEffect, useMemo, useReducer } from "react";
 import * as SecureStore from "expo-secure-store"
 import { User } from "../entities/User"
-import { ReactNode, createContext, useEffect, useMemo, useReducer } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import authService from "../services/authService";
 import { Alert } from "react-native";
@@ -86,7 +86,7 @@ export function AuthContextProvider({
             let currentUser: User | null = null;
 
             try {
-                storedToken = await SecureStore.getItemAsync("@luisapp-token");
+                storedToken = await SecureStore.getItemAsync("luisapp-token");
                 const userDataString = await AsyncStorage.getItem("@current-user");
                 currentUser = userDataString ? JSON.parse(userDataString) : null;
             } catch (err) {
@@ -112,7 +112,7 @@ export function AuthContextProvider({
                     user: null
                 });
 
-                await SecureStore.deleteItemAsync("@luisapp-token");
+                await SecureStore.deleteItemAsync("luisapp-token");
                 await AsyncStorage.removeItem("@user");
             },
 

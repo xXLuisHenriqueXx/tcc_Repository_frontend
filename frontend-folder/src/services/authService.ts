@@ -27,7 +27,7 @@ const authService = {
         if (response.status === 400 || response.status === 401) {
             Alert.alert("Erro", "Crendenciais inválidos");
         } else {
-            await SecureStore.setItemAsync("@luisapp-token", response.data.token);
+            await SecureStore.setItemAsync("luisapp-token", response.data.token);
             await AsyncStorage.setItem("@user", JSON.stringify(response.data.user));
         }
 
