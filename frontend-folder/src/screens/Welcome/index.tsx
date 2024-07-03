@@ -11,6 +11,14 @@ const Welcome = () => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
 
+  const handleNavigateToLogin = () => {
+    navigation.navigate("Login");
+  }
+
+  const handleNavigateToRegister = () => {
+    navigation.navigate("Register");
+  }
+
   return (
     <Container>
       <BackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
@@ -26,12 +34,12 @@ const Welcome = () => {
         </ContainerText>
 
         <ContainerButton>
-          <LoginButton activeOpacity={0.8}>
+          <LoginButton activeOpacity={0.8} onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
             <Feather name='arrow-right-circle' size={30} color={theme.colors.bgColor} style={{position: "absolute", right: 30}} />
           </LoginButton>
 
-          <RegisterButton activeOpacity={0.8}>
+          <RegisterButton activeOpacity={0.8} onPress={handleNavigateToRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
             <Feather name='arrow-right-circle' size={30} color={theme.colors.highlightColor} style={{position: "absolute", right: 30}} />
           </RegisterButton>

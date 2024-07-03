@@ -24,24 +24,18 @@ export const ContainerView = styled.View`
     align-items: center;
 `;
 
-export const Logo = styled.Image.attrs({
-    resizeMode: 'contain'
-})`
-    width: ${RFValue(200)}px;
-    height: ${RFValue(165)}px;
-`;
-
 export const ContainerText = styled.View`
     flex-direction: column;
     align-items: center;
     width: 90%;
-    margin: ${RFValue(60)}px 0;
+    margin-bottom: ${RFValue(80)}px;
 `;
 
 export const Title = styled.Text`
     font-size: ${RFValue(30)}px;
     font-weight: bold;
     color: ${({ theme }) => theme.colors.highlightColor};
+    text-align: center;
 `;
 
 export const NormalText = styled.Text`
@@ -50,10 +44,27 @@ export const NormalText = styled.Text`
     text-align: center;
 `;
 
-export const ContainerButton = styled.View`
+export const ContainerForm = styled.View`
+    width: 90%;
     flex-direction: column;
     align-items: center;
-    width: 90%;
+`;
+
+export const InputContainer = styled.View`
+    width: 100%;
+    height: ${RFValue(30)}px;
+    flex-direction: row;
+    align-items: center;
+    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
+    margin-bottom: ${RFValue(40)}px;
+`;
+
+export const Input = styled.TextInput`
+    flex: 1;
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(18)}px;
+    margin-left: ${RFValue(5)}px;
 `;
 
 export const LoginButton = styled.TouchableOpacity`
@@ -64,28 +75,10 @@ export const LoginButton = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom: ${RFValue(30)}px;
 `;
 
 export const LoginButtonText = styled.Text`
     font-size: ${RFValue(25)}px;
     color: ${({ theme }) => theme.colors.bgColor};
-    font-weight: bold;
-`;
-
-export const RegisterButton = styled.TouchableOpacity`
-    width: 100%;
-    height: ${RFValue(70)}px;
-    border-radius: ${RFValue(10)}px;
-    border-width: ${RFValue(1)}px;
-    border-color: ${({ theme }) => theme.colors.highlightColor};
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const RegisterButtonText = styled.Text`
-    font-size: ${RFValue(25)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
     font-weight: bold;
 `;
