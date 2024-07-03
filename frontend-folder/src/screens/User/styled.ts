@@ -25,11 +25,17 @@ export const UserImage = styled.View`
     justify-content: center;
 `;
 
+export const UserNameButton = styled.TouchableOpacity`
+    flex-direction: row;
+    align-items: center;
+`;
+
 export const UserName = styled.Text`
     font-size: ${RFValue(30)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
     margin-top: ${RFValue(4)}px;
     font-weight: bold;
+    margin-right: ${RFValue(5)}px;
 `;
 
 export const CreatedText = styled.Text`
@@ -44,9 +50,7 @@ export const HighlightedText = styled.Text`
 export const ContainerInfo = styled.View`
     width: 92%;
     height: ${RFValue(400)}px;
-    border-width: ${RFValue(2)}px;
-    border-color: ${({ theme }) => theme.colors.bdColor};
-    border-radius: ${RFValue(20)}px;
+    border-radius: ${RFValue(10)}px;
     margin-top: ${RFValue(10)}px;
     padding: ${RFValue(20)}px;
     align-self: center;
