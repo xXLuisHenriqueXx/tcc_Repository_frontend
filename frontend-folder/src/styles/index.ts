@@ -26,29 +26,28 @@ export const darkTheme: DefaultTheme =  {
     }
 };
 
-// export const lightTheme: DefaultTheme = {
-//     colors: {
-//         text: "#222328",
-//         textInactive: "#22232850",
-//         textAlternative: "#FFFFFF",
-//         highlightColor: "#F87433",
-//         bgColor: "#EAFBFE", 
-//         bdColor: "#298A9150",
-//         bgContainerColorActive: "#C3E2E750",
-//         bgContainerColorInactive: "#C3E2E720",
-//         fadeBgColor: "#00000090",
-//         bgBottomTab: "#CFEEF2",
-//         tintActiveColor: '#136670',
-//         tintInactiveColor: '#33354050',
-//         trackColorInactive: "#110F1F",
-//         trackColorActive: "#F87433",
-//         thumbColorActive: "#FFFFFF",
-//         thumbColorInactive: "#F4F3F4",
-//         white: "#FFFFFF",
-//     },
-//     images: {
-//         bgMain: require("../assets/bgLight_mainPages.jpg"),
-//         bgSecondary: require("../assets/bgLight_secondaryPages.jpg"),
-//         catImage: require("../assets/cute_cat.png")
-//     }
-// };
+export const lightTheme: DefaultTheme = {
+    colors: {
+        text: "#110F1F",
+        textInactive: "#110F1F50",
+        highlightColor: "#F87433",
+        highlightColorInactive: "#F8743350",
+        bgColor: "#E5F8FC", 
+        bdColor: "#298A9130",
+        bgContainerColorActive: "#94BEC575",
+        bgContainerColorInactive: "#94BEC525",
+        fadeBgColor: "#00000090",
+        bgModal: "#E3F7FB",
+        bgBottomTab: "#E3F7FB",
+        tintActiveColor: '#F87433',
+        tintInactiveColor: '#110F1F60',
+        trackColorInactive: "#110F1F",
+        trackColorActive: "#F87433",
+        thumbColor: "#FFFFFF",
+        white: "#FFFFFF",
+    },
+    images: {
+        bgMain: require("../assets/bgLight_mainPages.jpg"),
+        catImage: require("../assets/cute_cat.png")
+    }
+};

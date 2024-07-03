@@ -14,9 +14,7 @@ export const ModalView = styled.View`
     background-color: ${({ theme }) => theme.colors.bgModal};
     align-items: center;
     padding-top: ${RFValue(20)}px;
-    border-radius: ${RFValue(10)}px;
-    border-width: ${RFValue(1)}px;
-    border-color: ${({ theme }) => theme.colors.bdColor};                      
+    border-radius: ${RFValue(10)}px;                      
 `;
 
 export const ModalTitle = styled.Text`

@@ -19,7 +19,7 @@ const BotaoAdd = ({ navigate }: BotaoAddProps) => {
                 <Feather 
                     name='plus'
                     size={30}
-                    color={theme.colors.textAlternative}
+                    color={theme.colors.bgColor}
                 />
             </BgButton>
         </ContainerButton>

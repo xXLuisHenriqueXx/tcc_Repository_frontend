@@ -44,7 +44,7 @@ const User = () => {
     <Container
       source={theme.images.bgMain}
     >
-      <ThemeButton onPress={handleLogout}>
+      <ThemeButton onPress={toggleTheme}>
         <FontAwesome name='moon-o' size={30} color={theme.colors.text} />
       </ThemeButton>
 
