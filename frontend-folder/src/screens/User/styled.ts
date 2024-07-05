@@ -62,7 +62,13 @@ export const ThemeButton = styled.TouchableOpacity`
     position: absolute;
     top: ${RFValue(10)}px;
     right: ${RFValue(10)}px;
-    `;
+`;
+
+export const LogoutButton = styled.TouchableOpacity`
+    position: absolute;
+    top: ${RFValue(10)}px;
+    left: ${RFValue(10)}px;
+`;
 
 export const InfoTitle = styled.Text`
     font-size: ${RFValue(20)}px;

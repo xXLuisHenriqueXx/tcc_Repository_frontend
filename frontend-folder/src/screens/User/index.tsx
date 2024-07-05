@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTheme } from "styled-components";
 import { ThemeContext } from '../../styles/themeContext';
-import { Container, ContainerInfo, ContainerInfoText, ContainerUser, CreatedText, CuteCat, HighlightedInfoText, HighlightedText, InfoText, InfoTitle, ThanksText, ThemeButton, UserImage, UserName, UserNameButton } from './styled';
+import { Container, ContainerInfo, ContainerInfoText, ContainerUser, CreatedText, CuteCat, HighlightedInfoText, HighlightedText, InfoText, InfoTitle, LogoutButton, ThanksText, ThemeButton, UserImage, UserName, UserNameButton } from './styled';
 import { FontAwesome, FontAwesome5 , Feather } from '@expo/vector-icons'
 import Navbar from '../../components/common/Navbar';
 import useAuth from '../../hook/useAuth';
@@ -47,6 +47,10 @@ const User = () => {
       <ThemeButton onPress={toggleTheme}>
         <FontAwesome name='moon-o' size={30} color={theme.colors.text} />
       </ThemeButton>
+
+      <LogoutButton onPress={handleLogout}>
+        <Feather name='log-out' size={30} color={theme.colors.text} />
+      </LogoutButton>
 
       <ContainerUser>
         <UserImage>
