@@ -46,8 +46,8 @@ const UpdateProfile = ({ route }: Props) => {
     const handleSetInfos = async () => {
         setFields({
             ...fields,
-            name: userInfo.name,
-            email: userInfo.email,
+            name: userInfo?.name || "",
+            email: userInfo?.email || "",
         })
     }
 

@@ -10,7 +10,6 @@ import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
 import { Container, DiasText, NormalText, Title } from './styled';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
-import Loader from '../Loader';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Alarms'>;
 

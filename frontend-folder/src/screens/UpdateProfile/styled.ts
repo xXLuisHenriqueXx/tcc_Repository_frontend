@@ -14,8 +14,8 @@ export const BackButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: ${RFValue(20)}px;
-    left: ${RFValue(20)}px;
+    top: ${RFValue(10)}px;
+    left: ${RFValue(10)}px;
 `;
 
 export const ContainerView = styled.View`

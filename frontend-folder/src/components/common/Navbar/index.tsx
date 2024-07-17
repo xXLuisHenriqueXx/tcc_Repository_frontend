@@ -21,9 +21,9 @@ export default function Navbar({ screen }: NavbarProps) {
         navigation.navigate("Alarms", {newAlarm: false});
     };
 
-    // const navigateToNotes = () => {
-    //     navigation.navigate("Notes");
-    // }
+    const navigateToNotes = () => {
+        navigation.navigate("Notes", {newNote: false});
+    }
 
     const navigateToUser = () => {
         token === null
@@ -44,9 +44,9 @@ export default function Navbar({ screen }: NavbarProps) {
             <IconButton onPress={navigateToAlarms}>
                 <FontAwesome name={iconAlarm} size={size} color={colorAlarm} />
             </IconButton>
-            {/* <IconButton onPress={navigateToNotes}>
+            <IconButton onPress={navigateToNotes}>
                 <FontAwesome name={iconNote} size={size} color={colorNote} />
-            </IconButton>*/}
+            </IconButton>
             <IconButton onPress={navigateToUser}>
                 <FontAwesome name={iconUser} size={size} color={colorUser} />
             </IconButton>

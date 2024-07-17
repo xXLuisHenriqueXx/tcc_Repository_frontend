@@ -5,4 +5,5 @@ export interface User {
     level: number;
     experience: number;
     createdAt: string;
+    updatedAt: string;
 }

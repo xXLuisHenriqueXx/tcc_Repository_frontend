@@ -10,6 +10,9 @@ import Welcome from '../screens/Welcome';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import UpdateProfile from '../screens/UpdateProfile';
+import Notes from "../screens/Notes";
+import CreateNote from "../screens/CreateNote";
+
 import { User as UserEntitie } from '../entities/User';
 
 export type PropsNavigationStack = {
@@ -17,6 +20,10 @@ export type PropsNavigationStack = {
     newAlarm?: boolean;
   };
   CreateAlarm: undefined;
+  Notes: {
+    newNote?: boolean;
+  };
+  CreateNote: undefined;
   User: undefined;
   Welcome: undefined;
   Login: undefined;
@@ -53,6 +60,8 @@ const Routes = () => {
           <>
             <Stack.Screen name="Alarms" component={Alarms} />
             <Stack.Screen name="CreateAlarm" component={CreateAlarm} />
+            <Stack.Screen name="Notes" component={Notes} />
+            <Stack.Screen name="CreateNote" component={CreateNote} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
           </>

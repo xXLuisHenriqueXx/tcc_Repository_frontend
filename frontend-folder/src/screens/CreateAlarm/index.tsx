@@ -27,6 +27,16 @@ const CreateAlarm = () => {
         saturday: false
     });
 
+    const handleSaveAlarm = async () => {
+        if (title === "") {
+            alert("Digite um título para o alarm");
+            return;
+        } else {
+            await saveAlarm("@alarms", { _id: uuid.v4().toString(), title, hour, days, status: false });
+            navigation.navigate("Alarms", { newAlarm: true });
+        }
+    }
+
     const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
         const currentDate = selectedDate || hour;
         setShow(Platform.OS === 'ios');
@@ -53,15 +63,7 @@ const CreateAlarm = () => {
 
                 <ButtonAdd
                     activeOpacity={0.85}
-                    onPress={async () => {
-                        if (title === "") {
-                            alert("Digite um título para o alarm");
-                            return;
-                        } else {
-                            await saveAlarm("@alarms", { _id: uuid.v4().toString(), title, hour, days, status: false });
-                            navigation.navigate("Alarms", { newAlarm: true });
-                        }
-                    }}
+                    onPress={handleSaveAlarm}
                 >
                     <Feather name="check" size={25} color={theme.colors.text} />
                 </ButtonAdd>
