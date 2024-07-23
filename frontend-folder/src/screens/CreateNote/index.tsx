@@ -12,19 +12,19 @@ const CreateNote = () => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSaveNote = async () => {
     if (title === "") {
       alert("Digite um título para a nota");
       return;
 
-    } else if (description === "") {
+    } else if (content === "") {
       alert("Digite um conteúdo para a nota");
       return;
 
     } else {
-      const params = { title, description };
+      const params = { title, content };
 
       const { status } = await noteService.addNote(params);
 
@@ -66,8 +66,8 @@ const CreateNote = () => {
             style={{ textAlignVertical: "top" }}
             placeholder="Digite o conteúdo"
             placeholderTextColor={theme.colors.textInactive}
-            value={description}
-            onChangeText={setDescription}
+            value={content}
+            onChangeText={setContent}
             multiline
           />
         </ContainerInputsView>

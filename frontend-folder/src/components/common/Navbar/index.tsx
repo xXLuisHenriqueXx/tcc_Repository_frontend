@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, IconButton } from './styled'
+import { ButtonText, Container, IconButton } from './styled'
 import { FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -22,7 +22,9 @@ export default function Navbar({ screen }: NavbarProps) {
     };
 
     const navigateToNotes = () => {
-        navigation.navigate("Notes", {newNote: false});
+        token === null
+        ? navigation.navigate("Welcome")
+        : navigation.navigate("Notes", {newNote: false});
     }
 
     const navigateToUser = () => {
@@ -43,12 +45,27 @@ export default function Navbar({ screen }: NavbarProps) {
         <Container>
             <IconButton onPress={navigateToAlarms}>
                 <FontAwesome name={iconAlarm} size={size} color={colorAlarm} />
+                {screen === "Alarms" ? (
+                    <ButtonText screenEnabled={true}>Alarmes</ButtonText>
+                ) : (
+                    <ButtonText screenEnabled={false}>Alarmes</ButtonText>
+                )}
             </IconButton>
             <IconButton onPress={navigateToNotes}>
                 <FontAwesome name={iconNote} size={size} color={colorNote} />
+                {screen === "Notes" ? (
+                    <ButtonText screenEnabled={true}>Notas</ButtonText>
+                ) : (
+                    <ButtonText screenEnabled={false}>Notas</ButtonText>
+                )}
             </IconButton>
             <IconButton onPress={navigateToUser}>
                 <FontAwesome name={iconUser} size={size} color={colorUser} />
+                {screen === "Usuário" ? (
+                    <ButtonText screenEnabled={true}>Usuário</ButtonText>
+                ) : (
+                    <ButtonText screenEnabled={false}>Usuário</ButtonText>
+                )}
             </IconButton>
         </Container>
     )

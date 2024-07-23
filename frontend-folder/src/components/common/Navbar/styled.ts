@@ -1,6 +1,10 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
+interface screenEnabledProps {
+    screenEnabled: boolean;
+}
+
 export const Container = styled.View`
     position: absolute;
     width: 100%;
@@ -17,6 +21,12 @@ export const Container = styled.View`
 export const IconButton = styled.TouchableOpacity`
     width: ${RFValue(60)}px;
     height: ${RFValue(60)}px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+`;
+
+export const ButtonText = styled.Text<screenEnabledProps>`
+    font-size: ${RFValue(10)}px;
+    color: ${({ screenEnabled, theme }) => screenEnabled ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor};
 `;

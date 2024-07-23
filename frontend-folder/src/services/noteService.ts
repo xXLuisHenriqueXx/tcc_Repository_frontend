@@ -3,13 +3,13 @@ import api from './api';
 
 interface AddParams {
     title: string;
-    description: string;
+    content: string;
 }
 
 interface UpdateParams {
     _id: string;
     title: string;
-    description: string;
+    content: string;
 }
 
 interface DeleteParams {
