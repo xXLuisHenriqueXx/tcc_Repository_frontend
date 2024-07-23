@@ -25,7 +25,13 @@ export const TextDateNote = styled.Text`
 `;  
 
 export const TitleNote = styled.Text`
-    font-size: ${RFValue(30)}px;
-    font-weight: bold;
+    font-size: ${RFValue(25)}px;
+    font-weight: 700;
     color: ${({ theme }) => theme.colors.text};
+`;
+
+export const DeleteButton = styled.TouchableOpacity`
+    position: absolute;
+    top: ${RFValue(10)}px;
+    right: ${RFValue(10)}px;
 `;

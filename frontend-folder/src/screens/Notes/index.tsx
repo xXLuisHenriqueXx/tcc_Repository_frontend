@@ -21,6 +21,7 @@ const Notes = ({ route }: Props) => {
 
   const { newNote } = route.params || {};
   const [notes, setNotes] = useState<Note[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleNavigateToCreateNote = () => {
     navigation.navigate("CreateNote")
@@ -33,18 +34,33 @@ const Notes = ({ route }: Props) => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
+
     if (isFocused || newNote) {
       handleGetNotes();
     }
+
+    setIsLoading(false);
   }, [isFocused, newNote]);
+
+  const handleDeleteNote = async (noteId: string) => {
+    try {
+      await noteService.deleteNote({ _id: noteId });
+
+      setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
+    } catch (err) {
+      console.log("Failed to delete note");
+    }
+  }
 
   const renderItem: ListRenderItem<Note> = ({ item }) => (
     <ContainerNote 
       note={item}
+      deleteNote={() => handleDeleteNote(item._id)}
     />
   );
 
-  if (!notes) return <Loader />
+  if (isLoading) return <Loader />
 
   return (
     <Container source={theme.images.bgMain}>

@@ -7,7 +7,7 @@ interface AddParams {
 }
 
 interface UpdateParams {
-    _id: string;
+    _id: string | undefined;
     title: string;
     content: string;
 }

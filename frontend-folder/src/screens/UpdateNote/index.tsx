@@ -1,22 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BackButton, Container, ContainerHeader, ContainerInputs, ContainerInputsView, Input, InputTitleContainer, InputTitle, Title, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../routes';
+import { PropsNavigationStack, PropsStack } from '../../routes';
 import { Feather } from "@expo/vector-icons"
 import { useTheme } from 'styled-components';
 import { ButtonAdd } from '../CreateAlarm/styled';
 import noteService from '../../services/noteService';
 import { Alert } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-const UpdateNote = () => {
+type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateNote'>
+
+const UpdateNote = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [fields, setFields] = useState({
+        title: "",
+        content: ""
+    })
+
+    const { noteInfo } = route.params || {};
 
     const handleUpdateNote = async () => {
+        const params = { _id: noteInfo?._id, title: fields.title, content: fields.content };
 
+        const response = await noteService.updateNote(params);
+
+        if (response.status === 200) {
+            Alert.alert("Sucesso", "Nota atualizada com sucesso!");
+
+            navigation.navigate("Notes", { newNote: true });
+        }
     }
+
+    const handleSetInfos = async () => {
+        setFields({
+            ...fields,
+            title: noteInfo?.title || "",
+            content: noteInfo?.content || ""
+        })
+    }
+
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
 
     return (
         <Container>
@@ -39,8 +66,10 @@ const UpdateNote = () => {
                         <Input
                             placeholder="Digite um título"
                             placeholderTextColor={theme.colors.textInactive}
-                            value={title}
-                            onChangeText={setTitle}
+                            value={fields.title}
+                            onChangeText={(text) => {
+                                setFields({ ...fields, title: text })
+                            }}
                         />
                     </InputTitleContainer>
 
@@ -48,8 +77,10 @@ const UpdateNote = () => {
                         style={{ textAlignVertical: "top" }}
                         placeholder="Digite o conteúdo"
                         placeholderTextColor={theme.colors.textInactive}
-                        value={content}
-                        onChangeText={setContent}
+                        value={fields.content}
+                        onChangeText={(text) => {
+                            setFields({ ...fields, content: text })
+                        }}
                         multiline
                     />
                 </ContainerInputsView>
