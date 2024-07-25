@@ -11,6 +11,7 @@ import { FlatList, ListRenderItem } from 'react-native';
 import ContainerNote from '../../components/Notes/ContainerNote';
 import noteService from '../../services/noteService';
 import Loader from '../Loader';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Notes'>;
 
@@ -65,6 +66,7 @@ const Notes = ({ route }: Props) => {
   return (
     <Container source={theme.images.bgMain}>
       <FlatList
+        style={{marginBottom: RFValue(60)}}
         data={notes}
         keyExtractor={item => item._id}
         ListHeaderComponent={

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { BackButton, Container, ContainerHeader, ContainerInputs, ContainerInputsView, Input, InputTitleContainer, InputTitle, Title, InputContent } from './styled';
+import { Container, ContainerInputs, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
 import { Feather } from "@expo/vector-icons"
 import { useTheme } from 'styled-components';
-import { ButtonAdd } from '../CreateAlarm/styled';
 import noteService from '../../services/noteService';
 import { Alert } from 'react-native';
+import DefaultHeader from '../../components/common/DefaultHeader/Index';
 
 const CreateNote = () => {
   const theme = useTheme();
@@ -38,30 +38,10 @@ const CreateNote = () => {
 
   return (
     <Container>
-      <ContainerHeader>
-        <BackButton onPress={() => navigation.goBack()}>
-          <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
-        </BackButton>
-
-        <Title>Nova nota</Title>
-
-        <ButtonAdd onPress={handleSaveNote}>
-          <Feather name="check" size={25} color={theme.colors.text} />
-        </ButtonAdd>
-      </ContainerHeader>
+      <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' />
 
       <ContainerInputs>
         <ContainerInputsView>
-          <InputTitleContainer>
-            <InputTitle>Título</InputTitle>
-            <Input
-              placeholder="Digite um título"
-              placeholderTextColor={theme.colors.textInactive}
-              value={title}
-              onChangeText={setTitle}
-            />
-          </InputTitleContainer>
-
           <InputContent
             style={{ textAlignVertical: "top" }}
             placeholder="Digite o conteúdo"

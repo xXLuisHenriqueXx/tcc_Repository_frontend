@@ -5,33 +5,12 @@ interface selectedProp {
     selected: boolean;
 }
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const ContainerHeader = styled.View`
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    padding: ${RFValue(10)}px;
-`;
 
-export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(20)}px;
-    font-weight: 500;
-    margin-left: auto;
-`;
-
-export const BackButton = styled.TouchableOpacity`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(50)}px;
-    width: ${RFValue(50)}px;
-    height: ${RFValue(50)}px;
-    justify-content: center;
-    align-items: center;
-`;
 
 export const ContainerButtons = styled.View`
     flex: 1;
@@ -49,26 +28,12 @@ export const ContainerButtonsView = styled.View`
     padding: ${RFValue(40)}px 0;
 `;
 
-export const InputContainer = styled.View`
-    width: 90%;
-    flex-direction: column;
-    justify-content: flex-start;
-`;
-
-export const InputTitle = styled.Text`
+export const HourTitle = styled.Text`
     font-size: ${RFValue(20)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
+    text-align: center;
     font-weight: bold;
     margin-bottom: ${RFValue(5)}px;
-`;
-
-export const Input = styled.TextInput`
-    width: 100%;
-    height: ${RFValue(30)}px;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(16)}px;
-    border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
 `;
 
 export const DateButton = styled.TouchableOpacity`
@@ -76,7 +41,7 @@ export const DateButton = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: ${RFValue(40)}px 0;
+    padding-bottom: ${RFValue(40)}px;
     border-bottom-width: ${RFValue(1)}px;
     border-bottom-color: ${({ theme }) => theme.colors.bdColor};
 `;
@@ -88,11 +53,20 @@ export const DateButtonText = styled.Text`
     font-weight: bold;
 `;
 
+
+
 export const ContainerDaysView = styled.View`
     width: 90%;
     flex-direction: column;
     justify-content: flex-start;
     margin-top: ${RFValue(40)}px;
+`;
+
+export const DayTitle = styled.Text`
+    font-size: ${RFValue(20)}px;
+    color: ${({ theme }) => theme.colors.highlightColor};
+    font-weight: bold;
+    margin-bottom: ${RFValue(5)}px;
 `;
 
 export const ContainerDays = styled.View`
@@ -115,15 +89,4 @@ export const DayButtonText = styled.Text`
     color: ${({ theme }) => theme.colors.bgColor};
     font-size: ${RFValue(16)}px;
     font-weight: bold;
-`;
-
-export const ButtonAdd = styled.TouchableOpacity`
-    border-width: ${RFValue(1)}px;
-    border-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(50)}px;
-    width: ${RFValue(50)}px;
-    height: ${RFValue(50)}px;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
 `;

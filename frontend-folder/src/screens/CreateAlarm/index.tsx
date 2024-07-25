@@ -3,11 +3,12 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { useTheme } from 'styled-components';
-import { BackButton, ButtonAdd, Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerHeader, DateButton, DateButtonText, DayButton, DayButtonText, Input, InputContainer, InputTitle, Title } from './styled';
+import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, DateButton, DateButtonText, DayButton, DayButtonText, DayTitle, HourTitle } from './styled';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { saveAlarm } from '../../services/alarmsService';
 import { PropsStack } from '../../routes';
 import uuid from 'react-native-uuid';
+import DefaultHeader from '../../components/common/DefaultHeader/Index';
 
 const CreateAlarm = () => {
     const navigation = useNavigation<PropsStack>();
@@ -54,39 +55,19 @@ const CreateAlarm = () => {
 
     return (
         <Container>
-            <ContainerHeader>
-                <BackButton onPress={() => navigation.goBack()}>
-                    <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
-                </BackButton>
-
-                <Title>Novo alarme</Title>
-
-                <ButtonAdd
-                    activeOpacity={0.85}
-                    onPress={handleSaveAlarm}
-                >
-                    <Feather name="check" size={25} color={theme.colors.text} />
-                </ButtonAdd>
-            </ContainerHeader>
+            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' />
 
             <ContainerButtons>
                 <ContainerButtonsView>
-                    <InputContainer>
-                        <InputTitle>Título</InputTitle>
-                        <Input
-                            placeholder="Digite um título"
-                            placeholderTextColor={theme.colors.textInactive}
-                            value={title}
-                            onChangeText={setTitle}
-                        />
-                    </InputContainer>
+                    <HourTitle>Hora do alarme</HourTitle>
+
                     <DateButton onPress={showTimepicker} activeOpacity={1}>
                         <DateButtonText>{hour.getHours()}:{hour.getMinutes()}</DateButtonText>
                         <FontAwesome5 name="edit" size={25} color={theme.colors.highlightColor} />
                     </DateButton>
 
                     <ContainerDaysView>
-                        <InputTitle>Dias da semana</InputTitle>
+                        <DayTitle>Dias da semana</DayTitle>
                         <ContainerDays>
                             <DayButton selected={days.sunday} onPress={() => setDays({ ...days, sunday: !days.sunday })} activeOpacity={1}><DayButtonText>D</DayButtonText></DayButton>
                             <DayButton selected={days.monday} onPress={() => setDays({ ...days, monday: !days.monday })} activeOpacity={1}><DayButtonText>S</DayButtonText></DayButton>

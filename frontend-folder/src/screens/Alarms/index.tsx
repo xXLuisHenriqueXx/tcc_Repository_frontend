@@ -10,6 +10,7 @@ import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
 import { Container, DiasText, NormalText, Title } from './styled';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Alarms'>;
 
@@ -156,6 +157,7 @@ const Alarms = ({ route }: Props) => {
     return (
         <Container source={theme.images.bgMain}>
             <FlatList 
+                style={{marginBottom: RFValue(60)}}
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={

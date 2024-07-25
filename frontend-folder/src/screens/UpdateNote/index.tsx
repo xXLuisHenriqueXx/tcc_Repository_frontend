@@ -4,25 +4,24 @@ import { useNavigation } from '@react-navigation/native';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import { Feather } from "@expo/vector-icons"
 import { useTheme } from 'styled-components';
-import { ButtonAdd } from '../CreateAlarm/styled';
 import noteService from '../../services/noteService';
 import { Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ButtonAdd } from '../../components/common/DefaultHeader/styled';
+import DefaultHeader from '../../components/common/DefaultHeader/Index';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateNote'>
 
 const UpdateNote = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-    const [fields, setFields] = useState({
-        title: "",
-        content: ""
-    })
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
     const { noteInfo } = route.params || {};
 
     const handleUpdateNote = async () => {
-        const params = { _id: noteInfo?._id, title: fields.title, content: fields.content };
+        const params = { _id: noteInfo?._id, title: title, content: content };
 
         const response = await noteService.updateNote(params);
 
@@ -34,11 +33,8 @@ const UpdateNote = ({ route }: Props) => {
     }
 
     const handleSetInfos = async () => {
-        setFields({
-            ...fields,
-            title: noteInfo?.title || "",
-            content: noteInfo?.content || ""
-        })
+        setTitle(noteInfo?.title || "")
+        setContent(noteInfo?.title || "")
     }
 
     useEffect(() => {
@@ -47,40 +43,16 @@ const UpdateNote = ({ route }: Props) => {
 
     return (
         <Container>
-            <ContainerHeader>
-                <BackButton onPress={() => navigation.goBack()}>
-                    <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
-                </BackButton>
-
-                <Title>Atualizar nota</Title>
-
-                <ButtonAdd onPress={handleUpdateNote}>
-                    <Feather name="check" size={25} color={theme.colors.text} />
-                </ButtonAdd>
-            </ContainerHeader>
+            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleUpdateNote} placeholderText='' />
 
             <ContainerInputs>
                 <ContainerInputsView>
-                    <InputTitleContainer>
-                        <InputTitle>Título</InputTitle>
-                        <Input
-                            placeholder="Digite um título"
-                            placeholderTextColor={theme.colors.textInactive}
-                            value={fields.title}
-                            onChangeText={(text) => {
-                                setFields({ ...fields, title: text })
-                            }}
-                        />
-                    </InputTitleContainer>
-
                     <InputContent
                         style={{ textAlignVertical: "top" }}
                         placeholder="Digite o conteúdo"
                         placeholderTextColor={theme.colors.textInactive}
-                        value={fields.content}
-                        onChangeText={(text) => {
-                            setFields({ ...fields, content: text })
-                        }}
+                        value={content}
+                        onChangeText={setContent}
                         multiline
                     />
                 </ContainerInputsView>
