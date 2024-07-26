@@ -31,7 +31,7 @@ export const UserNameButton = styled.TouchableOpacity`
 `;
 
 export const UserName = styled.Text`
-    font-size: ${RFValue(30)}px;
+    font-size: ${RFValue(25)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
     margin-top: ${RFValue(4)}px;
     font-weight: bold;
@@ -39,7 +39,7 @@ export const UserName = styled.Text`
 `;
 
 export const CreatedText = styled.Text`
-    font-size: ${RFValue(15)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.text};
 `;
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, ContainerInputs, ContainerInputsView, InputContent } from './styled';
+import { Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
 import { Feather } from "@expo/vector-icons"
@@ -38,10 +38,11 @@ const CreateNote = () => {
 
   return (
     <Container>
-      <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' />
+      <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' marginBottom={30} />
 
       <ContainerInputs>
         <ContainerInputsView>
+          <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
           <InputContent
             style={{ textAlignVertical: "top" }}
             placeholder="Digite o conteúdo"

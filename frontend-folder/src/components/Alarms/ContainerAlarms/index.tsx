@@ -23,17 +23,6 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
 
     return (
         <ContainerAlarmView switchEnabled={switchEnabled}>
-            <SwitchButton
-                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
-                trackColor={trackColor}
-                thumbColor={theme.colors.thumbColor}
-                onValueChange={async (newValue) => {
-                    setSwitchEnabled(newValue);
-                    await toggleAlarmStatus(alarm._id, newValue);
-                }}
-                value={switchEnabled}
-            />
-
             <DeleteButton
                 activeOpacity={0.8}
                 onPress={() => setModalVisible(true)}
@@ -57,6 +46,17 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
                     {alarm.days?.saturday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
                 </TextDiasAlarmView>
             </View>
+
+            <SwitchButton
+                style={{ transform: [{ scaleX: 1.35 }, { scaleY: 1.35 }] }}
+                trackColor={trackColor}
+                thumbColor={theme.colors.thumbColor}
+                onValueChange={async (newValue) => {
+                    setSwitchEnabled(newValue);
+                    await toggleAlarmStatus(alarm._id, newValue);
+                }}
+                value={switchEnabled}
+            />
 
             <ModalDelete
                 item={alarm}

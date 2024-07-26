@@ -1,7 +1,11 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.ScrollView`
+export const Container = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        flexGrow: 1
+    }
+})`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
@@ -14,21 +18,31 @@ export const ContainerInputs = styled.View`
 
 export const ContainerInputsView = styled.View`
     width: 100%;
+    flex: 1;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     border-top-left-radius: ${RFValue(30)}px;
     border-top-right-radius: ${RFValue(30)}px;
-    padding: ${RFValue(10)}px;
+`;
+
+export const ContainerInputsTitle = styled.Text`
+    width: 90%;
+    font-size: ${RFValue(20)}px;
+    color: ${({ theme }) => theme.colors.highlightColor};
+    font-weight: bold;
+    padding: ${RFValue(20)}px 0;
+    text-align: center;
+    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-color: ${({ theme }) => theme.colors.bdColor};
+
 `;
 
 export const InputContent = styled.TextInput`
     width: 90%;
-    height: ${RFValue(380)}px;
+    height: 100%;
     color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(16)}px;
-    border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(5)}px;
-    margin-top: ${RFValue(30)}px;
+    margin-top: ${RFValue(20)}px;
 `;

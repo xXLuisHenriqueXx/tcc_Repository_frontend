@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
@@ -22,6 +22,7 @@ export const ContainerView = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    margin-top: ${RFValue(100)}px;
 `;
 
 export const ContainerText = styled.View`
@@ -57,7 +58,7 @@ export const InputContainer = styled.View`
     align-items: center;
     border-bottom-width: ${RFValue(1)}px;
     border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
-    margin-bottom: ${RFValue(40)}px;
+    margin-bottom: ${RFValue(35)}px;
 `;
 
 export const Input = styled.TextInput`
@@ -70,7 +71,7 @@ export const Input = styled.TextInput`
 export const RegisterButton = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
-    height: ${RFValue(70)}px;
+    height: ${RFValue(60)}px;
     border-radius: ${RFValue(10)}px;
     flex-direction: row;
     justify-content: center;

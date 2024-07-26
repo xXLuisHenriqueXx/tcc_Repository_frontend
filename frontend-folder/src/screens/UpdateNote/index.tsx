@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BackButton, Container, ContainerHeader, ContainerInputs, ContainerInputsView, Input, InputTitleContainer, InputTitle, Title, InputContent } from './styled';
+import { Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import { Feather } from "@expo/vector-icons"
@@ -34,7 +34,7 @@ const UpdateNote = ({ route }: Props) => {
 
     const handleSetInfos = async () => {
         setTitle(noteInfo?.title || "")
-        setContent(noteInfo?.title || "")
+        setContent(noteInfo?.content || "")
     }
 
     useEffect(() => {
@@ -43,10 +43,11 @@ const UpdateNote = ({ route }: Props) => {
 
     return (
         <Container>
-            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleUpdateNote} placeholderText='' />
+            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleUpdateNote} placeholderText='Título da nota...' marginBottom={30} />
 
             <ContainerInputs>
                 <ContainerInputsView>
+                    <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
                     <InputContent
                         style={{ textAlignVertical: "top" }}
                         placeholder="Digite o conteúdo"

@@ -7,7 +7,6 @@ export const ContainerHeader = styled.View`
     align-items: center;
     justify-content: space-between;
     padding: ${RFValue(10)}px;
-    margin-bottom: ${RFValue(100)}px;
 `;
 
 export const Input = styled.TextInput`

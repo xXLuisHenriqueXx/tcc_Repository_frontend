@@ -30,7 +30,7 @@ const CreateAlarm = () => {
 
     const handleSaveAlarm = async () => {
         if (title === "") {
-            alert("Digite um título para o alarm");
+            alert("Digite um título para o alarme");
             return;
         } else {
             await saveAlarm("@alarms", { _id: uuid.v4().toString(), title, hour, days, status: false });
@@ -55,7 +55,7 @@ const CreateAlarm = () => {
 
     return (
         <Container>
-            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' />
+            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' marginBottom={100} />
 
             <ContainerButtons>
                 <ContainerButtonsView>

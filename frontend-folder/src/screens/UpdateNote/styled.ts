@@ -1,32 +1,13 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        flexGrow: 1
+    }
+})`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
-`;
-
-export const ContainerHeader = styled.View`
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    padding: ${RFValue(10)}px;
-`;
-
-export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(20)}px;
-    font-weight: 500;
-    margin-left: auto;
-`;
-
-export const BackButton = styled.TouchableOpacity`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(50)}px;
-    width: ${RFValue(50)}px;
-    height: ${RFValue(50)}px;
-    justify-content: center;
-    align-items: center;
 `;
 
 export const ContainerInputs = styled.View`
@@ -36,43 +17,32 @@ export const ContainerInputs = styled.View`
 `;
 
 export const ContainerInputsView = styled.View`
-    width: 95%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
-    border-radius: ${RFValue(10)}px;
-    padding: ${RFValue(40)}px 0;
-`;
-
-export const InputTitleContainer = styled.View`
-    width: 90%;
+    width: 100%;
+    flex: 1;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    border-top-left-radius: ${RFValue(30)}px;
+    border-top-right-radius: ${RFValue(30)}px;
 `;
 
-export const InputTitle = styled.Text`
+export const ContainerInputsTitle = styled.Text`
+    width: 90%;
     font-size: ${RFValue(20)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
     font-weight: bold;
-    margin-bottom: ${RFValue(5)}px;
-`;
-
-export const Input = styled.TextInput`
-    width: 100%;
-    height: ${RFValue(30)}px;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(16)}px;
+    padding: ${RFValue(20)}px 0;
+    text-align: center;
     border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
+    border-bottom-color: ${({ theme }) => theme.colors.bdColor};
+
 `;
 
 export const InputContent = styled.TextInput`
     width: 90%;
-    height: ${RFValue(380)}px;
+    height: 100%;
     color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(16)}px;
-    border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(5)}px;
-    margin-top: ${RFValue(30)}px;
+    margin-top: ${RFValue(20)}px;
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
@@ -22,13 +22,14 @@ export const ContainerView = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    margin-top: ${RFValue(80)}px;
 `;
 
 export const Logo = styled.Image.attrs({
     resizeMode: 'contain'
 })`
-    width: ${RFValue(200)}px;
-    height: ${RFValue(165)}px;
+    width: ${RFValue(170)}px;
+    height: ${RFValue(150)}px;
 `;
 
 export const ContainerText = styled.View`
@@ -59,7 +60,7 @@ export const ContainerButton = styled.View`
 export const LoginButton = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
-    height: ${RFValue(70)}px;
+    height: ${RFValue(60)}px;
     border-radius: ${RFValue(10)}px;
     flex-direction: row;
     justify-content: center;
@@ -75,7 +76,7 @@ export const LoginButtonText = styled.Text`
 
 export const RegisterButton = styled.TouchableOpacity`
     width: 100%;
-    height: ${RFValue(70)}px;
+    height: ${RFValue(60)}px;
     border-radius: ${RFValue(10)}px;
     border-width: ${RFValue(1)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};

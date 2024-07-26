@@ -8,7 +8,7 @@ export const ContainerNoteView = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ${RFValue(26)}px;
+    padding: 0 ${RFValue(25)}px;
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
@@ -25,8 +25,8 @@ export const TextDateNote = styled.Text`
 `;  
 
 export const TitleNote = styled.Text`
-    font-size: ${RFValue(25)}px;
-    font-weight: 700;
+    font-size: ${RFValue(22)}px;
+    font-weight: 500;
     color: ${({ theme }) => theme.colors.text};
 `;
 

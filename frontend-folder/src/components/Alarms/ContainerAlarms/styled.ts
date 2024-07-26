@@ -12,7 +12,7 @@ export const ContainerAlarmView = styled.View<SwitchEnabledProps>`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ${RFValue(26)}px;
+    padding: 0 ${RFValue(25)}px;
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
@@ -21,13 +21,13 @@ export const ContainerAlarmView = styled.View<SwitchEnabledProps>`
 
 export const TextMaterialAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(14)}px;
-    font-weight: bold;
+    font-weight: 500;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.highlightColor : theme.colors.textInactive};
 `;  
 
 export const TextHorarioAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(40)}px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: ${RFValue(-5)}px;
     margin-top: ${RFValue(-5)}px;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.text : theme.colors.textInactive};
@@ -55,7 +55,4 @@ export const DeleteButton = styled.TouchableOpacity`
 `;
 
 export const SwitchButton = styled.Switch`
-    position: absolute;
-    top: ${RFValue(40)}px;
-    right: ${RFValue(30)}px;
 `;
