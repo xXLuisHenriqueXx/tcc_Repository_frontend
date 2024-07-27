@@ -27,6 +27,12 @@ export default function Navbar({ screen }: NavbarProps) {
         : navigation.navigate("Notes", {newNote: false});
     }
 
+    const navigateToTodos = () => {
+        token === null
+        ? navigation.navigate("Welcome")
+        : navigation.navigate("Todos", {newTodo: false});
+    }
+
     const navigateToUser = () => {
         token === null
         ? navigation.navigate("Welcome")       
@@ -36,9 +42,11 @@ export default function Navbar({ screen }: NavbarProps) {
     const size = 30;
     const colorAlarm = screen === "Alarms" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorNote = screen === "Notes" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
+    const colorTodo = screen === "Todos" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorUser = screen === "User" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const iconAlarm = screen === "Alarms" ? "bell" : "bell-o";
     const iconNote = screen === "Notes" ? "sticky-note" : "sticky-note-o";
+    const iconTodo = screen === "Todos" ? "bookmark" : "bookmark-o"
     const iconUser = screen === "User" ? "user" : "user-o";
     
     return (
@@ -57,6 +65,14 @@ export default function Navbar({ screen }: NavbarProps) {
                     <ButtonText screenEnabled={true}>Notas</ButtonText>
                 ) : (
                     <ButtonText screenEnabled={false}>Notas</ButtonText>
+                )}
+            </IconButton>
+            <IconButton onPress={navigateToTodos}>
+                <FontAwesome name={iconTodo} size={size} color={colorTodo} />
+                {screen === "Todos" ? (
+                    <ButtonText screenEnabled={true}>Lista de tarefas</ButtonText>
+                ) : (
+                    <ButtonText screenEnabled={false}>Lista de tarefas</ButtonText>
                 )}
             </IconButton>
             <IconButton onPress={navigateToUser}>

@@ -7,7 +7,7 @@ export const Container = styled.ImageBackground`
 `;
 
 export const Title = styled.Text`
-    margin-top: ${RFValue(25)}px;
+    margin-top: ${RFValue(40)}px;
     margin-left: ${RFValue(17)}px;
     color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(40)}px;

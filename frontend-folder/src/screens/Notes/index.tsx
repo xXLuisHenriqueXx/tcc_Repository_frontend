@@ -45,17 +45,13 @@ const Notes = ({ route }: Props) => {
   }, [isFocused, newNote]);
 
   const handleDeleteNote = async (noteId: string) => {
-    try {
-      await noteService.deleteNote({ _id: noteId });
+    await noteService.deleteNote({ _id: noteId });
 
-      setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
-    } catch (err) {
-      console.log("Failed to delete note");
-    }
+    setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
   }
 
   const renderItem: ListRenderItem<Note> = ({ item }) => (
-    <ContainerNote 
+    <ContainerNote
       note={item}
       deleteNote={() => handleDeleteNote(item._id)}
     />
@@ -66,7 +62,7 @@ const Notes = ({ route }: Props) => {
   return (
     <Container source={theme.images.bgMain}>
       <FlatList
-        style={{marginBottom: RFValue(60)}}
+        style={{ marginBottom: RFValue(70) }}
         data={notes}
         keyExtractor={item => item._id}
         ListHeaderComponent={

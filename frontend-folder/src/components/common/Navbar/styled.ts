@@ -8,7 +8,7 @@ interface screenEnabledProps {
 export const Container = styled.View`
     position: absolute;
     width: 100%;
-    height: ${RFValue(60)}px;
+    height: ${RFValue(70)}px;
     background-color: ${({ theme }) => theme.colors.bgBottomTab};
     border-top-left-radius: ${RFValue(20)}px;
     border-top-right-radius: ${RFValue(20)}px;
@@ -27,6 +27,6 @@ export const IconButton = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text<screenEnabledProps>`
-    font-size: ${RFValue(10)}px;
+    font-size: ${RFValue(8)}px;
     color: ${({ screenEnabled, theme }) => screenEnabled ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor};
 `;

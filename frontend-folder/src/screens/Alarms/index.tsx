@@ -157,7 +157,7 @@ const Alarms = ({ route }: Props) => {
     return (
         <Container source={theme.images.bgMain}>
             <FlatList 
-                style={{marginBottom: RFValue(60)}}
+                style={{marginBottom: RFValue(70)}}
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={
