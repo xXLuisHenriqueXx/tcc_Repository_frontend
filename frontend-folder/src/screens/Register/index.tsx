@@ -93,6 +93,7 @@ const Register = () => {
               onChangeText={(text) => {
                 setFields({ ...fields, password: text })
               }}
+              secureTextEntry
             />
           </InputContainer>
 
@@ -105,6 +106,7 @@ const Register = () => {
               onChangeText={(text) => {
                 setFields({ ...fields, confirmPassword: text })
               }}
+              secureTextEntry
             />
           </InputContainer>
 

@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
-import { Container, ContainerInputs, ContainerInputsView } from './styled'
+import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle } from './styled'
 import DefaultHeader from '../../components/common/DefaultHeader/Index'
 import { useTheme } from 'styled-components'
 import { useNavigation } from '@react-navigation/native'
 import { PropsStack } from '../../routes'
 import todoService from '../../services/todoService'
 import { Alert } from 'react-native'
+import { Entypo } from '@expo/vector-icons'
+import { RFValue } from 'react-native-responsive-fontsize'
+import taskService from '../../services/taskService'
+
+interface TaskProps {
+    title: string;
+    done: boolean;
+}
 
 const CreateTodo = () => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
     const [title, setTitle] = useState("");
+    const [tasks, setTasks] = useState<TaskProps[]>([]);
+    const [taskTitle, setTaskTitle] = useState("");
+    const [taskDone, setTaskDone] = useState(false);
 
     const handleSaveTodo = async () => {
         if (title === "") {
@@ -20,13 +31,40 @@ const CreateTodo = () => {
         } else {
             const params = { title }
 
-            const { status } = await todoService.addTodo(params);
+            const { status, data } = await todoService.addTodo(params);
 
             if (status === 201) {
                 Alert.alert("Sucesso", "Lista de tarefas cadastrado com sucesso!");
 
-                navigation.navigate("Todos", { newTodo: true });
+                if (tasks.length === 0) {
+                    navigation.navigate("Todos", { newTodo: true });
+                } else {
+                    tasks.map(async (task) => {
+                        const taskParams = { todoId: data._id ,title: task.title, done: task.done }
+                        const { status } = await taskService.addTask(taskParams);
+
+                        if (status === 201) {
+                            Alert.alert("Sucesso", "Tarefa cadastrada com sucesso!");
+                            navigation.navigate("Todos", { newTodo: true });
+                        } else {
+                            Alert.alert("Erro", "Erro ao cadastrar tarefa");
+                        }
+                    });
+                }
             }
+
+
+        }
+    }
+
+    const handleAddTask = () => {
+        if (taskTitle === "") {
+            alert("Digite um título para a tarefa");
+            return;
+
+        } else {
+            setTasks([...tasks, { title: taskTitle, done: taskDone }]);
+            setTaskTitle("");
         }
     }
 
@@ -36,7 +74,26 @@ const CreateTodo = () => {
 
             <ContainerInputs>
                 <ContainerInputsView>
-                    
+                    <ContainerInputsTitle>
+                        <ContainerTitle>Título da tarefa</ContainerTitle>
+                        <InputTitle
+                            placeholder="Digite o título da tarefa"
+                            placeholderTextColor={theme.colors.textInactive}
+                            value={taskTitle}
+                            onChangeText={setTaskTitle}
+                        />
+                    </ContainerInputsTitle>
+
+                    <AddTaskButton onPress={handleAddTask} >
+                        <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
+                        <Entypo name="plus" size={30} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
+                    </AddTaskButton>
+
+                    {tasks.map((task, index) => (
+                        <ContainerInputsTitle key={index}>
+                            <ContainerTitle>{task.title}</ContainerTitle>
+                        </ContainerInputsTitle>
+                    ))}
                 </ContainerInputsView>
             </ContainerInputs>
         </Container>

@@ -77,7 +77,7 @@ export default function Navbar({ screen }: NavbarProps) {
             </IconButton>
             <IconButton onPress={navigateToUser}>
                 <FontAwesome name={iconUser} size={size} color={colorUser} />
-                {screen === "Usuário" ? (
+                {screen === "User" ? (
                     <ButtonText screenEnabled={true}>Usuário</ButtonText>
                 ) : (
                     <ButtonText screenEnabled={false}>Usuário</ButtonText>

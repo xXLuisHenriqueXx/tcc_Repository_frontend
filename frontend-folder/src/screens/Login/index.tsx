@@ -65,6 +65,7 @@ const Login = () => {
                             onChangeText={(text) => {
                                 setFields({ ...fields, password: text })
                             }}
+                            secureTextEntry
                         />
                     </InputContainer>
 
