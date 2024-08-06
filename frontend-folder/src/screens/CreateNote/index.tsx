@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
-import { Feather } from "@expo/vector-icons"
 import { useTheme } from 'styled-components';
 import noteService from '../../services/noteService';
 import { Alert } from 'react-native';
 import DefaultHeader from '../../components/common/DefaultHeader/Index';
+import Loader from '../Loader';
 
 const CreateNote = () => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [noteTitle, setNoteTitle] = useState("");
+  const [noteContent, setNoteContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSaveNote = async () => {
+    const title = noteTitle.trim();
+    const content = noteContent.trim();
+
     if (title === "") {
       alert("Digite um título para a nota");
       return;
@@ -24,6 +28,8 @@ const CreateNote = () => {
       return;
 
     } else {
+      setIsLoading(true);
+
       const params = { title, content };
 
       const { status } = await noteService.addNote(params);
@@ -33,12 +39,16 @@ const CreateNote = () => {
 
         navigation.navigate("Notes", { newNote: true });
       }
+
+      setIsLoading(false);
     }
   }
 
+  if (isLoading) return <Loader type='save' />
+
   return (
     <Container>
-      <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' marginBottom={30} />
+      <DefaultHeader title={noteTitle} setTitle={setNoteTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' marginBottom={30} />
 
       <ContainerInputs>
         <ContainerInputsView>
@@ -47,8 +57,8 @@ const CreateNote = () => {
             style={{ textAlignVertical: "top" }}
             placeholder="Digite o conteúdo"
             placeholderTextColor={theme.colors.textInactive}
-            value={content}
-            onChangeText={setContent}
+            value={noteContent}
+            onChangeText={setNoteContent}
             multiline
           />
         </ContainerInputsView>

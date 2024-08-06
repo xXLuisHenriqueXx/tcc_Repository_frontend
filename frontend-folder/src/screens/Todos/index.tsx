@@ -29,19 +29,18 @@ const Todos = ({ route }: Props) => {
   }
 
   const handleGetTodos = async () => {
-    const { data } = await todoService.getTodos();
+    setIsLoading(true);
 
+    const { data } = await todoService.getTodos();
     setTodos(data);
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
-    setIsLoading(true);
-
     if(isFocused || newTodo) {
       handleGetTodos();
     }
-
-    setIsLoading(false);
   }, [isFocused, newTodo]);
 
   const handleDeleteTodo = async (todoId: string) => {
@@ -57,7 +56,7 @@ const Todos = ({ route }: Props) => {
     />
   )
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader type='load' />
 
   return (
     <Container source={theme.images.bgMain}>

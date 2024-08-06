@@ -12,12 +12,12 @@ import Register from '../screens/Register';
 import UpdateProfile from '../screens/UpdateProfile';
 import Notes from "../screens/Notes";
 import CreateNote from "../screens/CreateNote";
-
-import { User as UserEntitie } from '../entities/User';
-import { Note } from '../entities/Note';
 import UpdateNote from '../screens/UpdateNote';
 import Todos from '../screens/Todos';
 import CreateTodo from '../screens/CreateTodo';
+
+import { User as UserEntitie } from '../entities/User';
+import { Note } from '../entities/Note';
 
 export type PropsNavigationStack = {
   Alarms: {

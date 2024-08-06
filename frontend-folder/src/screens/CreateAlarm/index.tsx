@@ -4,18 +4,20 @@ import { useNavigation } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import { useTheme } from 'styled-components';
 import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, DateButton, DateButtonText, DayButton, DayButtonText, DayTitle, HourTitle } from './styled';
-import { FontAwesome5, Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { saveAlarm } from '../../services/alarmsService';
 import { PropsStack } from '../../routes';
 import uuid from 'react-native-uuid';
 import DefaultHeader from '../../components/common/DefaultHeader/Index';
+import Loader from '../Loader';
 
 const CreateAlarm = () => {
     const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [hour, setHour] = useState(new Date());
-    const [title, setTitle] = useState("");
+    const [alarmTitle, setAlarmTitle] = useState("");
     const [mode, setMode] = useState<"date" | "time">('date');
     const [show, setShow] = useState(false);
     const [days, setDays] = useState({
@@ -29,12 +31,17 @@ const CreateAlarm = () => {
     });
 
     const handleSaveAlarm = async () => {
-        if (title === "") {
+        if (alarmTitle === "") {
             alert("Digite um título para o alarme");
             return;
         } else {
+            setIsLoading(true);
+
+            const title = alarmTitle.trim();
             await saveAlarm("@alarms", { _id: uuid.v4().toString(), title, hour, days, status: false });
             navigation.navigate("Alarms", { newAlarm: true });
+
+            setIsLoading(false);
         }
     }
 
@@ -53,9 +60,11 @@ const CreateAlarm = () => {
         showMode('time');
     };
 
+    if (isLoading) return <Loader type='save' />
+
     return (
         <Container>
-            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' marginBottom={100} />
+            <DefaultHeader title={alarmTitle} setTitle={setAlarmTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' marginBottom={100} />
 
             <ContainerButtons>
                 <ContainerButtonsView>

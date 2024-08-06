@@ -29,19 +29,18 @@ const Notes = ({ route }: Props) => {
   }
 
   const handleGetNotes = async () => {
-    const { data } = await noteService.getNotes();
+    setIsLoading(true);
 
+    const { data } = await noteService.getNotes();
     setNotes(data);
+    
+    setIsLoading(false);
   }
 
   useEffect(() => {
-    setIsLoading(true);
-
     if (isFocused || newNote) {
       handleGetNotes();
     }
-
-    setIsLoading(false);
   }, [isFocused, newNote]);
 
   const handleDeleteNote = async (noteId: string) => {
@@ -57,7 +56,7 @@ const Notes = ({ route }: Props) => {
     />
   );
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader type='load' />
 
   return (
     <Container source={theme.images.bgMain}>

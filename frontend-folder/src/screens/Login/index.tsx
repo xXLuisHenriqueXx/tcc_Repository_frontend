@@ -23,12 +23,15 @@ const Login = () => {
     const { login } = useAuth();
 
     const handleLogin = () => {
-        if (!fields.email || !fields.password) {
+        const trimmedEmail = fields.email.trim();
+        const trimmedPassword = fields.password.trim();
+
+        if (!trimmedEmail || !trimmedPassword) {
             Alert.alert("Aviso", "Preencha todos os campos!");
             return;
         }
 
-        login(fields.email, fields.password);
+        login(trimmedEmail, trimmedPassword);
     }
 
     return (

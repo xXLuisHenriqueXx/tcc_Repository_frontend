@@ -9,6 +9,7 @@ import { Alert } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import taskService from '../../services/taskService'
+import Loader from '../Loader'
 
 interface TaskProps {
     title: string;
@@ -18,17 +19,21 @@ interface TaskProps {
 const CreateTodo = () => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-    const [title, setTitle] = useState("");
+    const [todoTitle, setTodoTitle] = useState("");
     const [tasks, setTasks] = useState<TaskProps[]>([]);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDone, setTaskDone] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSaveTodo = async () => {
-        if (title === "") {
+        if (todoTitle === "") {
             alert("Digite um título para a lista de tarefas");
             return;
 
         } else {
+            setIsLoading(true);
+
+            const title = todoTitle.trim();
             const params = { title }
 
             const { status, data } = await todoService.addTodo(params);
@@ -41,19 +46,14 @@ const CreateTodo = () => {
                 } else {
                     tasks.map(async (task) => {
                         const taskParams = { todoId: data._id ,title: task.title, done: task.done }
-                        const { status } = await taskService.addTask(taskParams);
-
-                        if (status === 201) {
-                            Alert.alert("Sucesso", "Tarefa cadastrada com sucesso!");
-                            navigation.navigate("Todos", { newTodo: true });
-                        } else {
-                            Alert.alert("Erro", "Erro ao cadastrar tarefa");
-                        }
+                        await taskService.addTask(taskParams);
                     });
+
+                    navigation.navigate("Todos", { newTodo: true });
                 }
             }
 
-
+            setIsLoading(false);
         }
     }
 
@@ -63,14 +63,18 @@ const CreateTodo = () => {
             return;
 
         } else {
-            setTasks([...tasks, { title: taskTitle, done: taskDone }]);
+            const trimmedTitle = taskTitle.trim();
+
+            setTasks([...tasks, { title: trimmedTitle, done: taskDone }]);
             setTaskTitle("");
         }
     }
 
+    if (isLoading) return <Loader type='save' />
+
     return (
         <Container>
-            <DefaultHeader title={title} setTitle={setTitle} handleSave={handleSaveTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
+            <DefaultHeader title={todoTitle} setTitle={setTodoTitle} handleSave={handleSaveTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
 
             <ContainerInputs>
                 <ContainerInputsView>

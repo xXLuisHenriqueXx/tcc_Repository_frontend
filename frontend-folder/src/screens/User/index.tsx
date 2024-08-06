@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useTheme } from "styled-components";
 import { ThemeContext } from '../../styles/themeContext';
 import { Container, ContainerInfo, ContainerInfoText, ContainerUser, CreatedText, CuteCat, HighlightedInfoText, HighlightedText, InfoText, InfoTitle, LogoutButton, ThanksText, ThemeButton, UserImage, UserName, UserNameButton } from './styled';
-import { FontAwesome, FontAwesome5 , Feather } from '@expo/vector-icons'
+import { FontAwesome5, Feather } from '@expo/vector-icons'
 import Navbar from '../../components/common/Navbar';
 import useAuth from '../../hook/useAuth';
 import { User as UserEntitie } from '../../entities/User';
@@ -35,17 +35,17 @@ const User = () => {
   }, [])
 
   const handleNavigateToUpdateProfile = () => {
-    navigation.navigate("UpdateProfile", { userInfo: userInfo});    
+    navigation.navigate("UpdateProfile", { userInfo: userInfo });
   }
 
-  if (!userInfo) return <Loader />
+  if (!userInfo) return <Loader type='load' />
 
   return (
     <Container
       source={theme.images.bgMain}
     >
       <ThemeButton onPress={toggleTheme}>
-        <FontAwesome name='moon-o' size={30} color={theme.colors.text} />
+        <FontAwesome5 name='moon' size={30} color={theme.colors.text} />
       </ThemeButton>
 
       <LogoutButton onPress={handleLogout}>

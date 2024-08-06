@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { User } from '../../entities/User'
 import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
 import { Feather, Entypo } from "@expo/vector-icons"
 import { useTheme } from 'styled-components';
@@ -9,6 +8,7 @@ import useAuth from '../../hook/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import Loader from '../Loader';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateProfile'>;
 
@@ -22,25 +22,38 @@ const UpdateProfile = ({ route }: Props) => {
         password: "",
         newPassword: "",
         confirmNewPassword: ""
-    })
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
     const { logout } = useAuth();
     const { userInfo } = route.params || {};
 
     const handleUpdate = async () => {
-        const response = await userService.updateUserProfile(fields);
-
-        if (response.status === 400) {
-            Alert.alert("Erro", "Email já cadastrado!");
+        if (fields.name === "") {
+            Alert.alert("Erro", "Digite um nome!");
             return;
-        }
+        } else if (fields.email === "") {
+            Alert.alert("Erro", "Digite um email!");
+            return;
+        } else {
+            setIsLoading(true);
 
-        if (fields.email != userInfo?.email) {
-            logout();
-        }
+            const response = await userService.updateUserProfile(fields);
 
-        navigation.navigate("Alarms", { newAlarm: false });
-        Alert.alert("Sucesso", "Perfil atualizado com sucesso!");
+            setIsLoading(false);
+
+            if (response.status === 400) {
+                Alert.alert("Erro", "Email já cadastrado!");
+                return;
+            }
+
+            if (fields.email != userInfo?.email) {
+                logout();
+            }
+
+            navigation.navigate("Alarms", { newAlarm: false });
+            Alert.alert("Sucesso", "Perfil atualizado com sucesso!");
+        }
     }
 
     const handleSetInfos = async () => {
@@ -54,6 +67,8 @@ const UpdateProfile = ({ route }: Props) => {
     useEffect(() => {
         handleSetInfos();
     }, []);
+
+    if (isLoading) return <Loader type='save' />
 
     return (
         <Container>

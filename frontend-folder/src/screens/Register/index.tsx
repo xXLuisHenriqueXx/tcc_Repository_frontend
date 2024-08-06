@@ -22,28 +22,33 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: ""
-  })
+  });
 
 
   const { register } = useAuth();
 
   const handleRegister = async () => {
-    if (!fields.name || !fields.email || !fields.password || !fields.confirmPassword) {
+    const trimmedName = fields.name.trim();
+    const trimmedEmail = fields.email.trim();
+    const trimmedPassword = fields.password.trim();
+    const trimmedConfirmPassword = fields.confirmPassword.trim();
+    
+    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
       Alert.alert("Aviso", "Preencha todos os campos!");
       return;
     }
 
-    if (fields.password.length < 8) {
+    if (trimmedPassword.length < 8) {
       Alert.alert("Aviso", "A senha deve ter no mínimo 8 caracteres!");
       return;
     }
 
-    if (fields.password != fields.confirmPassword) {
+    if (trimmedPassword != trimmedConfirmPassword) {
       Alert.alert("Aviso", "As senhas são diferentes!");
       return;
     }
 
-    register(fields.name, fields.email, fields.password);
+    register(trimmedName, trimmedEmail, trimmedPassword);
     Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
   }
 
