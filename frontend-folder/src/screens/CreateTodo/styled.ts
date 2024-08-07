@@ -32,7 +32,7 @@ export const ContainerInputsTitle = styled.View`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: ${RFValue(40)}px 0 ${RFValue(30)}px 0;
+    padding: ${RFValue(40)}px 0 ${RFValue(20)}px 0;
 `;
 
 export const ContainerTitle = styled.Text`
@@ -55,7 +55,7 @@ export const AddTaskButton = styled.TouchableOpacity`
     width: 90%;
     height: ${RFValue(50)}px;
     background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(10)}px;
+    border-radius: ${RFValue(5)}px;
     justify-content: center;
     align-items: center;
 `;
@@ -64,4 +64,33 @@ export const AddTaskButtonText = styled.Text`
     font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.bgColor};
     font-weight: bold;
+`;
+
+export const TasksContainer = styled.View`
+    width: 90%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: ${RFValue(20)}px;
+    border-top-width: ${RFValue(1)}px;
+    border-top-color: ${({ theme }) => theme.colors.bdColor};
+`;
+
+export const TasksContainerTitle = styled.Text`
+    width: 90%;
+    font-size: ${RFValue(20)}px;
+    color: ${({ theme }) => theme.colors.highlightColor};
+    font-weight: bold;
+    text-align: center;
+    padding: ${RFValue(20)}px 0;
+`;
+
+export const TaskContainer = styled.View`
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${RFValue(10)}px 0;
+    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-color: ${({ theme }) => theme.colors.bdColor};    
 `;

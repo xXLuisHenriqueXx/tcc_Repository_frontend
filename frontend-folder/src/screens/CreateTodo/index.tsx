@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle } from './styled'
+import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TasksContainer, TasksContainerTitle } from './styled'
 import DefaultHeader from '../../components/common/DefaultHeader/Index'
 import { useTheme } from 'styled-components'
 import { useNavigation } from '@react-navigation/native'
@@ -70,6 +70,18 @@ const CreateTodo = () => {
         }
     }
 
+    const handleUpdateTaskDone = (index: number) => {
+        const updatedTasks = tasks.map((task, i) => {
+            if (i === index) {
+                task.done = !task.done;
+            }
+
+            return task;
+        });
+
+        setTasks(updatedTasks);
+    }
+
     if (isLoading) return <Loader type='save' />
 
     return (
@@ -93,11 +105,9 @@ const CreateTodo = () => {
                         <Entypo name="plus" size={30} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
                     </AddTaskButton>
 
-                    {tasks.map((task, index) => (
-                        <ContainerInputsTitle key={index}>
-                            <ContainerTitle>{task.title}</ContainerTitle>
-                        </ContainerInputsTitle>
-                    ))}
+                    <TasksContainer>
+                        <TasksContainerTitle>Tarefas</TasksContainerTitle>
+                    </TasksContainer>
                 </ContainerInputsView>
             </ContainerInputs>
         </Container>
