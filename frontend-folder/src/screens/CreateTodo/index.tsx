@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TasksContainer, TasksContainerTitle } from './styled'
+import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TaskButton, TaskContainer, TaskContainerButtons, TaskDoneButton, TasksContainer, TasksContainerTitle, TaskTitle } from './styled'
 import DefaultHeader from '../../components/common/DefaultHeader/Index'
 import { useTheme } from 'styled-components'
 import { useNavigation } from '@react-navigation/native'
 import { PropsStack } from '../../routes'
 import todoService from '../../services/todoService'
 import { Alert } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import { Entypo, FontAwesome5 } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import taskService from '../../services/taskService'
 import Loader from '../Loader'
@@ -45,7 +45,7 @@ const CreateTodo = () => {
                     navigation.navigate("Todos", { newTodo: true });
                 } else {
                     tasks.map(async (task) => {
-                        const taskParams = { todoId: data._id ,title: task.title, done: task.done }
+                        const taskParams = { todoId: data._id, title: task.title, done: task.done }
                         await taskService.addTask(taskParams);
                     });
 
@@ -82,6 +82,11 @@ const CreateTodo = () => {
         setTasks(updatedTasks);
     }
 
+    const handleDeleteTask = (index: number) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+    }
+
     if (isLoading) return <Loader type='save' />
 
     return (
@@ -102,11 +107,29 @@ const CreateTodo = () => {
 
                     <AddTaskButton onPress={handleAddTask} >
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
-                        <Entypo name="plus" size={30} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
+                        <Entypo name="plus" size={RFValue(26)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
                     </AddTaskButton>
 
                     <TasksContainer>
                         <TasksContainerTitle>Tarefas</TasksContainerTitle>
+                        {tasks.map((task, index) => (
+                            <TaskContainer key={index}>
+                                <TaskDoneButton
+                                    style={task.done ? { backgroundColor: theme.colors.highlightColor } : { backgroundColor: 'transparent' }}
+                                    activeOpacity={0.8}
+                                    onPress={() => handleUpdateTaskDone(index)}
+                                />
+                                <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
+                                <TaskContainerButtons>
+                                    <TaskButton activeOpacity={0.8}>
+                                        <Entypo name="edit" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                    </TaskButton>
+                                    <TaskButton activeOpacity={0.8} onPress={() => handleDeleteTask(index)}>
+                                        <FontAwesome5 name="trash" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                    </TaskButton>
+                                </TaskContainerButtons>
+                            </TaskContainer>
+                        ))}
                     </TasksContainer>
                 </ContainerInputsView>
             </ContainerInputs>

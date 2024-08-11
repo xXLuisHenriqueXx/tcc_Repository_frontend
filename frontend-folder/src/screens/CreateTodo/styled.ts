@@ -86,11 +86,38 @@ export const TasksContainerTitle = styled.Text`
 `;
 
 export const TaskContainer = styled.View`
-    width: 90%;
+    width: 100%;
+    height: ${RFValue(40)}px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;  
+`;
+
+export const TaskTitle = styled.Text`
+    width: 74%;
+    font-size: ${RFValue(16)}px;
+    color: ${({ theme }) => theme.colors.text};
+    margin-left: ${RFValue(10)}px;
+    margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const TaskDoneButton = styled.TouchableOpacity`
+    width: ${RFValue(16)}px;
+    height: ${RFValue(16)}px;
+    justify-content: center;
+    align-items: center;
+    border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.highlightColor};
+`;
+
+export const TaskContainerButtons = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: ${RFValue(10)}px 0;
-    border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.bdColor};    
+    gap: ${RFValue(12)}px;
+`;
+
+export const TaskButton = styled.TouchableOpacity`
 `;
