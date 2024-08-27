@@ -25,11 +25,11 @@ const UpdateNote = ({ route }: Props) => {
         const content = noteContent.trim();
 
         if (title === "") {
-            alert("Digite um título para a nota");
+            Alert.alert("Aviso", "Digite um título para a nota!");
             return;
 
         } else if (content === "") {
-            alert("Digite um conteúdo para a nota");
+            Alert.alert("Aviso", "Digite um conteúdo para a nota!");
             return;
         } else {
             setIsLoading(true);
@@ -39,8 +39,6 @@ const UpdateNote = ({ route }: Props) => {
             const response = await noteService.updateNote(params);
 
             if (response.status === 200) {
-                Alert.alert("Sucesso", "Nota atualizada com sucesso!");
-
                 navigation.navigate("Notes", { newNote: true });
             }
 

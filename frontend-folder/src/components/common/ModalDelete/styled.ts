@@ -6,24 +6,24 @@ export const ContainerView = styled.View`
     justify-content: center;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.fadeBgColor};
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const ModalView = styled.View`
-    width: 90%;
-    height: ${RFValue(180)}px;
-    background-color: ${({ theme }) => theme.colors.bgModal};
+    width: 100%;
+    height: ${RFValue(200)}px;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     align-items: center;
-    padding-top: ${RFValue(20)}px;
-    border-radius: ${RFValue(10)}px;                      
+    padding: ${RFValue(16)}px;
+    border-radius: ${RFValue(5)}px;                      
 `;
 
 export const ModalTitle = styled.Text`
-    font-size: ${RFValue(15)}px;
-    font-weight: bold;
+    font-size: ${RFValue(14)}px;
+    font-weight: 400;
     color: ${({ theme }) => theme.colors.text};
-    padding-bottom: ${RFValue(12)}px;
-    border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.bdColor};
+    text-align: center;
+    margin-bottom: ${RFValue(16)}px;
 `;
 
 export const ModalTitleDestaque = styled.Text`
@@ -33,40 +33,37 @@ export const ModalTitleDestaque = styled.Text`
 export const ContainerButtons = styled.View`
     flex: 1;
     width: 100%;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 `;
 
 export const NoButton = styled.TouchableOpacity`
-    border-width: ${RFValue(1)}px;
+    border-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(10)}px;
-    width: ${RFValue(100)}px;
-    height: ${RFValue(40)}px;
+    border-radius: ${RFValue(5)}px;
+    width: 100%;
+    height: ${RFValue(50)}px;
     justify-content: center;
     align-items: center;
 `;
 
 export const YesButton = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-width: 1px;
-    border-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(10)}px;
-    width: ${RFValue(100)}px;
-    height: ${RFValue(40)}px;
+    border-radius: ${RFValue(5)}px;
+    width: 100%;
+    height: ${RFValue(50)}px;
     justify-content: center;
     align-items: center;
 `;
 
 export const NoButtonText = styled.Text`
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(15)}px;
-    font-weight: bold;
+    font-size: ${RFValue(14)}px;
+    font-weight: 600;
+    text-transform: uppercase;
 `;
 
-export const YesButtonText = styled.Text`
+export const YesButtonText = styled(NoButtonText)`
     color: ${({ theme }) => theme.colors.bgColor};
-    font-size: ${RFValue(15)}px;
-    font-weight: bold;
 `;

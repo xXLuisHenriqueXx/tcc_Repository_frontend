@@ -30,14 +30,14 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
 
                     <ContainerButtons>
                         <NoButton
-                            activeOpacity={0.8}
+                            activeOpacity={0.85}
                             onPress={() => setModalVisible(false)}
                         >
                             <NoButtonText>Não</NoButtonText>
                         </NoButton>
 
                         <YesButton
-                            activeOpacity={0.8}
+                            activeOpacity={0.85}
                             onPress={() => {
                                 deleteItem(item._id);
                                 setModalVisible(false);

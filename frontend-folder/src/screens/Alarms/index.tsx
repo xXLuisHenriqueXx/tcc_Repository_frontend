@@ -7,10 +7,11 @@ import { Alarm } from '../../entities/Alarm';
 import { deleteAlarm, getAlarms, toggleAlarmStatus } from '../../services/alarmsService';
 import { ListRenderItem, FlatList } from 'react-native';
 import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
-import { Container, DiasText, NormalText, Title } from './styled';
+import { DiasText, NormalText, Title } from './styled';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Alarms'>;
 
@@ -155,9 +156,12 @@ const Alarms = ({ route }: Props) => {
     )
     
     return (
-        <Container source={theme.images.bgMain}>
+        <LinearGradient
+            colors={theme.colors.bgMainColor}
+            style={{ flex: 1 }}
+        >
             <FlatList 
-                style={{marginBottom: RFValue(70)}}
+                style={{marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={
@@ -178,7 +182,7 @@ const Alarms = ({ route }: Props) => {
             />
             <BotaoAdd navigate={navigateToCreateAlarm} />
             <Navbar screen='Alarms' />
-        </Container>
+        </LinearGradient>
     )
 }
 

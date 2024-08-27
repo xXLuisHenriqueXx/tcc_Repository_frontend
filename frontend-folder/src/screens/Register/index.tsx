@@ -6,6 +6,8 @@ import { PropsStack } from '../../routes'
 import { useTheme } from 'styled-components'
 import useAuth from '../../hook/useAuth'
 import { Alert } from 'react-native'
+import { RFValue } from 'react-native-responsive-fontsize'
+import Loader from '../Loader'
 
 interface fieldsProps {
   name: string;
@@ -23,7 +25,7 @@ const Register = () => {
     password: "",
     confirmPassword: ""
   });
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register } = useAuth();
 
@@ -48,14 +50,17 @@ const Register = () => {
       return;
     }
 
+    setIsLoading(true);
     register(trimmedName, trimmedEmail, trimmedPassword);
-    Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+    setIsLoading(false);
   }
+
+  if (isLoading) return <Loader type='load' />
 
   return (
     <Container>
-      <BackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
-        <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
+      <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+        <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
       </BackButton>
 
       <ContainerView>
@@ -66,7 +71,7 @@ const Register = () => {
 
         <ContainerForm>
           <InputContainer>
-            <Entypo name="user" size={25} color={theme.colors.highlightColor} />
+            <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
             <Input
               placeholder='Digite seu nome de usuário...'
               placeholderTextColor={theme.colors.textInactive}
@@ -78,7 +83,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="mail" size={25} color={theme.colors.highlightColor} />
+            <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
             <Input
               placeholder='Digite seu email...'
               placeholderTextColor={theme.colors.textInactive}
@@ -90,7 +95,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+            <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
             <Input
               placeholder='Digite sua senha...'
               placeholderTextColor={theme.colors.textInactive}
@@ -103,7 +108,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+            <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
             <Input
               placeholder='Digite sua senha novamente...'
               placeholderTextColor={theme.colors.textInactive}
@@ -115,9 +120,9 @@ const Register = () => {
             />
           </InputContainer>
 
-          <RegisterButton activeOpacity={0.8} onPress={handleRegister}>
+          <RegisterButton activeOpacity={0.85} onPress={handleRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
-            <Feather name='arrow-right-circle' size={30} color={theme.colors.bgColor} style={{ position: "absolute", right: 30 }} />
+            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
           </RegisterButton>
         </ContainerForm>
       </ContainerView>

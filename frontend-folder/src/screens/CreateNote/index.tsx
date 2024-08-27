@@ -20,11 +20,11 @@ const CreateNote = () => {
     const content = noteContent.trim();
 
     if (title === "") {
-      alert("Digite um título para a nota");
+      Alert.alert("Aviso", "Digite um título para a nota!");
       return;
 
     } else if (content === "") {
-      alert("Digite um conteúdo para a nota");
+      Alert.alert("Aviso", "Digite um conteúdo para a nota!");
       return;
 
     } else {
@@ -35,8 +35,6 @@ const CreateNote = () => {
       const { status } = await noteService.addNote(params);
 
       if (status === 201) {
-        Alert.alert("Sucesso", "Nota cadastrado com sucesso!");
-
         navigation.navigate("Notes", { newNote: true });
       }
 
@@ -55,7 +53,7 @@ const CreateNote = () => {
           <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
           <InputContent
             style={{ textAlignVertical: "top" }}
-            placeholder="Digite o conteúdo"
+            placeholder="Digite o conteúdo..."
             placeholderTextColor={theme.colors.textInactive}
             value={noteContent}
             onChangeText={setNoteContent}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/common/Navbar'
-import { Container, NormalText, Title } from './styled'
+import { NormalText, Title } from './styled'
 import { useTheme } from 'styled-components'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
@@ -12,6 +12,7 @@ import { FlatList, ListRenderItem } from 'react-native'
 import ContainerTodo from '../../components/Todo/ContainerTodo'
 import Loader from '../Loader'
 import BotaoAdd from '../../components/common/BotaoAdd'
+import { LinearGradient } from 'expo-linear-gradient'
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Todos'>;
 
@@ -59,9 +60,12 @@ const Todos = ({ route }: Props) => {
   if (isLoading) return <Loader type='load' />
 
   return (
-    <Container source={theme.images.bgMain}>
+    <LinearGradient
+    colors={theme.colors.bgMainColor}
+      style={{ flex: 1 }}
+    >
       <FlatList
-        style={{marginBottom: RFValue(70)}}
+        style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
         data={todos}
         keyExtractor={item => item._id}
         ListHeaderComponent={
@@ -75,7 +79,7 @@ const Todos = ({ route }: Props) => {
       
       <BotaoAdd navigate={handleNavigateToCreateTodo} />
       <Navbar screen='Todos' />
-    </Container>
+    </LinearGradient>
   )
 }
 

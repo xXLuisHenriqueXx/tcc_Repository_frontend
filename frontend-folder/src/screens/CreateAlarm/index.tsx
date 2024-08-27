@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { useTheme } from 'styled-components';
 import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, DateButton, DateButtonText, DayButton, DayButtonText, DayTitle, HourTitle } from './styled';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -32,7 +32,7 @@ const CreateAlarm = () => {
 
     const handleSaveAlarm = async () => {
         if (alarmTitle === "") {
-            alert("Digite um título para o alarme");
+            Alert.alert("Aviso", "Digite um título para o alarme!");
             return;
         } else {
             setIsLoading(true);
@@ -70,7 +70,7 @@ const CreateAlarm = () => {
                 <ContainerButtonsView>
                     <HourTitle>Hora do alarme</HourTitle>
 
-                    <DateButton onPress={showTimepicker} activeOpacity={1}>
+                    <DateButton onPress={showTimepicker} activeOpacity={0.85}>
                         <DateButtonText>{hour.getHours()}:{hour.getMinutes()}</DateButtonText>
                         <FontAwesome5 name="edit" size={25} color={theme.colors.highlightColor} />
                     </DateButton>
@@ -78,13 +78,13 @@ const CreateAlarm = () => {
                     <ContainerDaysView>
                         <DayTitle>Dias da semana</DayTitle>
                         <ContainerDays>
-                            <DayButton selected={days.sunday} onPress={() => setDays({ ...days, sunday: !days.sunday })} activeOpacity={1}><DayButtonText>D</DayButtonText></DayButton>
-                            <DayButton selected={days.monday} onPress={() => setDays({ ...days, monday: !days.monday })} activeOpacity={1}><DayButtonText>S</DayButtonText></DayButton>
-                            <DayButton selected={days.tuesday} onPress={() => setDays({ ...days, tuesday: !days.tuesday })} activeOpacity={1}><DayButtonText>T</DayButtonText></DayButton>
-                            <DayButton selected={days.wednesday} onPress={() => setDays({ ...days, wednesday: !days.wednesday })} activeOpacity={1}><DayButtonText>Q</DayButtonText></DayButton>
-                            <DayButton selected={days.thursday} onPress={() => setDays({ ...days, thursday: !days.thursday })} activeOpacity={1}><DayButtonText>Q</DayButtonText></DayButton>
-                            <DayButton selected={days.friday} onPress={() => setDays({ ...days, friday: !days.friday })} activeOpacity={1}><DayButtonText>S</DayButtonText></DayButton>
-                            <DayButton selected={days.saturday} onPress={() => setDays({ ...days, saturday: !days.saturday })} activeOpacity={1}><DayButtonText>S</DayButtonText></DayButton>
+                            <DayButton selected={days.sunday} onPress={() => setDays({ ...days, sunday: !days.sunday })} activeOpacity={0.85}><DayButtonText>D</DayButtonText></DayButton>
+                            <DayButton selected={days.monday} onPress={() => setDays({ ...days, monday: !days.monday })} activeOpacity={0.85}><DayButtonText>S</DayButtonText></DayButton>
+                            <DayButton selected={days.tuesday} onPress={() => setDays({ ...days, tuesday: !days.tuesday })} activeOpacity={0.85}><DayButtonText>T</DayButtonText></DayButton>
+                            <DayButton selected={days.wednesday} onPress={() => setDays({ ...days, wednesday: !days.wednesday })} activeOpacity={0.85}><DayButtonText>Q</DayButtonText></DayButton>
+                            <DayButton selected={days.thursday} onPress={() => setDays({ ...days, thursday: !days.thursday })} activeOpacity={0.85}><DayButtonText>Q</DayButtonText></DayButton>
+                            <DayButton selected={days.friday} onPress={() => setDays({ ...days, friday: !days.friday })} activeOpacity={0.85}><DayButtonText>S</DayButtonText></DayButton>
+                            <DayButton selected={days.saturday} onPress={() => setDays({ ...days, saturday: !days.saturday })} activeOpacity={0.85}><DayButtonText>S</DayButtonText></DayButton>
                         </ContainerDays>
                     </ContainerDaysView>
                 </ContainerButtonsView>

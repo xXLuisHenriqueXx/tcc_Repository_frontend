@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Loader from '../Loader';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateProfile'>;
 
@@ -72,8 +73,8 @@ const UpdateProfile = ({ route }: Props) => {
 
     return (
         <Container>
-            <BackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
+            <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
             </BackButton>
 
             <ContainerView>
@@ -84,7 +85,7 @@ const UpdateProfile = ({ route }: Props) => {
 
                 <ContainerForm>
                     <InputContainer>
-                        <Entypo name="user" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             value={fields.name}
                             onChangeText={(text) => {
@@ -94,7 +95,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="mail" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             value={fields.email}
                             onChangeText={(text) => {
@@ -104,7 +105,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             placeholder='Digite sua senha atual...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -113,7 +114,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             placeholder='Digite sua nova senha...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -122,7 +123,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             placeholder='Digite sua nova senha novamente...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -130,9 +131,9 @@ const UpdateProfile = ({ route }: Props) => {
                         />
                     </InputContainer>
 
-                    <UpdateButton activeOpacity={0.8} onPress={handleUpdate}>
+                    <UpdateButton activeOpacity={0.85} onPress={handleUpdate}>
                         <UpdateButtonText>SALVAR</UpdateButtonText>
-                        <Feather name='arrow-right-circle' size={30} color={theme.colors.bgColor} style={{ position: "absolute", right: 30 }} />
+                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </UpdateButton>
                 </ContainerForm>
             </ContainerView>

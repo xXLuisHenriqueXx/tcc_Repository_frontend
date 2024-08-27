@@ -8,6 +8,7 @@ declare module "styled-components" {
         textInactive: string;
         highlightColor: string;
         highlightColorInactive: string;
+        bgMainColor: string[];
         bgColor: string; 
         bdColor: string;
         bgContainerColorActive: string;
@@ -23,7 +24,7 @@ declare module "styled-components" {
         white: string;
     },
     images: {
-        bgMain: any;
+        bgButton: any;
         catImage: any;
     }
     }

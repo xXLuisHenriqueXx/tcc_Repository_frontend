@@ -2,26 +2,26 @@ import * as SecureStore from 'expo-secure-store';
 import api from './api';
 
 interface AddTaskParams {
-    todoId: string;
+    todoId: string | undefined;
     title: string;
     done: boolean;
 }
 
 interface UpdateTaskParams {
     _id: string | undefined;
-    todoId: string;
+    todoId: string | undefined;
     title: string;
 }
 
 interface UpdateTaskDoneParams {
     _id: string | undefined;
-    todoId: string;
+    todoId: string | undefined;
     done: boolean;
 }
 
 interface DeleteTaskParams {
     _id: string;
-    todoId: string;
+    todoId: string | undefined;
 }
 
 const taskService = {

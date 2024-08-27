@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TaskButton, TaskContainer, TaskContainerButtons, TaskDoneButton, TasksContainer, TasksContainerTitle, TaskTitle } from './styled'
 import DefaultHeader from '../../components/common/DefaultHeader/Index'
 import { useTheme } from 'styled-components'
 import { useNavigation } from '@react-navigation/native'
-import { PropsStack } from '../../routes'
+import { PropsNavigationStack, PropsStack } from '../../routes'
 import todoService from '../../services/todoService'
 import { Alert } from 'react-native'
 import { Entypo, FontAwesome5 } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import taskService from '../../services/taskService'
 import Loader from '../Loader'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { Task } from '../../entities/Todo'
 
-interface TaskProps {
-    title: string;
-    done: boolean;
-}
+type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateTodo'>
 
-const CreateTodo = () => {
+const UpdateTodo = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
     const [todoTitle, setTodoTitle] = useState("");
-    const [tasks, setTasks] = useState<TaskProps[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [taskTitle, setTaskTitle] = useState("");
-    const [taskDone, setTaskDone] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSaveTodo = async () => {
+    const { todoInfo } = route.params || {};
+
+    const handleUpdateTodo = async () => {
         if (todoTitle === "") {
             Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
             return;
@@ -34,64 +34,68 @@ const CreateTodo = () => {
             setIsLoading(true);
 
             const title = todoTitle.trim();
-            const params = { title }
+            const params = { _id: todoInfo?._id, title: title };
 
-            const { status, data } = await todoService.addTodo(params);
+            const { status } = await todoService.updateTodo(params);
 
-            if (status === 201) {
-                if (tasks.length === 0) {
-                    navigation.navigate("Todos", { newTodo: true });
-                } else {
-                    const taskPromises = tasks.map(task => {
-                        const taskParams = { todoId: data._id, title: task.title, done: task.done };
-                        return taskService.addTask(taskParams);
-                    });
-
-                    await Promise.all(taskPromises);
-
-                    navigation.navigate("Todos", { newTodo: true });
-                }
-            }
-
+            if (status === 200) {
+                navigation.navigate("Todos", { newTodo: true });
+            } 
+            
             setIsLoading(false);
         }
     }
 
-    const handleAddTask = () => {
-        if (taskTitle === "") {
+    const handleAddTask = async () => {
+        const title = taskTitle.trim();
+
+        if (title === "") {
             Alert.alert("Aviso", "Digite um título para a tarefa!");
             return;
+        }
 
-        } else {
-            const trimmedTitle = taskTitle.trim();
+        const newTask = await taskService.addTask({ todoId: todoInfo?._id, title: title, done: false });
+        setTasks([...tasks, newTask.data]);
+        setTaskTitle("");
+    }
 
-            setTasks([...tasks, { title: trimmedTitle, done: taskDone }]);
-            setTaskTitle("");
+    const handleUpdateTaskDone = async (taskId: string) => {
+        const task = tasks.find(task => task._id === taskId);
+
+        if (task) {
+            const updatedTask = { ...task, done: !task.done };
+            const response = await taskService.updateTaskDone({ _id: taskId, todoId: todoInfo?._id, done: updatedTask.done });
+
+            if (response.status === 200) {
+                const updatedTasks = tasks.map(task => task._id === taskId ? updatedTask : task);
+                setTasks(updatedTasks);
+            }
         }
     }
 
-    const handleUpdateTaskDone = (index: number) => {
-        const updatedTasks = tasks.map((task, i) => {
-            if (i === index) {
-                task.done = !task.done;
-            }
+    const handleDeleteTask = async (taskId: string) => {
+        const response = await taskService.deleteTask({ _id: taskId, todoId: todoInfo?._id });
 
-            return task;
-        });
-
-        setTasks(updatedTasks);
+        if (response.status === 204) {
+            const updatedTasks = tasks.filter(task => task._id !== taskId);
+            setTasks(updatedTasks);
+        }
     }
 
-    const handleDeleteTask = (index: number) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
+    const handleSetInfos = async () => {
+        setTodoTitle(todoInfo?.title || "")
+        setTasks(todoInfo?.tasks || [])
     }
+
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
 
     if (isLoading) return <Loader type='save' />
 
     return (
         <Container>
-            <DefaultHeader title={todoTitle} setTitle={setTodoTitle} handleSave={handleSaveTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
+            <DefaultHeader title={todoTitle} setTitle={setTodoTitle} handleSave={handleUpdateTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
 
             <ContainerInputs>
                 <ContainerInputsView>
@@ -117,14 +121,14 @@ const CreateTodo = () => {
                                 <TaskDoneButton
                                     style={task.done ? { backgroundColor: theme.colors.highlightColor } : { backgroundColor: 'transparent' }}
                                     activeOpacity={0.85}
-                                    onPress={() => handleUpdateTaskDone(index)}
+                                    onPress={() => handleUpdateTaskDone(task._id)}
                                 />
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
                                 <TaskContainerButtons>
                                     <TaskButton activeOpacity={0.85}>
                                         <Entypo name="edit" size={RFValue(20)} color={theme.colors.highlightColor} />
                                     </TaskButton>
-                                    <TaskButton activeOpacity={0.85} onPress={() => handleDeleteTask(index)}>
+                                    <TaskButton activeOpacity={0.85} onPress={() => handleDeleteTask(task._id)}>
                                         <FontAwesome5 name="trash" size={RFValue(20)} color={theme.colors.highlightColor} />
                                     </TaskButton>
                                 </TaskContainerButtons>
@@ -137,4 +141,4 @@ const CreateTodo = () => {
     )
 }
 
-export default CreateTodo;
+export default UpdateTodo;

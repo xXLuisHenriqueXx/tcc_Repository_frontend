@@ -6,7 +6,7 @@ import { PropsStack } from '../../../routes'
 import { useTheme } from 'styled-components'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-interface DefaultHeaderProps{
+interface DefaultHeaderProps {
     title: string;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
     handleSave: () => Promise<void>;
@@ -19,9 +19,12 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
     const theme = useTheme();
 
     return (
-        <ContainerHeader style={{marginBottom: RFValue(marginBottom)}}>
-            <BackButton onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
+        <ContainerHeader style={{ marginBottom: RFValue(marginBottom) }}>
+            <BackButton
+                activeOpacity={0.85}
+                onPress={() => navigation.goBack()}
+            >
+                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
             </BackButton>
 
             <Input
@@ -35,7 +38,7 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
                 activeOpacity={0.85}
                 onPress={handleSave}
             >
-                <Feather name="check" size={25} color={theme.colors.text} />
+                <Feather name="check" size={RFValue(20)} color={theme.colors.text} />
             </ButtonAdd>
         </ContainerHeader>
     )

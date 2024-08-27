@@ -18,6 +18,8 @@ import CreateTodo from '../screens/CreateTodo';
 
 import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
+import { Todo } from '../entities/Todo';
+import UpdateTodo from '../screens/UpdateTodo';
 
 export type PropsNavigationStack = {
   Alarms: {
@@ -35,6 +37,9 @@ export type PropsNavigationStack = {
     newTodo?: boolean;
   };
   CreateTodo: undefined;
+  UpdateTodo: {
+    todoInfo?: Todo;
+  }
   User: undefined;
   Welcome: undefined;
   Login: undefined;
@@ -76,6 +81,7 @@ const Routes = () => {
             <Stack.Screen name="UpdateNote" component={UpdateNote} />
             <Stack.Screen name="Todos" component={Todos} />
             <Stack.Screen name="CreateTodo" component={CreateTodo} />
+            <Stack.Screen name="UpdateTodo" component={UpdateTodo} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
           </>

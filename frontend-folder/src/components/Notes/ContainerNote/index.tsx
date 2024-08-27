@@ -24,14 +24,11 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   }
 
   return (
-    <ContainerNoteView activeOpacity={0.9} onPress={navigateToUpdateNote}>
-      <DeleteButton
-        activeOpacity={0.8}
-        onPress={() => setModalVisible(true)}
-      >
-        <Feather name="x" size={24} color={theme.colors.text} />
-      </DeleteButton>
-
+    <ContainerNoteView
+      activeOpacity={0.85}
+      onPress={navigateToUpdateNote}
+      onLongPress={() => setModalVisible(true)}
+    >
       <ContainerTitleDate>
         <TitleNote>{note.title}</TitleNote>
         <TextDateNote>{getDate(note.createdAt.toString())}</TextDateNote>

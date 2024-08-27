@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, NormalText, Title } from './styled'
+import { NormalText, Title } from './styled'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import Navbar from '../../components/common/Navbar';
@@ -12,6 +12,7 @@ import ContainerNote from '../../components/Notes/ContainerNote';
 import noteService from '../../services/noteService';
 import Loader from '../Loader';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Notes'>;
 
@@ -59,9 +60,12 @@ const Notes = ({ route }: Props) => {
   if (isLoading) return <Loader type='load' />
 
   return (
-    <Container source={theme.images.bgMain}>
+    <LinearGradient
+      colors={theme.colors.bgMainColor}
+      style={{ flex: 1 }}
+    >
       <FlatList
-        style={{ marginBottom: RFValue(70) }}
+        style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
         data={notes}
         keyExtractor={item => item._id}
         ListHeaderComponent={
@@ -75,7 +79,7 @@ const Notes = ({ route }: Props) => {
 
       <BotaoAdd navigate={handleNavigateToCreateNote} />
       <Navbar screen="Notes" />
-    </Container>
+    </LinearGradient>
   )
 }
 

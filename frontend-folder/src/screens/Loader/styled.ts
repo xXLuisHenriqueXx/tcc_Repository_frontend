@@ -10,20 +10,21 @@ export const Container = styled.View`
 
 export const ContainerInfoText = styled.View`
     position: absolute;
-    width: 90%;
+    width: 100%;
     bottom: ${RFValue(80)}px;
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const Title = styled.Text`
     font-size: ${RFValue(20)}px;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.highlightColor};
-    margin: ${RFValue(10)}px;
+    margin: ${RFValue(8)}px 0;
     text-align: center;
 `;
 
 export const NormalText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.text};
     text-align: center;

@@ -10,16 +10,15 @@ export const Container = styled.ScrollView`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-
-
 export const ContainerButtons = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    margin: 0 ${RFValue(16)}px;
 `;
 
 export const ContainerButtonsView = styled.View`
-    width: 95%;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;

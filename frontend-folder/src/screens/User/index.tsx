@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTheme } from "styled-components";
 import { ThemeContext } from '../../styles/themeContext';
-import { Container, ContainerInfo, ContainerInfoText, ContainerUser, CreatedText, CuteCat, HighlightedInfoText, HighlightedText, InfoText, InfoTitle, LogoutButton, ThanksText, ThemeButton, UserImage, UserName, UserNameButton } from './styled';
+import { ContainerInfo, ContainerInfoText, ContainerUser, CreatedText, CuteCat, HighlightedInfoText, HighlightedText, InfoText, InfoTitle, LogoutButton, ThanksText, ThemeButton, UserImage, UserName, UserNameButton } from './styled';
 import { FontAwesome5, Feather } from '@expo/vector-icons'
 import Navbar from '../../components/common/Navbar';
 import useAuth from '../../hook/useAuth';
@@ -11,6 +11,7 @@ import getDate from '../../utils/getDate';
 import Loader from '../Loader';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const User = () => {
   const navigation = useNavigation<PropsStack>();
@@ -41,8 +42,9 @@ const User = () => {
   if (!userInfo) return <Loader type='load' />
 
   return (
-    <Container
-      source={theme.images.bgMain}
+    <LinearGradient
+      colors={theme.colors.bgMainColor}
+      style={{ flex: 1 }}
     >
       <ThemeButton onPress={toggleTheme}>
         <FontAwesome5 name='moon' size={30} color={theme.colors.text} />
@@ -57,7 +59,7 @@ const User = () => {
           <Feather name='plus' size={100} color={theme.colors.white} />
         </UserImage>
 
-        <UserNameButton activeOpacity={0.8} onPress={handleNavigateToUpdateProfile}>
+        <UserNameButton activeOpacity={0.85} onPress={handleNavigateToUpdateProfile}>
           <UserName>{userInfo?.name}</UserName>
           <FontAwesome5 name='edit' size={25} color={theme.colors.highlightColor} />
         </UserNameButton>
@@ -79,7 +81,7 @@ const User = () => {
       </ContainerInfo>
 
       <Navbar screen='User' />
-    </Container>
+    </LinearGradient>
   )
 }
 

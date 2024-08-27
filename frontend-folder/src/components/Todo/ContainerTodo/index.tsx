@@ -19,15 +19,16 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
   const navigation = useNavigation<PropsStack>();
   const [modalVisible, setModalVisible] = useState(false);
 
-  return (
-    <ContainerTodoView activeOpacity={0.9} onPress={() => {}}>
-      <DeleteButton
-        activeOpacity={0.8}
-        onPress={() => setModalVisible(true)}
-      >
-        <Feather name="x" size={24} color={theme.colors.text} />
-      </DeleteButton>
+  const navigateToUpdateTodo = () => {
+    navigation.navigate("UpdateTodo", { todoInfo: todo });
+  }
 
+  return (
+    <ContainerTodoView
+      activeOpacity={0.85}
+      onPress={navigateToUpdateTodo}
+      onLongPress={() => setModalVisible(true)}
+    >
       <ContainerTitleDate>
         <TitleTodo>{todo.title}</TitleTodo>
         <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>

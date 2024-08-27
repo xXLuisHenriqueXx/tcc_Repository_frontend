@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
 
 export const Container = styled.ScrollView.attrs({
     contentContainerStyle: {
@@ -48,7 +48,7 @@ export const InputTitle = styled.TextInput`
     width: 100%;
     height: ${RFValue(40)}px;
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(16)}px;
     border-bottom-width: ${RFValue(1)}px;
     border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
 `;
@@ -97,7 +97,7 @@ export const TaskContainer = styled.View`
 
 export const TaskTitle = styled.Text`
     width: 74%;
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.text};
     margin-left: ${RFValue(10)}px;
     margin-right: auto;

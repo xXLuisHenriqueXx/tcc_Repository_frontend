@@ -22,13 +22,11 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
     const iconColor = switchEnabled ? theme.colors.text : theme.colors.textInactive;
 
     return (
-        <ContainerAlarmView switchEnabled={switchEnabled}>
-            <DeleteButton
-                activeOpacity={0.8}
-                onPress={() => setModalVisible(true)}
-            >
-                <Feather name="x" size={24} color={iconColor} />
-            </DeleteButton>
+        <ContainerAlarmView 
+            activeOpacity={0.85}
+            onLongPress={() => setModalVisible(true)}
+            switchEnabled={switchEnabled}
+        >
             <View>
                 <TextMaterialAlarm switchEnabled={switchEnabled}>
                     {alarm.title}
@@ -48,7 +46,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             </View>
 
             <SwitchButton
-                style={{ transform: [{ scaleX: 1.35 }, { scaleY: 1.35 }] }}
+                style={{ transform: [{ scaleX: 1.15 }, { scaleY: 1.15 }] }}
                 trackColor={trackColor}
                 thumbColor={theme.colors.thumbColor}
                 onValueChange={async (newValue) => {

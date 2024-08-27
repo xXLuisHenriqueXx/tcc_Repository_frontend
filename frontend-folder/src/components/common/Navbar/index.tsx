@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { PropsStack } from '../../../routes';
 import useAuth from '../../../hook/useAuth';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface NavbarProps {
     screen: string;
@@ -39,7 +40,7 @@ export default function Navbar({ screen }: NavbarProps) {
         : navigation.navigate("User")
     }
 
-    const size = 30;
+    const size = RFValue(24);
     const colorAlarm = screen === "Alarms" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorNote = screen === "Notes" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorTodo = screen === "Todos" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;

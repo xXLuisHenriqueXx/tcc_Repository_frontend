@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../routes';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const logoImage = require("../../assets/logo_text.png");
 
@@ -21,8 +22,8 @@ const Welcome = () => {
 
   return (
     <Container>
-      <BackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
-        <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
+      <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+        <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
       </BackButton>
       
       <ContainerView>
@@ -34,14 +35,14 @@ const Welcome = () => {
         </ContainerText>
 
         <ContainerButton>
-          <LoginButton activeOpacity={0.8} onPress={handleNavigateToLogin}>
+          <LoginButton activeOpacity={0.85} onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
-            <Feather name='arrow-right-circle' size={30} color={theme.colors.bgColor} style={{position: "absolute", right: 30}} />
+            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{position: "absolute", right: RFValue(16)}} />
           </LoginButton>
 
-          <RegisterButton activeOpacity={0.8} onPress={handleNavigateToRegister}>
+          <RegisterButton activeOpacity={0.85} onPress={handleNavigateToRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
-            <Feather name='arrow-right-circle' size={30} color={theme.colors.highlightColor} style={{position: "absolute", right: 30}} />
+            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{position: "absolute", right: RFValue(16)}} />
           </RegisterButton>
 
         </ContainerButton>

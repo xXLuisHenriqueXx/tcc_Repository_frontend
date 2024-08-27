@@ -6,6 +6,8 @@ import { PropsStack } from '../../routes'
 import { useTheme } from 'styled-components'
 import useAuth from '../../hook/useAuth'
 import { Alert } from 'react-native'
+import { RFValue } from 'react-native-responsive-fontsize'
+import Loader from '../Loader'
 
 interface fieldsProps {
     email: string;
@@ -18,7 +20,8 @@ const Login = () => {
     const [fields, setFields] = useState<fieldsProps>({
         email: "",
         password: ""
-    })
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
     const { login } = useAuth();
 
@@ -31,24 +34,31 @@ const Login = () => {
             return;
         }
 
+        setIsLoading(true);
         login(trimmedEmail, trimmedPassword);
+        setIsLoading(false);
     }
+
+    if (isLoading) return <Loader type='load' />
 
     return (
         <Container>
-            <BackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={24} color={theme.colors.bgColor} />
+            <BackButton
+                activeOpacity={0.85}
+                onPress={() => navigation.goBack()}
+            >
+                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
             </BackButton>
 
             <ContainerView>
                 <ContainerText>
-                    <Title>Que bom te ver novamente!</Title>
+                    <Title>Que bom te ver de novo!</Title>
                     <NormalText>Para prosseguir realize o login nos campos abaixo!</NormalText>
                 </ContainerText>
 
                 <ContainerForm>
                     <InputContainer>
-                        <Entypo name="mail" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             placeholder='Digite seu email...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -60,7 +70,7 @@ const Login = () => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={25} color={theme.colors.highlightColor} />
+                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
                             placeholder='Digite sua senha...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -72,9 +82,9 @@ const Login = () => {
                         />
                     </InputContainer>
 
-                    <LoginButton activeOpacity={0.8} onPress={handleLogin}>
+                    <LoginButton activeOpacity={0.85} onPress={handleLogin}>
                         <LoginButtonText>ACESSAR</LoginButtonText>
-                        <Feather name='arrow-right-circle' size={30} color={theme.colors.bgColor} style={{ position: "absolute", right: 30 }} />
+                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </LoginButton>
                 </ContainerForm>
             </ContainerView>

@@ -1,5 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import Constants from 'expo-constants';
+
+const statusBarHeight = Constants.statusBarHeight;
 
 export const Container = styled.ScrollView`
     flex: 1;
@@ -8,35 +11,36 @@ export const Container = styled.ScrollView`
 
 export const BackButton = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(50)}px;
-    width: ${RFValue(50)}px;
-    height: ${RFValue(50)}px;
+    border-radius: ${RFValue(20)}px;
+    width: ${RFValue(40)}px;
+    height: ${RFValue(40)}px;
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: ${RFValue(10)}px;
-    left: ${RFValue(10)}px;
+    top: ${RFValue(16)}px;
+    left: ${RFValue(16)}px;
 `;
 
 export const ContainerView = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
-    margin-top: ${RFValue(80)}px;
+    margin-top: ${statusBarHeight + RFValue(80)}px;
 `;
 
 export const Logo = styled.Image.attrs({
     resizeMode: 'contain'
 })`
-    width: ${RFValue(170)}px;
-    height: ${RFValue(150)}px;
+    width: ${RFValue(150)}px;
+    height: ${RFValue(130)}px;
 `;
 
 export const ContainerText = styled.View`
     flex-direction: column;
     align-items: center;
-    width: 90%;
+    width: 100%;
     margin: ${RFValue(60)}px 0;
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const Title = styled.Text`
@@ -46,7 +50,7 @@ export const Title = styled.Text`
 `;
 
 export const NormalText = styled.Text`
-    font-size: ${RFValue(18)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.text};
     text-align: center;
 `;
@@ -54,14 +58,15 @@ export const NormalText = styled.Text`
 export const ContainerButton = styled.View`
     flex-direction: column;
     align-items: center;
-    width: 90%;
+    width: 100%;
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const LoginButton = styled.TouchableOpacity`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
     height: ${RFValue(60)}px;
-    border-radius: ${RFValue(10)}px;
+    border-radius: ${RFValue(5)}px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -69,16 +74,16 @@ export const LoginButton = styled.TouchableOpacity`
 `;
 
 export const LoginButtonText = styled.Text`
-    font-size: ${RFValue(25)}px;
+    font-size: ${RFValue(20)}px;
     color: ${({ theme }) => theme.colors.bgColor};
-    font-weight: bold;
+    font-weight: 600;
 `;
 
 export const RegisterButton = styled.TouchableOpacity`
     width: 100%;
     height: ${RFValue(60)}px;
-    border-radius: ${RFValue(10)}px;
-    border-width: ${RFValue(1)}px;
+    border-radius: ${RFValue(5)}px;
+    border-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};
     flex-direction: row;
     justify-content: center;
@@ -86,7 +91,7 @@ export const RegisterButton = styled.TouchableOpacity`
 `;
 
 export const RegisterButtonText = styled.Text`
-    font-size: ${RFValue(25)}px;
+    font-size: ${RFValue(20)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
+    font-weight: 600;
 `;

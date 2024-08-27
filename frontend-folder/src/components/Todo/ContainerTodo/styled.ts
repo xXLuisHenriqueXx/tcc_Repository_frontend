@@ -3,12 +3,12 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export const ContainerTodoView = styled.TouchableOpacity`
     border-radius: ${RFValue(5)}px;
-    width: 90%;
-    height: ${RFValue(100)}px;
+    width: 100%;
+    height: ${RFValue(90)}px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ${RFValue(25)}px;
+    padding: 0 ${RFValue(16)}px;
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
@@ -20,7 +20,7 @@ export const ContainerTitleDate = styled.View`
 `
 
 export const TextDateTodo = styled.Text`
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(12)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
 `;  
 

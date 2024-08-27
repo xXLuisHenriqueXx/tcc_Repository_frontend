@@ -11,10 +11,12 @@ const BotaoAdd = ({ navigate }: BotaoAddProps) => {
     const theme = useTheme();
 
     return (
-        <ContainerButton>
+        <ContainerButton 
+            activeOpacity={.85}
+            onPress={navigate}
+        >
             <BgButton
-                activeOpacity={0.8}
-                onPress={navigate}
+                source={theme.images.bgButton}
             >
                 <Feather 
                     name='plus'
