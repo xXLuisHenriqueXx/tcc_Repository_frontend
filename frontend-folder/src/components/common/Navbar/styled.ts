@@ -18,7 +18,9 @@ export const Container = styled.View`
     bottom: 0;
 `;
 
-export const IconButton = styled.TouchableOpacity`
+export const IconButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     width: ${RFValue(60)}px;
     height: ${RFValue(60)}px;
     flex-direction: column;

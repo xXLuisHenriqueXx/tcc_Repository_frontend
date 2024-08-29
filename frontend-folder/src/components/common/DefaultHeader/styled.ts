@@ -17,7 +17,9 @@ export const Input = styled.TextInput`
     text-align: center;
 `;
 
-export const ButtonAdd = styled.TouchableOpacity`
+export const ButtonAdd = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     border: ${RFValue(2)}px solid ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(20)}px;
     width: ${RFValue(40)}px;
@@ -27,7 +29,9 @@ export const ButtonAdd = styled.TouchableOpacity`
     margin-left: ${RFValue(5)}px;
 `;
 
-export const BackButton = styled.TouchableOpacity`
+export const BackButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(20)}px;
     width: ${RFValue(40)}px;

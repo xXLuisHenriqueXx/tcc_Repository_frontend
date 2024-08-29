@@ -5,7 +5,9 @@ interface SwitchEnabledProps {
     switchEnabled: boolean;
 }
 
-export const ContainerAlarmView = styled.TouchableOpacity<SwitchEnabledProps>`
+export const ContainerAlarmView = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})<SwitchEnabledProps>`
     border-radius: ${RFValue(5)}px;
     width: 100%;
     height: ${RFValue(90)}px;
@@ -46,12 +48,6 @@ export const TextDiasAlarm = styled.Text<SwitchEnabledProps>`
 
 export const TextDiasAlarmHighlight = styled(TextDiasAlarm)`
     font-weight: bold;
-`;
-
-export const DeleteButton = styled.TouchableOpacity`
-    position: absolute;
-    top: ${RFValue(10)}px;
-    right: ${RFValue(10)}px;
 `;
 
 export const SwitchButton = styled.Switch`

@@ -35,7 +35,9 @@ export const HourTitle = styled.Text`
     margin-bottom: ${RFValue(5)}px;
 `;
 
-export const DateButton = styled.TouchableOpacity`
+export const DateButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     width: 90%;
     flex-direction: row;
     justify-content: center;
@@ -75,7 +77,9 @@ export const ContainerDays = styled.View`
     align-items: center;
 `;
 
-export const DayButton = styled.TouchableOpacity<selectedProp>`
+export const DayButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})<selectedProp>`
     width: ${RFValue(35)}px;
     height: ${RFValue(35)}px;
     background-color: ${({ theme, selected }) => selected ? theme.colors.highlightColor : theme.colors.highlightColorInactive};

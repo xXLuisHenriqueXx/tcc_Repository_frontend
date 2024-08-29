@@ -9,7 +9,9 @@ export const Container = styled.ScrollView`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const BackButton = styled.TouchableOpacity`
+export const BackButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(20)}px;
     width: ${RFValue(40)}px;
@@ -73,7 +75,9 @@ export const Input = styled.TextInput`
     margin-left: ${RFValue(5)}px;
 `;
 
-export const RegisterButton = styled.TouchableOpacity`
+export const RegisterButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
     height: ${RFValue(60)}px;

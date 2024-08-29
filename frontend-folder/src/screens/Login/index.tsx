@@ -44,7 +44,6 @@ const Login = () => {
     return (
         <Container>
             <BackButton
-                activeOpacity={0.85}
                 onPress={() => navigation.goBack()}
             >
                 <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
@@ -82,7 +81,7 @@ const Login = () => {
                         />
                     </InputContainer>
 
-                    <LoginButton activeOpacity={0.85} onPress={handleLogin}>
+                    <LoginButton onPress={handleLogin}>
                         <LoginButtonText>ACESSAR</LoginButtonText>
                         <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </LoginButton>

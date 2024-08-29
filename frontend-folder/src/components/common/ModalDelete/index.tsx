@@ -1,6 +1,5 @@
 import React from 'react'
 import { Modal } from 'react-native'
-import { useTheme } from 'styled-components'
 import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled'
 
 interface ModalDeleteProps {
@@ -11,8 +10,6 @@ interface ModalDeleteProps {
 }
 
 const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalDeleteProps) => {
-    const theme = useTheme();
-
     return (
         <Modal
             animationType='fade'
@@ -30,14 +27,12 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
 
                     <ContainerButtons>
                         <NoButton
-                            activeOpacity={0.85}
                             onPress={() => setModalVisible(false)}
                         >
                             <NoButtonText>Não</NoButtonText>
                         </NoButton>
 
                         <YesButton
-                            activeOpacity={0.85}
                             onPress={() => {
                                 deleteItem(item._id);
                                 setModalVisible(false);
@@ -52,4 +47,4 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
     )
 }
 
-export default ModalDelete
+export default ModalDelete;

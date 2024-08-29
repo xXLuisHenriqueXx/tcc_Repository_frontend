@@ -6,6 +6,7 @@ import { useTheme } from 'styled-components';
 import { PropsStack } from '../../../routes';
 import useAuth from '../../../hook/useAuth';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { StyleSheet } from 'react-native';
 
 interface NavbarProps {
     screen: string;
@@ -19,25 +20,25 @@ export default function Navbar({ screen }: NavbarProps) {
     const { token } = useAuth();
 
     const navigateToAlarms = () => {
-        navigation.navigate("Alarms", {newAlarm: false});
+        navigation.navigate("Alarms", { newAlarm: false });
     };
 
     const navigateToNotes = () => {
         token === null
-        ? navigation.navigate("Welcome")
-        : navigation.navigate("Notes", {newNote: false});
+            ? navigation.navigate("Welcome")
+            : navigation.navigate("Notes", { newNote: false });
     }
 
     const navigateToTodos = () => {
         token === null
-        ? navigation.navigate("Welcome")
-        : navigation.navigate("Todos", {newTodo: false});
+            ? navigation.navigate("Welcome")
+            : navigation.navigate("Todos", { newTodo: false });
     }
 
     const navigateToUser = () => {
         token === null
-        ? navigation.navigate("Welcome")       
-        : navigation.navigate("User")
+            ? navigation.navigate("Welcome")
+            : navigation.navigate("User")
     }
 
     const size = RFValue(24);
@@ -49,9 +50,15 @@ export default function Navbar({ screen }: NavbarProps) {
     const iconNote = screen === "Notes" ? "sticky-note" : "sticky-note-o";
     const iconTodo = screen === "Todos" ? "bookmark" : "bookmark-o"
     const iconUser = screen === "User" ? "user" : "user-o";
-    
+
     return (
-        <Container>
+        <Container style={{
+            shadowColor: theme.colors.text,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 1,
+            shadowRadius: 16,
+            elevation: 20,
+        }}>
             <IconButton onPress={navigateToAlarms}>
                 <FontAwesome name={iconAlarm} size={size} color={colorAlarm} />
                 {screen === "Alarms" ? (

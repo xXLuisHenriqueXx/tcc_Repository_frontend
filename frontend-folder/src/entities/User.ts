@@ -3,6 +3,9 @@ export interface User {
     name: string;
     email: string;
     achievements: string[];
+    level: number;
+    experience: number;
+    experienceToNextLevel: number;
     numberCreateNotes: number;
     numberCreateTodos: number;
     numberCreateTasks: number;
@@ -12,8 +15,6 @@ export interface User {
     numberDeleteNotes: number;
     numberDeleteTodos: number;
     numberDeleteTasks: number;
-    level: number;
-    experience: number;
     createdAt: string;
     updatedAt: string;
 }

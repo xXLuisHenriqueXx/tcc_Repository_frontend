@@ -21,7 +21,6 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
     return (
         <ContainerHeader style={{ marginBottom: RFValue(marginBottom) }}>
             <BackButton
-                activeOpacity={0.85}
                 onPress={() => navigation.goBack()}
             >
                 <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
@@ -35,7 +34,6 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
             />
 
             <ButtonAdd
-                activeOpacity={0.85}
                 onPress={handleSave}
             >
                 <Feather name="check" size={RFValue(20)} color={theme.colors.text} />

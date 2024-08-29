@@ -49,17 +49,17 @@ const Register = () => {
       Alert.alert("Aviso", "As senhas são diferentes!");
       return;
     }
-
+    
     setIsLoading(true);
     register(trimmedName, trimmedEmail, trimmedPassword);
     setIsLoading(false);
-  }
+    }
 
   if (isLoading) return <Loader type='load' />
 
   return (
     <Container>
-      <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+      <BackButton onPress={() => navigation.goBack()}>
         <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
       </BackButton>
 
@@ -120,7 +120,7 @@ const Register = () => {
             />
           </InputContainer>
 
-          <RegisterButton activeOpacity={0.85} onPress={handleRegister}>
+          <RegisterButton onPress={handleRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
           </RegisterButton>

@@ -11,8 +11,7 @@ const BotaoAdd = ({ navigate }: BotaoAddProps) => {
     const theme = useTheme();
 
     return (
-        <ContainerButton 
-            activeOpacity={.85}
+        <ContainerButton
             onPress={navigate}
         >
             <BgButton

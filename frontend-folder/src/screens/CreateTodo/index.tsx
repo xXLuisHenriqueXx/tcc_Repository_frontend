@@ -105,7 +105,7 @@ const CreateTodo = () => {
                         />
                     </ContainerInputsTitle>
 
-                    <AddTaskButton activeOpacity={0.85} onPress={handleAddTask} >
+                    <AddTaskButton onPress={handleAddTask} >
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
                         <Entypo name="plus" size={RFValue(24)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
                     </AddTaskButton>
@@ -116,15 +116,14 @@ const CreateTodo = () => {
                             <TaskContainer key={index}>
                                 <TaskDoneButton
                                     style={task.done ? { backgroundColor: theme.colors.highlightColor } : { backgroundColor: 'transparent' }}
-                                    activeOpacity={0.85}
                                     onPress={() => handleUpdateTaskDone(index)}
                                 />
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
                                 <TaskContainerButtons>
-                                    <TaskButton activeOpacity={0.85}>
+                                    <TaskButton>
                                         <Entypo name="edit" size={RFValue(20)} color={theme.colors.highlightColor} />
                                     </TaskButton>
-                                    <TaskButton activeOpacity={0.85} onPress={() => handleDeleteTask(index)}>
+                                    <TaskButton onPress={() => handleDeleteTask(index)}>
                                         <FontAwesome5 name="trash" size={RFValue(20)} color={theme.colors.highlightColor} />
                                     </TaskButton>
                                 </TaskContainerButtons>

@@ -12,9 +12,10 @@ export const ContainerView = styled.View`
 export const ModalView = styled.View`
     width: 100%;
     height: ${RFValue(200)}px;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    background-color: ${({ theme }) => theme.colors.bgModal};
     align-items: center;
     padding: ${RFValue(16)}px;
+    border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.bdColor};
     border-radius: ${RFValue(5)}px;                      
 `;
 
@@ -38,7 +39,9 @@ export const ContainerButtons = styled.View`
     align-items: center;
 `;
 
-export const NoButton = styled.TouchableOpacity`
+export const NoButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     border-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(5)}px;
@@ -48,7 +51,9 @@ export const NoButton = styled.TouchableOpacity`
     align-items: center;
 `;
 
-export const YesButton = styled.TouchableOpacity`
+export const YesButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(5)}px;
     width: 100%;

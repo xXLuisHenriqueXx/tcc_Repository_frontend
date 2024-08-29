@@ -22,7 +22,7 @@ const Welcome = () => {
 
   return (
     <Container>
-      <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+      <BackButton onPress={() => navigation.goBack()}>
         <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
       </BackButton>
       
@@ -35,12 +35,12 @@ const Welcome = () => {
         </ContainerText>
 
         <ContainerButton>
-          <LoginButton activeOpacity={0.85} onPress={handleNavigateToLogin}>
+          <LoginButton onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{position: "absolute", right: RFValue(16)}} />
           </LoginButton>
 
-          <RegisterButton activeOpacity={0.85} onPress={handleNavigateToRegister}>
+          <RegisterButton onPress={handleNavigateToRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{position: "absolute", right: RFValue(16)}} />
           </RegisterButton>

@@ -25,7 +25,6 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
 
   return (
     <ContainerTodoView
-      activeOpacity={0.85}
       onPress={navigateToUpdateTodo}
       onLongPress={() => setModalVisible(true)}
     >

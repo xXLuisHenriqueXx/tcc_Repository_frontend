@@ -9,7 +9,9 @@ export const Container = styled.ScrollView`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const BackButton = styled.TouchableOpacity`
+export const BackButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(20)}px;
     width: ${RFValue(40)}px;
@@ -62,7 +64,9 @@ export const ContainerButton = styled.View`
     padding: 0 ${RFValue(16)}px;
 `;
 
-export const LoginButton = styled.TouchableOpacity`
+export const LoginButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
     height: ${RFValue(60)}px;
@@ -79,7 +83,9 @@ export const LoginButtonText = styled.Text`
     font-weight: 600;
 `;
 
-export const RegisterButton = styled.TouchableOpacity`
+export const RegisterButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     width: 100%;
     height: ${RFValue(60)}px;
     border-radius: ${RFValue(5)}px;

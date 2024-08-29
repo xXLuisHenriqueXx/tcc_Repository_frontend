@@ -14,3 +14,5 @@ const achievementService = {
         return response;
     },
 }
+
+export default achievementService;

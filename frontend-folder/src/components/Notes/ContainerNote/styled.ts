@@ -1,7 +1,9 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const ContainerNoteView = styled.TouchableOpacity`
+export const ContainerNoteView = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     border-radius: ${RFValue(5)}px;
     width: 100%;
     height: ${RFValue(90)}px;
@@ -30,7 +32,9 @@ export const TitleNote = styled.Text`
     color: ${({ theme }) => theme.colors.text};
 `;
 
-export const DeleteButton = styled.TouchableOpacity`
+export const DeleteButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     position: absolute;
     top: ${RFValue(10)}px;
     right: ${RFValue(10)}px;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native';
-import { ContainerAlarmView, DeleteButton, SwitchButton, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
-import { Feather } from '@expo/vector-icons'
+import { ContainerAlarmView, SwitchButton, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
 import { useTheme } from 'styled-components';
 import { Alarm } from '../../../entities/Alarm';
 import ModalDelete from '../../common/ModalDelete';
@@ -19,11 +18,9 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
     const [modalVisible, setModalVisible] = useState(false);
 
     const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
-    const iconColor = switchEnabled ? theme.colors.text : theme.colors.textInactive;
 
     return (
-        <ContainerAlarmView 
-            activeOpacity={0.85}
+        <ContainerAlarmView
             onLongPress={() => setModalVisible(true)}
             switchEnabled={switchEnabled}
         >

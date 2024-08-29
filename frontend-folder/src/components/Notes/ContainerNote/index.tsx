@@ -25,7 +25,6 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
 
   return (
     <ContainerNoteView
-      activeOpacity={0.85}
       onPress={navigateToUpdateNote}
       onLongPress={() => setModalVisible(true)}
     >

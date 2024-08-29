@@ -73,7 +73,7 @@ const UpdateProfile = ({ route }: Props) => {
 
     return (
         <Container>
-            <BackButton activeOpacity={0.85} onPress={() => navigation.goBack()}>
+            <BackButton onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
             </BackButton>
 
@@ -131,7 +131,7 @@ const UpdateProfile = ({ route }: Props) => {
                         />
                     </InputContainer>
 
-                    <UpdateButton activeOpacity={0.85} onPress={handleUpdate}>
+                    <UpdateButton onPress={handleUpdate}>
                         <UpdateButtonText>SALVAR</UpdateButtonText>
                         <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </UpdateButton>

@@ -3,5 +3,7 @@ export interface Achievement {
     title: string;
     description: string;
     requirement: string;
+    type: string;
+    imageUrl: string;
     expGiven: number;
 }

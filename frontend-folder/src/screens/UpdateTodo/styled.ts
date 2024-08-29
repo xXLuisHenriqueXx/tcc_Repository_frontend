@@ -53,7 +53,9 @@ export const InputTitle = styled.TextInput`
     border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
 `;
 
-export const AddTaskButton = styled.TouchableOpacity`
+export const AddTaskButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     width: 100%;
     height: ${RFValue(50)}px;
     background-color: ${({ theme }) => theme.colors.highlightColor};
@@ -106,7 +108,9 @@ export const TaskTitle = styled.Text`
     white-space: nowrap;
 `;
 
-export const TaskDoneButton = styled.TouchableOpacity`
+export const TaskDoneButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
     width: ${RFValue(16)}px;
     height: ${RFValue(16)}px;
     justify-content: center;
@@ -121,5 +125,7 @@ export const TaskContainerButtons = styled.View`
     gap: ${RFValue(12)}px;
 `;
 
-export const TaskButton = styled.TouchableOpacity`
+export const TaskButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
 `;
