@@ -1,3 +1,4 @@
+import { MotiView } from "moti";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
@@ -10,7 +11,7 @@ export const Container = styled.ScrollView.attrs({
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const ContainerInputs = styled.View`
+export const ContainerInputs = styled(MotiView)`
     flex: 1;
     justify-content: center;
     align-items: center;

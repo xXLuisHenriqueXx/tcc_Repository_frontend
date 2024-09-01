@@ -8,6 +8,13 @@ export const Container = styled.View`
     align-items: center;
 `;
 
+export const CatGifLoading = styled.Image.attrs({
+    resizeMode: 'contain'
+})`
+    width: ${RFValue(128)}px;
+    height: ${RFValue(128)}px;
+`;
+
 export const ContainerInfoText = styled.View`
     position: absolute;
     width: 100%;

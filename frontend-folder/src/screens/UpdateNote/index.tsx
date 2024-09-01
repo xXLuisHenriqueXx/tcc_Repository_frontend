@@ -20,40 +20,44 @@ const UpdateNote = ({ route }: Props) => {
 
     const { noteInfo } = route.params || {};
 
-    const handleUpdateNote = async () => {
-        const title = noteTitle.trim();
-        const content = noteContent.trim();
-
-        if (title === "") {
-            Alert.alert("Aviso", "Digite um título para a nota!");
-            return;
-
-        } else if (content === "") {
-            Alert.alert("Aviso", "Digite um conteúdo para a nota!");
-            return;
-        } else {
-            setIsLoading(true);
-
-            const params = { _id: noteInfo?._id, title: title, content: content };
-
-            const response = await noteService.updateNote(params);
-
-            if (response.status === 200) {
-                navigation.navigate("Notes", { newNote: true });
-            }
-
-            setIsLoading(false);
-        }
-    }
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
 
     const handleSetInfos = async () => {
         setNoteTitle(noteInfo?.title || "")
         setNoteContent(noteInfo?.content || "")
     }
 
-    useEffect(() => {
-        handleSetInfos();
-    }, []);
+    const handleUpdateNote = async () => {
+        setIsLoading(true);
+
+        try {
+            const title = noteTitle.trim();
+            const content = noteContent.trim();
+
+            if (title === "") {
+                Alert.alert("Aviso", "Digite um título para a nota!");
+                return;
+
+            } else if (content === "") {
+                Alert.alert("Aviso", "Digite um conteúdo para a nota!");
+                return;
+            } else {
+                const params = { _id: noteInfo?._id, title: title, content: content };
+
+                const response = await noteService.updateNote(params);
+
+                if (response.status === 200) {
+                    navigation.navigate("Notes", { newNote: true });
+                }
+            }
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao atualizar nota!");
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     if (isLoading) return <Loader type='save' />
 
@@ -61,7 +65,14 @@ const UpdateNote = ({ route }: Props) => {
         <Container>
             <DefaultHeader title={noteTitle} setTitle={setNoteTitle} handleSave={handleUpdateNote} placeholderText='Título da nota...' marginBottom={30} />
 
-            <ContainerInputs>
+            <ContainerInputs
+                from={{ translateY: 300, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                transition={{
+                    type: 'timing',
+                    duration: 200,
+                }}
+            >
                 <ContainerInputsView>
                     <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
                     <InputContent

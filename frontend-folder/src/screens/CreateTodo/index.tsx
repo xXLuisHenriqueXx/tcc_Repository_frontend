@@ -26,33 +26,37 @@ const CreateTodo = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSaveTodo = async () => {
-        if (todoTitle === "") {
-            Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
-            return;
+        setIsLoading(true);
 
-        } else {
-            setIsLoading(true);
+        try {
+            if (todoTitle === "") {
+                Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
+                return;
 
-            const title = todoTitle.trim();
-            const params = { title }
+            } else {
+                const title = todoTitle.trim();
+                const params = { title }
 
-            const { status, data } = await todoService.addTodo(params);
+                const { status, data } = await todoService.addTodo(params);
 
-            if (status === 201) {
-                if (tasks.length === 0) {
-                    navigation.navigate("Todos", { newTodo: true });
-                } else {
-                    const taskPromises = tasks.map(task => {
-                        const taskParams = { todoId: data._id, title: task.title, done: task.done };
-                        return taskService.addTask(taskParams);
-                    });
+                if (status === 201) {
+                    if (tasks.length === 0) {
+                        navigation.navigate("Todos", { newTodo: true });
+                    } else {
+                        const taskPromises = tasks.map(task => {
+                            const taskParams = { todoId: data._id, title: task.title, done: task.done };
+                            return taskService.addTask(taskParams);
+                        });
 
-                    await Promise.all(taskPromises);
+                        await Promise.all(taskPromises);
 
-                    navigation.navigate("Todos", { newTodo: true });
+                        navigation.navigate("Todos", { newTodo: true });
+                    }
                 }
             }
-
+        } catch (err) {
+            Alert.alert('Erro', 'Erro ao salvar lista de tarefas');
+        } finally {
             setIsLoading(false);
         }
     }
@@ -93,7 +97,15 @@ const CreateTodo = () => {
         <Container>
             <DefaultHeader title={todoTitle} setTitle={setTodoTitle} handleSave={handleSaveTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
 
-            <ContainerInputs>
+            <ContainerInputs
+                from={{ translateY: 300, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                transition={{
+                    type: 'timing',
+                    duration: 200,
+                }}
+            >
+
                 <ContainerInputsView>
                     <ContainerInputsTitle>
                         <ContainerTitle>Título da tarefa</ContainerTitle>
@@ -105,7 +117,7 @@ const CreateTodo = () => {
                         />
                     </ContainerInputsTitle>
 
-                    <AddTaskButton onPress={handleAddTask} >
+                    <AddTaskButton onPress={handleAddTask}>
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
                         <Entypo name="plus" size={RFValue(24)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
                     </AddTaskButton>

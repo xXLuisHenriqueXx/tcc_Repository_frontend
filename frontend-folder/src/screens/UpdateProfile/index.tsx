@@ -27,35 +27,12 @@ const UpdateProfile = ({ route }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const { logout } = useAuth();
+
     const { userInfo } = route.params || {};
 
-    const handleUpdate = async () => {
-        if (fields.name === "") {
-            Alert.alert("Erro", "Digite um nome!");
-            return;
-        } else if (fields.email === "") {
-            Alert.alert("Erro", "Digite um email!");
-            return;
-        } else {
-            setIsLoading(true);
-
-            const response = await userService.updateUserProfile(fields);
-
-            setIsLoading(false);
-
-            if (response.status === 400) {
-                Alert.alert("Erro", "Email já cadastrado!");
-                return;
-            }
-
-            if (fields.email != userInfo?.email) {
-                logout();
-            }
-
-            navigation.navigate("Alarms", { newAlarm: false });
-            Alert.alert("Sucesso", "Perfil atualizado com sucesso!");
-        }
-    }
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
 
     const handleSetInfos = async () => {
         setFields({
@@ -65,9 +42,46 @@ const UpdateProfile = ({ route }: Props) => {
         })
     }
 
-    useEffect(() => {
-        handleSetInfos();
-    }, []);
+    const handleUpdate = async () => {
+        setIsLoading(true);
+
+        try {
+            const name = fields.name.trim();
+            const email = fields.email.trim();
+
+            if (name === "") {
+                Alert.alert("Erro", "Digite um nome!");
+                return;
+            } else if (email === "") {
+                Alert.alert("Erro", "Digite um email!");
+                return;
+            } else {
+                const params = {
+                    name: name,
+                    email: email,
+                    password: fields.password,
+                    newPassword: fields.newPassword
+                }
+
+                const response = await userService.updateUserProfile(params);
+
+                if (response.status === 400) {
+                    Alert.alert("Erro", "Email já cadastrado!");
+                    return;
+                }
+
+                if (email != userInfo?.email) {
+                    logout();
+                }
+
+                navigation.navigate("Alarms", { newAlarm: false });
+            }
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao atualizar perfil!");
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     if (isLoading) return <Loader type='save' />
 
@@ -83,7 +97,14 @@ const UpdateProfile = ({ route }: Props) => {
                     <NormalText>Nesta tela você pode editar seus credenciais.</NormalText>
                 </ContainerText>
 
-                <ContainerForm>
+                <ContainerForm
+                    from={{translateY: 300, opacity: 0}}
+                    animate={{translateY: 0, opacity: 1}}
+                    transition={{
+                        type: 'timing',
+                        duration: 200,
+                    }}
+                >
                     <InputContainer>
                         <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
@@ -131,7 +152,7 @@ const UpdateProfile = ({ route }: Props) => {
                         />
                     </InputContainer>
 
-                    <UpdateButton onPress={handleUpdate}>
+                    <UpdateButton onPress={handleUpdate} disabled={isLoading}>
                         <UpdateButtonText>SALVAR</UpdateButtonText>
                         <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </UpdateButton>

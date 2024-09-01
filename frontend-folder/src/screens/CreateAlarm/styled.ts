@@ -27,14 +27,6 @@ export const ContainerButtonsView = styled.View`
     padding: ${RFValue(40)}px 0;
 `;
 
-export const HourTitle = styled.Text`
-    font-size: ${RFValue(20)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: ${RFValue(5)}px;
-`;
-
 export const DateButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
@@ -61,13 +53,6 @@ export const ContainerDaysView = styled.View`
     flex-direction: column;
     justify-content: flex-start;
     margin-top: ${RFValue(40)}px;
-`;
-
-export const DayTitle = styled.Text`
-    font-size: ${RFValue(20)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
-    margin-bottom: ${RFValue(5)}px;
 `;
 
 export const ContainerDays = styled.View`

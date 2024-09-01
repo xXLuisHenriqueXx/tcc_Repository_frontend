@@ -24,6 +24,7 @@ export const darkTheme: DefaultTheme =  {
     images: {
         bgButton: require("../assets/bgButton_dark.png"),
         catImage: require("../assets/cute_cat.png"),
+        catLoadingGif: require("../assets/cat_loading.gif")
     }
 };
 
@@ -31,25 +32,26 @@ export const lightTheme: DefaultTheme = {
     colors: {
         text: "#110f1f",
         textInactive: "#110f1f80",
-        highlightColor: "#c24f4f",
-        highlightColorInactive: "#c24f4f80",
-        bgMainColor: ["#ffffff","#ffefef"],
+        highlightColor: "#6E53B4",
+        highlightColorInactive: "#6E53B480",
+        bgMainColor: ["#ffffff","#CABEE9"],
         bgColor: "#fefefe", 
-        bdColor: "#c24f4f26",
-        bgContainerColorActive: "#FFC9C9bf",
-        bgContainerColorInactive: "#FFC9C940",
+        bdColor: "#6E53B426",
+        bgContainerColorActive: "#CABEE9bf",
+        bgContainerColorInactive: "#CABEE940",
         fadeBgColor: "#000000e6",
         bgModal: "#fefefe",
         bgBottomTab: "#fefefe",
-        tintActiveColor: '#c24f4f',
+        tintActiveColor: '#6E53B4',
         tintInactiveColor: '#110f1f99',
         trackColorInactive: "#110f1f",
-        trackColorActive: "#c24f4f",
+        trackColorActive: "#6E53B4",
         thumbColor: "#ffffff",
         white: "#ffffff",
     },
     images: {
         bgButton: require("../assets/bgButton_light.png"),
-        catImage: require("../assets/cute_cat.png")
+        catImage: require("../assets/cute_cat.png"),
+        catLoadingGif: require("../assets/cat_loading.gif")
     }
 };

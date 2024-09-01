@@ -34,7 +34,14 @@ const Welcome = () => {
           <NormalText>Para uma melhor experiência com as funções do aplicativo, realize seu login ou cadastro.</NormalText>
         </ContainerText>
 
-        <ContainerButton>
+        <ContainerButton
+          from={{translateY: 300, opacity: 0}}
+          animate={{translateY: 0, opacity: 1}}
+          transition={{
+              type: 'timing',
+              duration: 200,
+          }}
+        >
           <LoginButton onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{position: "absolute", right: RFValue(16)}} />
@@ -44,7 +51,6 @@ const Welcome = () => {
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{position: "absolute", right: RFValue(16)}} />
           </RegisterButton>
-
         </ContainerButton>
       </ContainerView>
     </Container>

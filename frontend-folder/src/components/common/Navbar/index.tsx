@@ -52,13 +52,15 @@ export default function Navbar({ screen }: NavbarProps) {
     const iconUser = screen === "User" ? "user" : "user-o";
 
     return (
-        <Container style={{
-            shadowColor: theme.colors.text,
-            shadowOffset: { width: 0, height: 0 },
-            shadowOpacity: 1,
-            shadowRadius: 16,
-            elevation: 20,
-        }}>
+        <Container
+            style={{
+                shadowColor: theme.colors.text,
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: 1,
+                shadowRadius: 16,
+                elevation: 20,
+            }}
+        >
             <IconButton onPress={navigateToAlarms}>
                 <FontAwesome name={iconAlarm} size={size} color={colorAlarm} />
                 {screen === "Alarms" ? (

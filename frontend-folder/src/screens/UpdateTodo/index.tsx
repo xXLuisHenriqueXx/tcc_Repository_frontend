@@ -22,74 +22,103 @@ const UpdateTodo = ({ route }: Props) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [taskTitle, setTaskTitle] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isTaskLoading, setIsTaskLoading] = useState(false);
 
     const { todoInfo } = route.params || {};
 
+    useEffect(() => {
+        handleSetInfos();
+    }, []);
+
+    const handleSetInfos = async () => {
+        setTodoTitle(todoInfo?.title || "");
+        setTasks(todoInfo?.tasks || []);
+    }
+
     const handleUpdateTodo = async () => {
-        if (todoTitle === "") {
-            Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
-            return;
+        setIsLoading(true);
 
-        } else {
-            setIsLoading(true);
+        try {
+            if (todoTitle === "") {
+                Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
+                return;
 
-            const title = todoTitle.trim();
-            const params = { _id: todoInfo?._id, title: title };
+            } else {
+                const title = todoTitle.trim();
+                const params = { _id: todoInfo?._id, title: title };
 
-            const { status } = await todoService.updateTodo(params);
+                const { status } = await todoService.updateTodo(params);
 
-            if (status === 200) {
-                navigation.navigate("Todos", { newTodo: true });
-            } 
-            
+                if (status === 200) {
+                    navigation.navigate("Todos", { newTodo: true });
+                }
+            }
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao atualizar lista de tarefas!");
+        } finally {
             setIsLoading(false);
         }
     }
 
     const handleAddTask = async () => {
-        const title = taskTitle.trim();
+        setIsTaskLoading(true);
 
-        if (title === "") {
-            Alert.alert("Aviso", "Digite um título para a tarefa!");
-            return;
+        try {
+            const title = taskTitle.trim();
+
+            if (title === "") {
+                Alert.alert("Aviso", "Digite um título para a tarefa!");
+                return;
+            }
+
+            const newTask = await taskService.addTask({ todoId: todoInfo?._id, title: title, done: false });
+            setTasks([...tasks, newTask.data]);
+            setTaskTitle("");
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao adicionar tarefa!");
+        } finally {
+            setIsTaskLoading(false);
         }
-
-        const newTask = await taskService.addTask({ todoId: todoInfo?._id, title: title, done: false });
-        setTasks([...tasks, newTask.data]);
-        setTaskTitle("");
     }
 
     const handleUpdateTaskDone = async (taskId: string) => {
-        const task = tasks.find(task => task._id === taskId);
+        setIsLoading(true);
 
-        if (task) {
-            const updatedTask = { ...task, done: !task.done };
-            const response = await taskService.updateTaskDone({ _id: taskId, todoId: todoInfo?._id, done: updatedTask.done });
+        try {
+            const task = tasks.find(task => task._id === taskId);
 
-            if (response.status === 200) {
-                const updatedTasks = tasks.map(task => task._id === taskId ? updatedTask : task);
-                setTasks(updatedTasks);
+            if (task) {
+                const updatedTask = { ...task, done: !task.done };
+                const response = await taskService.updateTaskDone({ _id: taskId, todoId: todoInfo?._id, done: updatedTask.done });
+
+                if (response.status === 200) {
+                    const updatedTasks = tasks.map(task => task._id === taskId ? updatedTask : task);
+                    setTasks(updatedTasks);
+                }
             }
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao atualizar tarefa!");
+        } finally {
+            setIsLoading(false);
         }
     }
 
     const handleDeleteTask = async (taskId: string) => {
-        const response = await taskService.deleteTask({ _id: taskId, todoId: todoInfo?._id });
+        setIsTaskLoading(true);
 
-        if (response.status === 204) {
-            const updatedTasks = tasks.filter(task => task._id !== taskId);
-            setTasks(updatedTasks);
+        try {
+            const response = await taskService.deleteTask({ _id: taskId, todoId: todoInfo?._id });
+
+            if (response.status === 204) {
+                const updatedTasks = tasks.filter(task => task._id !== taskId);
+                setTasks(updatedTasks);
+            }
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao deletar tarefa!");
+        } finally {
+            setIsTaskLoading(false);
         }
     }
-
-    const handleSetInfos = async () => {
-        setTodoTitle(todoInfo?.title || "")
-        setTasks(todoInfo?.tasks || [])
-    }
-
-    useEffect(() => {
-        handleSetInfos();
-    }, []);
 
     if (isLoading) return <Loader type='save' />
 
@@ -97,7 +126,14 @@ const UpdateTodo = ({ route }: Props) => {
         <Container>
             <DefaultHeader title={todoTitle} setTitle={setTodoTitle} handleSave={handleUpdateTodo} placeholderText='Título da lista de tarefas...' marginBottom={30} />
 
-            <ContainerInputs>
+            <ContainerInputs
+                from={{ translateY: 300, opacity: 0 }}
+                animate={{ translateY: 0, opacity: 1 }}
+                transition={{
+                    type: 'timing',
+                    duration: 200,
+                }}
+            >
                 <ContainerInputsView>
                     <ContainerInputsTitle>
                         <ContainerTitle>Título da tarefa</ContainerTitle>
@@ -109,7 +145,7 @@ const UpdateTodo = ({ route }: Props) => {
                         />
                     </ContainerInputsTitle>
 
-                    <AddTaskButton onPress={handleAddTask} >
+                    <AddTaskButton onPress={handleAddTask} disabled={isTaskLoading}>
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
                         <Entypo name="plus" size={RFValue(24)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
                     </AddTaskButton>

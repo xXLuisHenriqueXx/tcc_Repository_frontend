@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { PropsNavigationStack, PropsStack } from '../../routes'
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { Alarm } from '../../entities/Alarm';
-import { deleteAlarm, getAlarms, toggleAlarmStatus } from '../../services/alarmsService';
-import { ListRenderItem, FlatList } from 'react-native';
+import { ListRenderItem, FlatList, Alert, RefreshControl } from 'react-native';
 import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
 import { DiasText, NormalText, Title } from './styled';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MotiView } from 'moti';
+import alarmsService from '../../services/alarmsService';
+import Loader from '../Loader';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Alarms'>;
 
@@ -28,16 +30,8 @@ const Alarms = ({ route }: Props) => {
     const { newAlarm } = route.params || {};
     const [alarms, setAlarms] = useState<Alarm[]>([]);
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
-
-    const navigateToCreateAlarm = () => {
-        navigation.navigate('CreateAlarm');
-    };
-
-    const handleGetAlarms = async () => {
-        const alarms = await getAlarms('@alarms');
-        setAlarms(alarms);
-        calculateDaysUntilNextAlarm(alarms);
-    };
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     useEffect(() => {
         if (isFocused || newAlarm) {
@@ -45,98 +39,70 @@ const Alarms = ({ route }: Props) => {
         }
     }, [isFocused, newAlarm]);
 
+    const handleGetAlarms = async () => {
+        setIsLoading(true);
+        try {
+            const alarms = await alarmsService.getAlarms('@alarms');
+            setAlarms(alarms);
+            calculateDaysUntilNextAlarm(alarms);
+        } catch (err) {
+            Alert.alert('Erro', 'Erro ao buscar alarmes');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const onRefresh = useCallback(() => {
+        setIsRefreshing(true);
+        handleGetAlarms().then(() => setIsRefreshing(false));
+    }, []);
+
     const handleDeleteAlarm = async (alarmId: string) => {
-        const newAlarms = await deleteAlarm(alarmId);
+        const newAlarms = await alarmsService.deleteAlarm(alarmId);
         setAlarms(newAlarms);
         calculateDaysUntilNextAlarm(newAlarms);
     };
 
     const handleToggleAlarmStatus = async (alarmId: string, status: boolean) => {
-        const newAlarms = await toggleAlarmStatus(alarmId, status);
+        const newAlarms = await alarmsService.toggleAlarmStatus(alarmId, !status);
         setAlarms(newAlarms);
         calculateDaysUntilNextAlarm(newAlarms);
     };
 
-    // const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
-    //     const today = new Date();
-    //     let nextAlarmTime: Date | null = null as Date | null;
-
-    //     alarms.forEach(alarm => {
-    //         if (alarm.status) {
-    //             const alarmHour = new Date(alarm.hour);
-    //             const days = Object.keys(alarm.days).filter(day => alarm.days[day as keyof typeof alarm.days]);
-
-    //             days.forEach(day => {
-    //                 const dayIndex = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(day);
-    //                 let alarmTime = new Date(today);
-    //                 alarmTime.setHours(alarmHour.getHours(), alarmHour.getMinutes(), 0, 0);
-
-    //                 const diffDays = (dayIndex + 7 - today.getDay()) % 7;
-    //                 alarmTime.setDate(today.getDate() + diffDays);
-
-    //                 if (diffDays === 0 && alarmTime < today) {
-    //                     alarmTime.setDate(alarmTime.getDate() + 7);
-    //                 }
-
-    //                 if (!nextAlarmTime || alarmTime < nextAlarmTime) {
-    //                     nextAlarmTime = alarmTime;
-    //                 }
-    //             });
-    //         }
-    //     });
-
-    //     if (nextAlarmTime) {
-    //         const timeDiff = nextAlarmTime.getTime() - today.getTime();
-    //         const minutesDiff = Math.ceil(timeDiff / 1000 / 60);
-    //         const hoursDiff = Math.ceil(timeDiff / 1000 / 3600);
-    //         const daysDiff = Math.ceil(timeDiff / 1000 / 3600 / 24);
-
-    //         if (hoursDiff < 1) {
-    //             setNextAlarm({ value: minutesDiff, unit: 'minutos' });
-    //         } else if (hoursDiff < 24) {
-    //             setNextAlarm({ value: hoursDiff, unit: 'horas' });
-    //         } else {
-    //             setNextAlarm({ value: daysDiff, unit: 'dias' });
-    //         }
-    //     } else {
-    //         setNextAlarm(null);
-    //     }
-    // };
-
     const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
         const today = new Date();
         let nextAlarmTime: Date | null = null;
-    
+
         alarms.forEach(alarm => {
             if (alarm.status) {
                 const alarmHour = new Date(alarm.hour);
                 const days = Object.keys(alarm.days).filter(day => alarm.days[day as keyof typeof alarm.days]);
-    
+
                 days.forEach(day => {
                     const dayIndex = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(day);
                     let alarmTime = new Date(today);
                     alarmTime.setHours(alarmHour.getHours(), alarmHour.getMinutes(), 0, 0);
-    
+
                     const diffDays = (dayIndex + 7 - today.getDay()) % 7;
                     alarmTime.setDate(today.getDate() + diffDays);
-    
+
                     if (diffDays === 0 && alarmTime <= today) {
                         alarmTime.setDate(alarmTime.getDate() + 7);
                     }
-    
+
                     if (!nextAlarmTime || alarmTime < nextAlarmTime) {
                         nextAlarmTime = alarmTime;
                     }
                 });
             }
         });
-    
+
         if (nextAlarmTime) {
             const timeDiff = new Date(nextAlarmTime).getTime() - today.getTime();
             const minutesDiff = Math.ceil(timeDiff / (1000 * 60));
             const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
             const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    
+
             if (hoursDiff < 24) {
                 setNextAlarm({ value: hoursDiff < 1 ? minutesDiff : hoursDiff, unit: hoursDiff < 1 ? 'minutos' : 'horas' });
             } else {
@@ -147,21 +113,37 @@ const Alarms = ({ route }: Props) => {
         }
     };
 
-    const renderItem: ListRenderItem<Alarm> = ({ item }) => (
-        <ContainerAlarm 
-            alarm={item}
-            deleteAlarm={() => handleDeleteAlarm(item._id)}
-            toggleAlarmStatus={() => handleToggleAlarmStatus(item._id, item.status)}
-        />
+    const navigateToCreateAlarm = () => {
+        navigation.navigate('CreateAlarm');
+    };
+
+    const renderItem: ListRenderItem<Alarm> = ({ item, index }) => (
+        <MotiView
+            from={{ translateX: -300, opacity: 0 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            transition={{
+                type: 'timing',
+                duration: 200,
+                delay: index * 100
+            }}
+        >
+            <ContainerAlarm
+                alarm={item}
+                deleteAlarm={() => handleDeleteAlarm(item._id)}
+                toggleAlarmStatus={() => handleToggleAlarmStatus(item._id, item.status)}
+            />
+        </MotiView>
     )
-    
+
+    if (isLoading) return <Loader type='load' />
+
     return (
         <LinearGradient
             colors={theme.colors.bgMainColor}
             style={{ flex: 1 }}
         >
-            <FlatList 
-                style={{marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
+            <FlatList
+                style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={
@@ -179,6 +161,9 @@ const Alarms = ({ route }: Props) => {
                     </>
                 }
                 renderItem={renderItem}
+                refreshControl={
+                    <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+                }
             />
             <BotaoAdd navigate={navigateToCreateAlarm} />
             <Navbar screen='Alarms' />

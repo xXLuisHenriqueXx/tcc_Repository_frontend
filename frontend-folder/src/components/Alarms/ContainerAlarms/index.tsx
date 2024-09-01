@@ -48,7 +48,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
                 thumbColor={theme.colors.thumbColor}
                 onValueChange={async (newValue) => {
                     setSwitchEnabled(newValue);
-                    await toggleAlarmStatus(alarm._id, newValue);
+                    await toggleAlarmStatus(alarm._id, alarm.status);
                 }}
                 value={switchEnabled}
             />

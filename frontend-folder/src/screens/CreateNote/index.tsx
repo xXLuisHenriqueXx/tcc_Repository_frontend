@@ -16,30 +16,35 @@ const CreateNote = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSaveNote = async () => {
-    const title = noteTitle.trim();
-    const content = noteContent.trim();
+    setIsLoading(true);
+    
+    try {
+      const title = noteTitle.trim();
+      const content = noteContent.trim();
 
-    if (title === "") {
-      Alert.alert("Aviso", "Digite um título para a nota!");
-      return;
+      if (title === "") {
+        Alert.alert("Aviso", "Digite um título para a nota!");
+        return;
 
-    } else if (content === "") {
-      Alert.alert("Aviso", "Digite um conteúdo para a nota!");
-      return;
+      } else if (content === "") {
+        Alert.alert("Aviso", "Digite um conteúdo para a nota!");
+        return;
 
-    } else {
-      setIsLoading(true);
+      } else {
+        const params = { title, content };
 
-      const params = { title, content };
+        const { status } = await noteService.addNote(params);
 
-      const { status } = await noteService.addNote(params);
-
-      if (status === 201) {
-        navigation.navigate("Notes", { newNote: true });
+        if (status === 201) {
+          navigation.navigate("Notes", { newNote: true });
+        }
       }
-
+    } catch (err) {
+      Alert.alert('Erro', 'Erro ao salvar nota');
+    } finally {
       setIsLoading(false);
     }
+
   }
 
   if (isLoading) return <Loader type='save' />
@@ -48,7 +53,14 @@ const CreateNote = () => {
     <Container>
       <DefaultHeader title={noteTitle} setTitle={setNoteTitle} handleSave={handleSaveNote} placeholderText='Título da nota...' marginBottom={30} />
 
-      <ContainerInputs>
+      <ContainerInputs
+        from={{ translateY: 300, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        transition={{
+          type: 'timing',
+          duration: 200,
+        }}
+      >
         <ContainerInputsView>
           <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
           <InputContent

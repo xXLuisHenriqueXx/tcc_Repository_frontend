@@ -26,17 +26,23 @@ const Login = () => {
     const { login } = useAuth();
 
     const handleLogin = () => {
-        const trimmedEmail = fields.email.trim();
-        const trimmedPassword = fields.password.trim();
-
-        if (!trimmedEmail || !trimmedPassword) {
-            Alert.alert("Aviso", "Preencha todos os campos!");
-            return;
-        }
-
         setIsLoading(true);
-        login(trimmedEmail, trimmedPassword);
-        setIsLoading(false);
+
+        try {
+            const trimmedEmail = fields.email.trim();
+            const trimmedPassword = fields.password.trim();
+
+            if (!trimmedEmail || !trimmedPassword) {
+                Alert.alert("Aviso", "Preencha todos os campos!");
+                return;
+            }
+
+            login(trimmedEmail, trimmedPassword);
+        } catch (error) {
+            Alert.alert("Erro", "Erro ao realizar login!");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     if (isLoading) return <Loader type='load' />
@@ -55,7 +61,14 @@ const Login = () => {
                     <NormalText>Para prosseguir realize o login nos campos abaixo!</NormalText>
                 </ContainerText>
 
-                <ContainerForm>
+                <ContainerForm
+                    from={{translateY: 300, opacity: 0}}
+                    animate={{translateY: 0, opacity: 1}}
+                    transition={{
+                        type: 'timing',
+                        duration: 200,
+                    }}
+                >
                     <InputContainer>
                         <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
                         <Input
@@ -81,7 +94,7 @@ const Login = () => {
                         />
                     </InputContainer>
 
-                    <LoginButton onPress={handleLogin}>
+                    <LoginButton onPress={handleLogin} disabled={isLoading}>
                         <LoginButtonText>ACESSAR</LoginButtonText>
                         <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </LoginButton>

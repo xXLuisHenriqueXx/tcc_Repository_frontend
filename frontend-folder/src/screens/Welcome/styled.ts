@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import Constants from 'expo-constants';
+import { MotiView } from "moti";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -57,7 +58,7 @@ export const NormalText = styled.Text`
     text-align: center;
 `;
 
-export const ContainerButton = styled.View`
+export const ContainerButton = styled(MotiView)`
     flex-direction: column;
     align-items: center;
     width: 100%;

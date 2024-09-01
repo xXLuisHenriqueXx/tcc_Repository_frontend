@@ -30,30 +30,36 @@ const Register = () => {
   const { register } = useAuth();
 
   const handleRegister = async () => {
-    const trimmedName = fields.name.trim();
-    const trimmedEmail = fields.email.trim();
-    const trimmedPassword = fields.password.trim();
-    const trimmedConfirmPassword = fields.confirmPassword.trim();
-    
-    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
-      Alert.alert("Aviso", "Preencha todos os campos!");
-      return;
-    }
-
-    if (trimmedPassword.length < 8) {
-      Alert.alert("Aviso", "A senha deve ter no mínimo 8 caracteres!");
-      return;
-    }
-
-    if (trimmedPassword != trimmedConfirmPassword) {
-      Alert.alert("Aviso", "As senhas são diferentes!");
-      return;
-    }
-    
     setIsLoading(true);
-    register(trimmedName, trimmedEmail, trimmedPassword);
-    setIsLoading(false);
+
+    try {
+      const trimmedName = fields.name.trim();
+      const trimmedEmail = fields.email.trim();
+      const trimmedPassword = fields.password.trim();
+      const trimmedConfirmPassword = fields.confirmPassword.trim();
+      
+      if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
+        Alert.alert("Aviso", "Preencha todos os campos!");
+        return;
+      }
+  
+      if (trimmedPassword.length < 8) {
+        Alert.alert("Aviso", "A senha deve ter no mínimo 8 caracteres!");
+        return;
+      }
+  
+      if (trimmedPassword != trimmedConfirmPassword) {
+        Alert.alert("Aviso", "As senhas são diferentes!");
+        return;
+      }
+      
+      register(trimmedName, trimmedEmail, trimmedPassword);
+    } catch (error) {
+      Alert.alert("Erro", "Erro ao realizar cadastro!");
+    } finally {
+      setIsLoading(false);
     }
+  }
 
   if (isLoading) return <Loader type='load' />
 
@@ -69,7 +75,14 @@ const Register = () => {
           <NormalText>Para prosseguir realize o cadastro nos campos abaixo!</NormalText>
         </ContainerText>
 
-        <ContainerForm>
+        <ContainerForm
+          from={{translateY: 300, opacity: 0}}
+          animate={{translateY: 0, opacity: 1}}
+          transition={{
+              type: 'timing',
+              duration: 200,
+          }}
+        >
           <InputContainer>
             <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
             <Input
@@ -120,7 +133,7 @@ const Register = () => {
             />
           </InputContainer>
 
-          <RegisterButton onPress={handleRegister}>
+          <RegisterButton onPress={handleRegister} disabled={isLoading}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
             <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
           </RegisterButton>
