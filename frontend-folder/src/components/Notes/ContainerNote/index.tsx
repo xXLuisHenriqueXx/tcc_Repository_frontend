@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ContainerNoteView, ContainerTitleDate, DeleteButton, TextDateNote, TitleNote } from './styled';
 import { AntDesign, Feather } from '@expo/vector-icons'
 import { Note } from '../../../entities/Note';
@@ -8,6 +8,7 @@ import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { PropsStack } from '../../../routes';
 import ModalDelete from '../../common/ModalDelete';
+import { Animated, Easing } from 'react-native';
 
 interface ContainerNoteProps {
   note: Note;
@@ -18,6 +19,52 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const [modalVisible, setModalVisible] = useState(false);
+
+  const translateX = useRef(new Animated.Value(0)).current;
+    const shakeAnimation = useRef(new Animated.Value(0)).current;
+
+    const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
+
+    const handleDelete = async () => {
+        Animated.timing(translateX, {
+            toValue: 500,
+            duration: 100,
+            easing: Easing.ease,
+            useNativeDriver: true,
+        }).start(async () => {
+            await deleteNote(note);
+        });
+    };
+
+    useEffect(() => {
+        if (modalVisible) {
+            Animated.loop(
+                Animated.sequence([
+                    Animated.timing(shakeAnimation, {
+                        toValue: 1,
+                        duration: 200,
+                        easing: Easing.linear,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(shakeAnimation, {
+                        toValue: -1,
+                        duration: 200,
+                        easing: Easing.linear,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(shakeAnimation, {
+                        toValue: 0,
+                        duration: 200,
+                        easing: Easing.linear,
+                        useNativeDriver: true,
+                    }),
+                ])
+            ).start();
+        } else {
+            shakeAnimation.setValue(0);
+        }
+    }, [modalVisible]);
+
 
   const navigateToUpdateNote = () => {
     navigation.navigate("UpdateNote", { noteInfo: note });
@@ -36,7 +83,7 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
 
       <ModalDelete
         item={note}
-        deleteItem={deleteNote}
+        deleteItem={handleDelete}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />

@@ -3,7 +3,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useNavigation } from '@react-navigation/native';
 import { Alert, Platform } from 'react-native';
 import { useTheme } from 'styled-components';
-import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, DateButton, DateButtonText, DayButton, DayButtonText } from './styled';
+import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerText, DateButton, DayButton, DayButtonText } from './styled';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { PropsStack } from '../../routes';
 import uuid from 'react-native-uuid';
@@ -23,9 +23,6 @@ type DaysState = {
     saturday: boolean
 }
 
-const hoursData = Array.from({ length: 24 }, (_, i) => i);
-const minutesData = Array.from({ length: 60 }, (_, i) => i);
-
 const CreateAlarm = () => {
     const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
@@ -33,9 +30,9 @@ const CreateAlarm = () => {
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
     const [alarmTitle, setAlarmTitle] = useState<string>("");
-    // const [date, setDate] = useState(new Date());
-    // const [mode, setMode] = useState<"date" | "time">('date');
-    // const [show, setShow] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [mode, setMode] = useState<"date" | "time">('date');
+    const [show, setShow] = useState(false);
     const [days, setDays] = useState<DaysState>({
         sunday: false,
         monday: false,
@@ -73,26 +70,26 @@ const CreateAlarm = () => {
         }
     }
 
-    // const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    //     const currentDate = selectedDate || date;
-    //     setShow(Platform.OS === 'ios');
-    //     setDate(currentDate);
-    // };
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
 
-    // const showMode = (currentMode: "date") => {
-    //     setShow(true);
-    //     setMode('date');
-    // };
+    const showMode = (currentMode: "date") => {
+        setShow(true);
+        setMode('date');
+    };
 
-    // const showDatepicker = () => {
-    //     showMode('date');
-    // };
+    const showDatepicker = () => {
+        showMode('date');
+    };
 
     if (isLoading) return <Loader type='save' />
 
     return (
         <Container>
-            <DefaultHeader title={alarmTitle} setTitle={setAlarmTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' marginBottom={100} />
+            <DefaultHeader title={alarmTitle} setTitle={setAlarmTitle} handleSave={handleSaveAlarm} placeholderText='Título do alarme...' marginBottom={0} />
 
             <MotiView
                 from={{ translateY: -300, opacity: 0 }}
@@ -104,13 +101,15 @@ const CreateAlarm = () => {
             >
                 <ContainerButtons>
                     <ContainerButtonsView>
-                        <HourMinutesPicker hour={hour} minute={minute} setHour={setHour} setMinute={setMinute} />
+                        <ContainerText>Hora</ContainerText>
+                        <HourMinutesPicker setHour={setHour} setMinute={setMinute} />
 
-                        {/* <DateButton onPress={showDatepicker}>
+                        <DateButton onPress={showDatepicker}>
                             <FontAwesome5 name="calendar" size={25} color={theme.colors.highlightColor} />
-                        </DateButton> */}
+                        </DateButton>
 
                         <ContainerDaysView>
+                            <ContainerText>Dias da semana</ContainerText>
                             <ContainerDays>
                                 <DayButton selected={days.sunday} onPress={() => setDays({ ...days, sunday: !days.sunday })}><DayButtonText>D</DayButtonText></DayButton>
                                 <DayButton selected={days.monday} onPress={() => setDays({ ...days, monday: !days.monday })}><DayButtonText>S</DayButtonText></DayButton>
@@ -124,15 +123,15 @@ const CreateAlarm = () => {
                     </ContainerButtonsView>
                 </ContainerButtons>
             </MotiView>
-            {/* {show && (
+            {show && (
                 <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
-                    mode={'time'}
+                    mode={'date'}
                     display="calendar"
                     onChange={onChange}
                 />
-            )} */}
+            )}
         </Container>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BackButton, Container, ContainerButton, ContainerText, ContainerView, LoginButton, LoginButtonText, Logo, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
+import { BackButton, Container, ContainerButton, ContainerText, ContainerView, LoginButton, LoginButtonText, Logo, NormalText, OrContainer, OrLine, OrText, RegisterButton, RegisterButtonText, Title } from './styled';
 import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +25,7 @@ const Welcome = () => {
       <BackButton onPress={() => navigation.goBack()}>
         <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
       </BackButton>
-      
+
       <ContainerView>
         <Logo source={logoImage} />
 
@@ -35,21 +35,27 @@ const Welcome = () => {
         </ContainerText>
 
         <ContainerButton
-          from={{translateY: 300, opacity: 0}}
-          animate={{translateY: 0, opacity: 1}}
+          from={{ translateY: 300, opacity: 0 }}
+          animate={{ translateY: 0, opacity: 1 }}
           transition={{
-              type: 'timing',
-              duration: 200,
+            type: 'timing',
+            duration: 200,
           }}
         >
           <LoginButton onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
-            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{position: "absolute", right: RFValue(16)}} />
+            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
           </LoginButton>
+
+          <OrContainer>
+            <OrLine />
+            <OrText>OU</OrText>
+            <OrLine />
+          </OrContainer>
 
           <RegisterButton onPress={handleNavigateToRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
-            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{position: "absolute", right: RFValue(16)}} />
+            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{ position: "absolute", right: RFValue(16) }} />
           </RegisterButton>
         </ContainerButton>
       </ContainerView>

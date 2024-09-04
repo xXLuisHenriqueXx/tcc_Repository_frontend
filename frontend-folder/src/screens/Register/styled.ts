@@ -64,9 +64,9 @@ export const InputContainer = styled.View`
     height: ${RFValue(30)}px;
     flex-direction: row;
     align-items: center;
-    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-width: ${RFValue(2)}px;
     border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
-    margin-bottom: ${RFValue(35)}px;
+    margin-bottom: ${RFValue(30)}px;
 `;
 
 export const Input = styled.TextInput`
@@ -81,7 +81,7 @@ export const RegisterButton = styled.TouchableOpacity.attrs({
 })`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
-    height: ${RFValue(60)}px;
+    height: ${RFValue(50)}px;
     border-radius: ${RFValue(5)}px;
     flex-direction: row;
     justify-content: center;
@@ -89,7 +89,7 @@ export const RegisterButton = styled.TouchableOpacity.attrs({
 `;
 
 export const RegisterButtonText = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.bgColor};
     font-weight: 600;
 `;

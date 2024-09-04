@@ -19,7 +19,11 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
                 setModalVisible(!modalVisible);
             }}
         >
-            <ContainerView>
+            <ContainerView
+                from={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ type: 'timing', duration: 300 }}
+            >
                 <ModalView>
                     <ModalTitle>
                         Tem certeza que deseja excluir o item "<ModalTitleDestaque>{item.title}</ModalTitleDestaque>"?

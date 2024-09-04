@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, LoginButton, LoginButtonText, NormalText, Title } from './styled'
-import { Feather, Entypo } from "@expo/vector-icons"
+import { BackButton, Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled'
+import { Feather, Entypo, FontAwesome } from "@expo/vector-icons"
 import { useNavigation } from '@react-navigation/native'
 import { PropsStack } from '../../routes'
 import { useTheme } from 'styled-components'
@@ -62,8 +62,8 @@ const Login = () => {
                 </ContainerText>
 
                 <ContainerForm
-                    from={{translateY: 300, opacity: 0}}
-                    animate={{translateY: 0, opacity: 1}}
+                    from={{ translateY: 300, opacity: 0 }}
+                    animate={{ translateY: 0, opacity: 1 }}
                     transition={{
                         type: 'timing',
                         duration: 200,
@@ -98,6 +98,21 @@ const Login = () => {
                         <LoginButtonText>ACESSAR</LoginButtonText>
                         <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
                     </LoginButton>
+                    <ForgotPasswordButton>
+                        <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
+                    </ForgotPasswordButton>
+
+                    <OrContainer>
+                        <OrLine />
+                        <OrText>OU</OrText>
+                        <OrLine />
+                    </OrContainer>
+
+                    <GoogleButton>
+                        <FontAwesome name="google" size={RFValue(22)} color={theme.colors.highlightColor} style={{ position: "absolute", left: RFValue(16) }} />
+                        <GoogleButtonText>ACESSAR COM GOOGLE</GoogleButtonText>
+                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{ position: "absolute", right: RFValue(16) }} />
+                    </GoogleButton>
                 </ContainerForm>
             </ContainerView>
         </Container>

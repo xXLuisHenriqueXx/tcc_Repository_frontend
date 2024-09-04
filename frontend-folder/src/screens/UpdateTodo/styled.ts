@@ -40,18 +40,20 @@ export const ContainerInputsTitle = styled.View`
 
 export const ContainerTitle = styled.Text`
     width: 100%;
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
+    font-weight: 500;
+    padding-bottom: ${RFValue(4)}px;
 `;
 
 export const InputTitle = styled.TextInput`
     width: 100%;
     height: ${RFValue(40)}px;
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(16)}px;
-    border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
+    border-radius: ${RFValue(5)}px;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    font-size: ${RFValue(14)}px;
+    padding: 0 ${RFValue(8)}px;
 `;
 
 export const AddTaskButton = styled.TouchableOpacity.attrs({
@@ -77,7 +79,7 @@ export const TasksContainer = styled.View`
     justify-content: flex-start;
     align-items: center;
     margin-top: ${RFValue(16)}px;
-    border-top-width: ${RFValue(1)}px;
+    border-top-width: ${RFValue(2)}px;
     border-top-color: ${({ theme }) => theme.colors.bdColor};
 `;
 

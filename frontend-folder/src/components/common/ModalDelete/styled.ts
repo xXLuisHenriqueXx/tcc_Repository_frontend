@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { MotiView } from "moti";
 
-export const ContainerView = styled.View`
+export const ContainerView = styled(MotiView)`
     flex: 1;
     justify-content: center;
     align-items: center;

@@ -5,54 +5,56 @@ interface selectedProp {
     selected: boolean;
 }
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
 export const ContainerButtons = styled.View`
-    flex: 1;
+    width: 100%;
+    height: 90%;
     justify-content: center;
     align-items: center;
-    margin: 0 ${RFValue(16)}px;
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const ContainerButtonsView = styled.View`
     width: 100%;
+    height: ${RFValue(400)}px;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     border-radius: ${RFValue(10)}px;
-    padding: ${RFValue(40)}px 0;
+    padding: ${RFValue(32)}px ${RFValue(16)}px;
 `;
 
 export const DateButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
-    width: 90%;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: ${RFValue(40)}px;
-    border-bottom-width: ${RFValue(1)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.bdColor};
+    position: absolute;
+    top: ${RFValue(32)}px;
+    right: ${RFValue(16)}px;
 `;
 
-export const DateButtonText = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(60)}px;
-    margin-right: ${RFValue(10)}px;
-    font-weight: bold;
+export const ContainerText = styled.Text`
+    width: 100%;
+    font-size: ${RFValue(16)}px;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.highlightColor};
+    text-align: start;
+    margin-bottom: ${RFValue(8)}px;
 `;
-
-
 
 export const ContainerDaysView = styled.View`
-    width: 90%;
+    width: 100%;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: ${RFValue(40)}px;
+    margin-top: ${RFValue(32)}px;
+    padding-bottom: ${RFValue(16)}px;
+    margin-bottom: ${RFValue(32)}px;
+    border-bottom-width: ${RFValue(2)}px;
+    border-color: ${({ theme }) => theme.colors.bdColor};
 `;
 
 export const ContainerDays = styled.View`

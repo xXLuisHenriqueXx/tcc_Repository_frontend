@@ -36,7 +36,7 @@ export const ContainerInputsTitle = styled.Text`
     font-weight: bold;
     padding: ${RFValue(16)}px 0;
     text-align: center;
-    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-width: ${RFValue(2)}px;
     border-bottom-color: ${({ theme }) => theme.colors.bdColor};
 `;
 

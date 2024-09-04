@@ -64,9 +64,9 @@ export const InputContainer = styled.View`
     height: ${RFValue(30)}px;
     flex-direction: row;
     align-items: center;
-    border-bottom-width: ${RFValue(1)}px;
+    border-bottom-width: ${RFValue(2)}px;
     border-bottom-color: ${({ theme }) => theme.colors.highlightColor};
-    margin-bottom: ${RFValue(35)}px;
+    margin-bottom: ${RFValue(30)}px;
 `;
 
 export const Input = styled.TextInput`
@@ -81,7 +81,7 @@ export const LoginButton = styled.TouchableOpacity.attrs({
 })`
     background-color: ${({ theme }) => theme.colors.highlightColor};
     width: 100%;
-    height: ${RFValue(60)}px;
+    height: ${RFValue(50)}px;
     border-radius: ${RFValue(5)}px;
     flex-direction: row;
     justify-content: center;
@@ -89,7 +89,58 @@ export const LoginButton = styled.TouchableOpacity.attrs({
 `;
 
 export const LoginButtonText = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.bgColor};
+    font-weight: 600;
+`;
+
+export const ForgotPasswordButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
+`;
+
+export const ForgotPasswordText = styled.Text`
+    font-size: ${RFValue(12)}px;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.text};
+    margin-top: ${RFValue(8)}px;
+`;
+
+export const OrContainer = styled.View`
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    margin: ${RFValue(32)}px 0;
+`;
+
+export const OrLine = styled.View`
+    flex: 1;
+    height: ${RFValue(2)}px;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+`;
+
+export const OrText = styled.Text`
+    font-size: ${RFValue(16)}px;
+    color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    margin: 0 ${RFValue(16)}px;
+`;
+
+export const GoogleButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.85
+})`
+    width: 100%;
+    height: ${RFValue(50)}px;
+    border-radius: ${RFValue(5)}px;
+    border-width: ${RFValue(2)}px;
+    border-color: ${({ theme }) => theme.colors.highlightColor};
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const GoogleButtonText = styled.Text`
+    font-size: ${RFValue(16)}px;
+    color: ${({ theme }) => theme.colors.highlightColor};
     font-weight: 600;
 `;

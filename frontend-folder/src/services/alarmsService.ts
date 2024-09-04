@@ -2,23 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alarm } from "../entities/Alarm";
 
 const alarmsService = {
-    // getAlarms: async (key: string) => {
-    //     try {
-    //         const myAlarms = await AsyncStorage.getItem(key);
-    //         let myAlarmsParsed: Alarm[] = myAlarms != null ? JSON.parse(myAlarms) : [];
-
-    //         myAlarmsParsed = myAlarmsParsed.map(item => ({
-    //             ...item,
-    //             date: new Date(item.hour)
-    //         }));
-
-    //         return myAlarmsParsed;
-    //     } catch (error) {
-    //         console.log(error);
-    //         return [];
-    //     }
-    // },
-
     getAlarms: async (key: string): Promise<Alarm[]> => {
         try {
             const alarms = await AsyncStorage.getItem(key);
@@ -69,8 +52,9 @@ const alarmsService = {
             });
     
             await AsyncStorage.setItem('@alarms', JSON.stringify(alarmsUpdated));
-    
+            
             return alarmsUpdated;
+
         } catch (error) {
             console.log(error);
             return [];

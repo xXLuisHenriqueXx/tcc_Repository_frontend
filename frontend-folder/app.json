@@ -12,13 +12,15 @@
       "backgroundColor": "#08041B"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.frontendfolder"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.frontendfolder"
     },
     "web": {
       "favicon": ""
