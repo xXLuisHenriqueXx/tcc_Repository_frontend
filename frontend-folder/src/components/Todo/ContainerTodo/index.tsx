@@ -21,7 +21,7 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
-  const shakeAnimation = useRef(new Animated.Value(0)).current;
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const handleDelete = async () => {
     Animated.timing(translateX, {
@@ -38,28 +38,22 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
     if (modalVisible) {
       Animated.loop(
         Animated.sequence([
-          Animated.timing(shakeAnimation, {
+          Animated.timing(scaleAnimation, {
+            toValue: 1.01,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(scaleAnimation, {
             toValue: 1,
-            duration: 200,
-            easing: Easing.linear,
-            useNativeDriver: true,
-          }),
-          Animated.timing(shakeAnimation, {
-            toValue: -1,
-            duration: 200,
-            easing: Easing.linear,
-            useNativeDriver: true,
-          }),
-          Animated.timing(shakeAnimation, {
-            toValue: 0,
-            duration: 200,
-            easing: Easing.linear,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
             useNativeDriver: true,
           }),
         ])
       ).start();
     } else {
-      shakeAnimation.setValue(0);
+      scaleAnimation.setValue(1);
     }
   }, [modalVisible]);
 
@@ -68,7 +62,7 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
   }
 
   return (
-    <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
+    <Animated.View style={{ transform: [{translateX}, {scale: scaleAnimation}] }}>
       <ContainerTodoView
         onPress={navigateToUpdateTodo}
         onLongPress={() => setModalVisible(true)}

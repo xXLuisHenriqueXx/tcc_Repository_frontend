@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from 'styled-components';
 import { BgButton, ContainerButton } from './styled';
-import { Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons';
 
 interface BotaoAddProps {
     navigate: () => void;

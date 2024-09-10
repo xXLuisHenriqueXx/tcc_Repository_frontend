@@ -18,7 +18,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
     const [modalVisible, setModalVisible] = useState(false);
 
     const translateX = useRef(new Animated.Value(0)).current;
-    const shakeAnimation = useRef(new Animated.Value(0)).current;
+    const scaleAnimation = useRef(new Animated.Value(0)).current;
 
     const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
 
@@ -33,37 +33,32 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
         });
     };
 
-    useEffect(() => {
-        if (modalVisible) {
-            Animated.loop(
-                Animated.sequence([
-                    Animated.timing(shakeAnimation, {
-                        toValue: 1,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(shakeAnimation, {
-                        toValue: -1,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(shakeAnimation, {
-                        toValue: 0,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                ])
-            ).start();
-        } else {
-            shakeAnimation.setValue(0);
-        }
-    }, [modalVisible]);
+    
+  useEffect(() => {
+    if (modalVisible) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(scaleAnimation, {
+            toValue: 1.01,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(scaleAnimation, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    } else {
+      scaleAnimation.setValue(1);
+    }
+  }, [modalVisible]);
 
     return (
-        <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
+        <Animated.View style={{ transform: [{translateX}, {scale: scaleAnimation}] }}>
             <ContainerAlarmView
                 onLongPress={() => setModalVisible(true)}
                 switchEnabled={switchEnabled}

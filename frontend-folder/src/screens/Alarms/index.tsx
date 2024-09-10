@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { ListRenderItem, FlatList, Alert, RefreshControl } from 'react-native';
+import { ContainerModeSelect, ContainerPomodoro, ContainerPomodoroButtons, ContainerPomodoroButtonsStartButton, ContainerPomodoroButtonsStartButtonText, ContainerPomodoroButtonsTimeBox, ContainerPomodoroButtonsTimeBoxInput, ContainerPomodoroButtonsTimeBoxInputText, ContainerPomodoroButtonsTitle, ContainerPomodoroTitle, DiasText, NormalText, Title } from './styled';
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { PropsNavigationStack, PropsStack } from '../../routes'
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { Alarm } from '../../entities/Alarm';
-import { ListRenderItem, FlatList, Alert, RefreshControl } from 'react-native';
 import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
-import { DiasText, NormalText, Title } from './styled';
 import Navbar from '../../components/common/Navbar'
 import BotaoAdd from '../../components/common/BotaoAdd';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -14,6 +14,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MotiView } from 'moti';
 import alarmsService from '../../services/alarmsService';
 import Loader from '../Loader';
+import { Entypo } from '@expo/vector-icons'
+import ModalSelect from '../../components/common/ModalSelect';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Alarms'>;
 
@@ -30,8 +32,10 @@ const Alarms = ({ route }: Props) => {
     const { newAlarm } = route.params || {};
     const [alarms, setAlarms] = useState<Alarm[]>([]);
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+    const [screen, setScreen] = useState<"alarm" | "pomodoro">("alarm");
+    const [modalSelectVisible, setModalSelectVisible] = useState<boolean>(false);
 
     useEffect(() => {
         if (isFocused || newAlarm) {
@@ -142,32 +146,83 @@ const Alarms = ({ route }: Props) => {
             colors={theme.colors.bgMainColor}
             style={{ flex: 1 }}
         >
-            <FlatList
-                style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
-                data={alarms}
-                keyExtractor={item => item._id}
-                ListHeaderComponent={
-                    <>
-                        <Title>Alarmes</Title>
+            {screen === "alarm" ?
+                < FlatList
+                    style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
+                    data={alarms}
+                    keyExtractor={item => item._id}
+                    ListHeaderComponent={
+                        <>
+                            <ContainerModeSelect onPress={() => { setModalSelectVisible(true) }}>
+                                <Title>Alarmes</Title>
+                                <Entypo name="chevron-down" size={RFValue(28)} color={theme.colors.text} />
+                            </ContainerModeSelect>
+                            <NormalText>
+                                {nextAlarm && nextAlarm.value > 0 ? (
+                                    `Próximo alarme em `
+                                ) : (
+                                    "Nenhum alarme em progresso..."
+                                )}
+                                {nextAlarm && nextAlarm.value > 0 && <DiasText>{nextAlarm.value}</DiasText>}
+                                {nextAlarm && nextAlarm.value > 0 && ` ${nextAlarm.unit}...`}
+                            </NormalText>
+                        </>
+                    }
+                    renderItem={renderItem}
+                    refreshControl={
+                        <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+                    }
+                />
+                :
+
+                <ContainerPomodoro>
+                    <ContainerPomodoroTitle>
+                        <ContainerModeSelect onPress={() => { setModalSelectVisible(true) }}>
+                            <Title>Pomodoro</Title>
+                            <Entypo name="chevron-down" size={RFValue(28)} color={theme.colors.text} />
+                        </ContainerModeSelect>
                         <NormalText>
-                            {nextAlarm && nextAlarm.value > 0 ? (
-                                `Próximo alarme em `
-                            ) : (
-                                "Nenhum alarme em progresso..."
-                            )}
-                            {nextAlarm && nextAlarm.value > 0 && <DiasText>{nextAlarm.value}</DiasText>}
-                            {nextAlarm && nextAlarm.value > 0 && ` ${nextAlarm.unit}...`}
+                            Crie seu pomodoro aqui...
                         </NormalText>
-                    </>
-                }
-                renderItem={renderItem}
-                refreshControl={
-                    <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-                }
-            />
-            <BotaoAdd navigate={navigateToCreateAlarm} />
+                    </ContainerPomodoroTitle>
+
+                    <ContainerPomodoroButtons>
+                        <ContainerPomodoroButtonsTitle>Tempo de estudo:</ContainerPomodoroButtonsTitle>
+                        <ContainerPomodoroButtonsTimeBox>
+                            <ContainerPomodoroButtonsTimeBoxInput
+                                placeholder='00'
+                                placeholderTextColor={theme.colors.textInactive}
+                                maxLength={2}
+                            />
+                            <ContainerPomodoroButtonsTimeBoxInputText>minutos</ContainerPomodoroButtonsTimeBoxInputText>
+                        </ContainerPomodoroButtonsTimeBox>
+
+                        <ContainerPomodoroButtonsTitle style={{marginTop: RFValue(16)}}>Tempo de descanso:</ContainerPomodoroButtonsTitle>
+                        <ContainerPomodoroButtonsTimeBox>
+                            <ContainerPomodoroButtonsTimeBoxInput
+                                placeholder='00'
+                                placeholderTextColor={theme.colors.textInactive}
+                                maxLength={2}
+                            />
+                            <ContainerPomodoroButtonsTimeBoxInputText>minutos</ContainerPomodoroButtonsTimeBoxInputText>
+                        </ContainerPomodoroButtonsTimeBox>
+
+                        <ContainerPomodoroButtonsStartButton>
+                            <ContainerPomodoroButtonsStartButtonText>COMEÇAR</ContainerPomodoroButtonsStartButtonText>
+                        </ContainerPomodoroButtonsStartButton>
+                    </ContainerPomodoroButtons>
+                </ContainerPomodoro>
+
+            }
+            {screen === "alarm" && <BotaoAdd navigate={navigateToCreateAlarm} />}
             <Navbar screen='Alarms' />
-        </LinearGradient>
+            <ModalSelect
+                modalVisible={modalSelectVisible}
+                setModalVisible={setModalSelectVisible}
+                screen={screen}
+                setScreen={setScreen}
+            />
+        </LinearGradient >
     )
 }
 

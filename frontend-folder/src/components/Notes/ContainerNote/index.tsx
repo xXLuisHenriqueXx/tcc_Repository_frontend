@@ -21,49 +21,41 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
-    const shakeAnimation = useRef(new Animated.Value(0)).current;
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
-    const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
+  const handleDelete = async () => {
+    Animated.timing(translateX, {
+      toValue: 500,
+      duration: 100,
+      easing: Easing.ease,
+      useNativeDriver: true,
+    }).start(async () => {
+      await deleteNote(note);
+    });
+  };
 
-    const handleDelete = async () => {
-        Animated.timing(translateX, {
-            toValue: 500,
-            duration: 100,
-            easing: Easing.ease,
+  useEffect(() => {
+    if (modalVisible) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(scaleAnimation, {
+            toValue: 1.01,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
             useNativeDriver: true,
-        }).start(async () => {
-            await deleteNote(note);
-        });
-    };
-
-    useEffect(() => {
-        if (modalVisible) {
-            Animated.loop(
-                Animated.sequence([
-                    Animated.timing(shakeAnimation, {
-                        toValue: 1,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(shakeAnimation, {
-                        toValue: -1,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(shakeAnimation, {
-                        toValue: 0,
-                        duration: 200,
-                        easing: Easing.linear,
-                        useNativeDriver: true,
-                    }),
-                ])
-            ).start();
-        } else {
-            shakeAnimation.setValue(0);
-        }
-    }, [modalVisible]);
+          }),
+          Animated.timing(scaleAnimation, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    } else {
+      scaleAnimation.setValue(1);
+    }
+  }, [modalVisible]);
 
 
   const navigateToUpdateNote = () => {
@@ -71,23 +63,25 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   }
 
   return (
-    <ContainerNoteView
-      onPress={navigateToUpdateNote}
-      onLongPress={() => setModalVisible(true)}
-    >
-      <ContainerTitleDate>
-        <TitleNote>{note.title}</TitleNote>
-        <TextDateNote>{getDate(note.createdAt.toString())}</TextDateNote>
-      </ContainerTitleDate>
-      <AntDesign name='rightcircle' size={RFValue(30)} color={theme.colors.highlightColor} />
+    <Animated.View style={{ transform: [{ translateX}, {scale: scaleAnimation}] }}>
+      <ContainerNoteView
+        onPress={navigateToUpdateNote}
+        onLongPress={() => setModalVisible(true)}
+      >
+        <ContainerTitleDate>
+          <TitleNote>{note.title}</TitleNote>
+          <TextDateNote>{getDate(note.createdAt.toString())}</TextDateNote>
+        </ContainerTitleDate>
+        <AntDesign name='rightcircle' size={RFValue(30)} color={theme.colors.highlightColor} />
 
-      <ModalDelete
-        item={note}
-        deleteItem={handleDelete}
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-    </ContainerNoteView>
+        <ModalDelete
+          item={note}
+          deleteItem={handleDelete}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+      </ContainerNoteView>
+    </Animated.View>
   )
 }
 
