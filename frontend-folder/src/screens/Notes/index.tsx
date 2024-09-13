@@ -2,24 +2,21 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import { NormalText, Title } from './styled';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from 'styled-components';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { LinearGradient } from 'expo-linear-gradient';
-import { MotiView } from 'moti';
 
 import Loader from '../Loader';
 import BotaoAdd from '../../components/common/BotaoAdd';
 import ContainerNote from '../../components/Notes/ContainerNote';
-import Navbar from '../../components/common/Navbar';
 import noteService from '../../services/noteService';
 import { Note } from '../../entities/Note';
 import { PropsNavigationStack, PropsStack } from '../../routes';
+import ContainerGradient from '../../components/common/ContainerGradient';
+import ContainerRenderAnimated from '../../components/common/ContainerRenderAnimated';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Notes'>;
 
 const Notes = ({ route }: Props) => {
-  const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const isFocused = useIsFocused();
 
@@ -46,7 +43,6 @@ const Notes = ({ route }: Props) => {
     } finally {
       setIsLoading(false);
     }
-
   }
 
   const onRefresh = useCallback(() => {
@@ -65,29 +61,18 @@ const Notes = ({ route }: Props) => {
   }
 
   const renderItem: ListRenderItem<Note> = ({ item, index }) => (
-    <MotiView
-      from={{ translateX: -300, opacity: 0 }}
-      animate={{ translateX: 0, opacity: 1 }}
-      transition={{
-        type: 'timing',
-        duration: 200,
-        delay: index * 100
-      }}
-    >
+    <ContainerRenderAnimated index={index}>
       <ContainerNote
         note={item}
         deleteNote={() => handleDeleteNote(item._id)}
       />
-    </MotiView>
+    </ContainerRenderAnimated>
   );
 
   if (isLoading) return <Loader type='load' />
 
   return (
-    <LinearGradient
-      colors={theme.colors.bgMainColor}
-      style={{ flex: 1 }}
-    >
+    <ContainerGradient screen='Notes'>
       <FlatList
         style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
         data={notes}
@@ -104,37 +89,8 @@ const Notes = ({ route }: Props) => {
         }
       />
 
-      {/* <NotesScrollView
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
-      >
-        <Title>Notas</Title>
-        <NormalText>Suas notas encontram aqui...</NormalText>
-        {/* <ContainerNotesGrid> */}
-          {/* {notes.map((item, index) => (
-            <MotiView
-              key={index}
-              from={{ translateX: -300, opacity: 0 }}
-              animate={{ translateX: 0, opacity: 1 }}
-              transition={{
-                type: 'timing',
-                duration: 200,
-                delay: index * 100
-              }}
-            >
-              <ContainerNote
-                note={item}
-                deleteNote={() => handleDeleteNote(item._id)}
-              />
-            </MotiView>
-          ))}
-        </ContainerNotesGrid>
-      </NotesScrollView> */}
-
       <BotaoAdd navigate={handleNavigateToCreateNote} />
-      <Navbar screen="Notes" />
-    </LinearGradient>
+    </ContainerGradient>
   )
 }
 

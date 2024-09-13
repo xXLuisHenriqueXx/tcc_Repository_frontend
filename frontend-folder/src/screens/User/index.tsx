@@ -1,31 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, RefreshControl } from 'react-native';
 import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, LogoutButton, ScrollContainer, ThemeButton, UserImagePlaceholder, UserName, UserNameButton } from './styled';
 import { useTheme } from "styled-components";
-import { ThemeContext } from '../../styles/themeContext';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MotiView } from 'moti';
 import { FontAwesome5, Feather } from '@expo/vector-icons'
 
 import Loader from '../Loader';
-import Navbar from '../../components/common/Navbar';
 import ModalInfo from '../../components/common/ModalInfo';
 import { User as UserEntitie } from '../../entities/User';
 import userService from '../../services/userService';
-import useAuth from '../../hook/useAuth';
 import getDate from '../../utils/getDate';
 import { PropsStack } from '../../routes';
 import { Achievement } from '../../entities/Achievement';
 import achievementService from '../../services/achievementService';
+import ContainerGradient from '../../components/common/ContainerGradient';
 
 const User = () => {
   const navigation = useNavigation<PropsStack>();
   const theme = useTheme();
 
-  const { toggleTheme } = useContext(ThemeContext);
-  
   const [userInfo, setUserInfo] = useState<UserEntitie | undefined>();
   const [progress, setProgress] = useState<number>(0);
   const [achievementsNote, setAchievementsNote] = useState<Achievement[] | undefined>([]);
@@ -36,18 +31,16 @@ const User = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { logout } = useAuth();
-
   useEffect(() => {
     handleUserInfo();
   }, []);
-
+  
   const handleUserInfo = async () => {
     setIsLoading(true);
-
+    
     try {
       const { data } = await userService.getUserProfile();
-
+      
       setUserInfo(data);
       
       let progressValue = handleCalculateProgress(data.experience, data.experienceToNextLevel,);
@@ -58,39 +51,35 @@ const User = () => {
       setIsLoading(false);
     }
   }
-
+  
   const handleCalculateProgress = (experience: number, experienceToNextLevel: number) => {
     const experiencePercentage = (experience / experienceToNextLevel) * 100;
-
+    
     const progress = experiencePercentage.toFixed(2);
-
+    
     return progress;
   }
-
+  
   useEffect(() => {
     if (userInfo) {
       handleLoadAchievements();
     }
   }, [userInfo]);
-
+  
   const handleLoadAchievements = async () => {
     const { data } = await achievementService.getAll();
-
+    
     handleFilterAchievements(data);
   }
-
+  
   const handleFilterAchievements = (data: Achievement[]) => {
     const achievementsNote = data.filter(achievement => achievement.type === '_note');
     const achievementsTodo = data.filter(achievement => achievement.type === '_todo');
     const achievementsTask = data.filter(achievement => achievement.type === '_task');
-
+    
     setAchievementsNote(achievementsNote);
     setAchievementsTodo(achievementsTodo);
     setAchievementsTask(achievementsTask);
-  }
-
-  const handleLogout = () => {
-    logout();
   }
 
   const handleNavigateToUpdateProfile = () => {
@@ -100,18 +89,7 @@ const User = () => {
   if (isLoading) return <Loader type='load' />
 
   return (
-    <LinearGradient
-      colors={theme.colors.bgMainColor}
-      style={{ flex: 1 }}
-    >
-      <ThemeButton onPress={toggleTheme}>
-        <FontAwesome5 name='moon' size={RFValue(26)} color={theme.colors.text} />
-      </ThemeButton>
-
-      <LogoutButton onPress={handleLogout}>
-        <Feather name='log-out' size={RFValue(26)} color={theme.colors.text} />
-      </LogoutButton>
-
+    <ContainerGradient screen='User'>
       <ScrollContainer
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -262,14 +240,13 @@ const User = () => {
         </MotiView>
 
       </ScrollContainer>
-      <Navbar screen='User' />
       <ModalInfo
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         selected={selectedAchievement}
         setSelected={setSelectedAchievement}
       />
-    </LinearGradient>
+    </ContainerGradient>
   )
 }
 

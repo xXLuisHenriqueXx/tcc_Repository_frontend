@@ -4,13 +4,13 @@ import { ContainerModeSelect, DiasText, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
 import { useIsFocused } from '@react-navigation/native';
-import { MotiView } from 'moti';
-import { Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons';
 
 import Loader from '../../../screens/Loader';
 import ContainerAlarm from '../ContainerAlarms';
 import alarmsService from '../../../services/alarmsService';
 import { Alarm } from '../../../entities/Alarm';
+import ContainerRenderAnimated from '../../common/ContainerRenderAnimated';
 
 interface AlarmScreenProps {
     newAlarm?: boolean | undefined;
@@ -97,9 +97,9 @@ const AlarmScreen = ({newAlarm, setModalSelectVisible}: AlarmScreenProps) => {
 
         if (nextAlarmTime) {
             const timeDiff = new Date(nextAlarmTime).getTime() - today.getTime();
-            const minutesDiff = Math.ceil(timeDiff / (1000 * 60));
-            const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
-            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+            const hoursDiff = Math.floor(timeDiff / (1000 * 3600));
+            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24))
 
             if (hoursDiff < 24) {
                 setNextAlarm({ value: hoursDiff < 1 ? minutesDiff : hoursDiff, unit: hoursDiff < 1 ? 'minutos' : 'horas' });
@@ -112,21 +112,13 @@ const AlarmScreen = ({newAlarm, setModalSelectVisible}: AlarmScreenProps) => {
     };
 
     const renderItem: ListRenderItem<Alarm> = ({ item, index }) => (
-        <MotiView
-            from={{ translateX: -300, opacity: 0 }}
-            animate={{ translateX: 0, opacity: 1 }}
-            transition={{
-                type: 'timing',
-                duration: 200,
-                delay: index * 100
-            }}
-        >
+        <ContainerRenderAnimated index={index}>
             <ContainerAlarm
                 alarm={item}
                 deleteAlarm={() => handleDeleteAlarm(item._id)}
                 toggleAlarmStatus={() => handleToggleAlarmStatus(item._id, item.status)}
             />
-        </MotiView>
+        </ContainerRenderAnimated>
     )
 
     if (isLoading) return <Loader type='load' />

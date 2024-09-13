@@ -1,25 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import { NormalText, Title } from './styled';
-import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
-import { MotiView } from 'moti';
 
 import Loader from '../Loader';
-import Navbar from '../../components/common/Navbar';
 import ContainerTodo from '../../components/Todo/ContainerTodo';
 import BotaoAdd from '../../components/common/BotaoAdd';
 import { PropsNavigationStack, PropsStack } from '../../routes';
 import { Todo } from '../../entities/Todo';
 import todoService from '../../services/todoService';
+import ContainerGradient from '../../components/common/ContainerGradient';
+import ContainerRenderAnimated from '../../components/common/ContainerRenderAnimated';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Todos'>;
 
 const Todos = ({ route }: Props) => {
-  const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const isFocused = useIsFocused();
 
@@ -39,7 +36,7 @@ const Todos = ({ route }: Props) => {
 
     try {
       const { data } = await todoService.getTodos();
-      setTodos(data);  
+      setTodos(data);
     } catch (error) {
       Alert.alert('Erro', 'Erro ao buscar tarefas');
     } finally {
@@ -65,29 +62,18 @@ const Todos = ({ route }: Props) => {
 
 
   const renderItem: ListRenderItem<Todo> = ({ item, index }) => (
-    <MotiView
-      from={{ translateX: -300, opacity: 0 }}
-      animate={{ translateX: 0, opacity: 1 }}
-      transition={{
-        type: 'timing',
-        duration: 200,
-        delay: index * 100
-      }}
-    >
+    <ContainerRenderAnimated index={index}>
       <ContainerTodo
         todo={item}
         deleteTodo={() => handleDeleteTodo(item._id)}
       />
-    </MotiView>
+    </ContainerRenderAnimated>
   )
 
   if (isLoading) return <Loader type='load' />
 
   return (
-    <LinearGradient
-      colors={theme.colors.bgMainColor}
-      style={{ flex: 1 }}
-    >
+    <ContainerGradient screen='Todos'>
       <FlatList
         style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
         data={todos}
@@ -105,9 +91,8 @@ const Todos = ({ route }: Props) => {
       />
 
       <BotaoAdd navigate={handleNavigateToCreateTodo} />
-      <Navbar screen='Todos' />
-    </LinearGradient>
+    </ContainerGradient>
   )
 }
 
-export default Todos
+export default Todos;

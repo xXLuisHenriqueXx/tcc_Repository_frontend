@@ -2,24 +2,25 @@ import React from 'react'
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 
-import Alarms from '../screens/Alarms';
-import CreateAlarm from '../screens/CreateAlarm';
-import User from '../screens/User';
-import useAuth from '../hook/useAuth';
 import Welcome from '../screens/Welcome';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import User from '../screens/User';
 import UpdateProfile from '../screens/UpdateProfile';
+import Alarms from '../screens/Alarms';
+import CreateAlarm from '../screens/CreateAlarm';
 import Notes from "../screens/Notes";
 import CreateNote from "../screens/CreateNote";
 import UpdateNote from '../screens/UpdateNote';
 import Todos from '../screens/Todos';
 import CreateTodo from '../screens/CreateTodo';
+import UpdateTodo from '../screens/UpdateTodo';
 
+import useAuth from '../hook/useAuth';
 import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
 import { Todo } from '../entities/Todo';
-import UpdateTodo from '../screens/UpdateTodo';
+import ConfigScreen from '../screens/ConfigScreen';
 
 export type PropsNavigationStack = {
   Alarms: {
@@ -47,6 +48,7 @@ export type PropsNavigationStack = {
   UpdateProfile: {
     userInfo?: UserEntitie;
   };
+  ConfigScreen: undefined;
 }
 
 const Stack = createNativeStackNavigator<PropsNavigationStack>();
@@ -84,6 +86,7 @@ const Routes = () => {
             <Stack.Screen name="UpdateTodo" component={UpdateTodo} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+            <Stack.Screen name="ConfigScreen" component={ConfigScreen} />
           </>
         )}
       </Stack.Navigator>
