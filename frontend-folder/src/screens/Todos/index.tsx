@@ -1,19 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import Navbar from '../../components/common/Navbar'
-import { NormalText, Title } from './styled'
-import { useTheme } from 'styled-components'
-import { RFValue } from 'react-native-responsive-fontsize'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
-import { PropsNavigationStack, PropsStack } from '../../routes'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Todo } from '../../entities/Todo'
-import todoService from '../../services/todoService'
-import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native'
-import ContainerTodo from '../../components/Todo/ContainerTodo'
-import Loader from '../Loader'
-import BotaoAdd from '../../components/common/BotaoAdd'
-import { LinearGradient } from 'expo-linear-gradient'
-import { MotiView } from 'moti'
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
+import { NormalText, Title } from './styled';
+import { useTheme } from 'styled-components';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { LinearGradient } from 'expo-linear-gradient';
+import { MotiView } from 'moti';
+
+import Loader from '../Loader';
+import Navbar from '../../components/common/Navbar';
+import ContainerTodo from '../../components/Todo/ContainerTodo';
+import BotaoAdd from '../../components/common/BotaoAdd';
+import { PropsNavigationStack, PropsStack } from '../../routes';
+import { Todo } from '../../entities/Todo';
+import todoService from '../../services/todoService';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'Todos'>;
 

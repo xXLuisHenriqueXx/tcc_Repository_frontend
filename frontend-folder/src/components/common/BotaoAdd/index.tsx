@@ -1,6 +1,6 @@
-import React from 'react'
-import { useTheme } from 'styled-components';
+import React from 'react';
 import { BgButton, ContainerButton } from './styled';
+import { useTheme } from 'styled-components';
 import { Feather } from '@expo/vector-icons';
 
 interface BotaoAddProps {

@@ -14,3 +14,22 @@ export const NormalText = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(14)}px;
 `;
+
+export const NotesScrollView = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        paddingBottom: RFValue(70),
+        paddingHorizontal: RFValue(16),
+        justifyContent: 'space-between'
+    }
+})`
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
+
+export const ContainerNotesGrid = styled.View`
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;

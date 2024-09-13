@@ -1,6 +1,6 @@
-import React from 'react'
-import { Modal } from 'react-native'
-import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled'
+import React from 'react';
+import { Modal } from 'react-native';
+import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled';
 
 interface ModalDeleteProps {
     item: any

@@ -28,11 +28,8 @@ export const DiasText = styled(NormalText)`
     font-weight: bold;
 `;
 
-export const ContainerPomodoro = styled.ScrollView.attrs({
-    contentContainerStyle: {
-        flexGrow: 1
-    }
-})`
+export const ContainerPomodoro = styled.View`
+    flex: 1;
     padding: 0 ${RFValue(16)}px;
 `;
 
@@ -52,26 +49,32 @@ export const ContainerPomodoroButtonsTitle = styled.Text`
     font-size: ${RFValue(14)}px;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.text};
+    margin-bottom: ${RFValue(8)}px;
 `;
 
 export const ContainerPomodoroButtonsTimeBox = styled.View`
-    width: 60%;
+    width: 100%;
+    height: ${RFValue(100)}px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: ${RFValue(8)}px;
+    padding: 0 ${RFValue(16)}px;
+    border-bottom-width: ${RFValue(2)}px;
+    border-top-width: ${RFValue(2)}px;
+    border-color: ${({ theme }) => theme.colors.bdColor};
 `;
 
-export const ContainerPomodoroButtonsTimeBoxInput = styled.TextInput`
-    font-size: ${RFValue(80)}px;
+export const ContainerPomodoroButtonsTimeBoxText = styled.Text`
+    font-size: ${RFValue(54)}px;
     color: ${({ theme }) => theme.colors.text};
+    font-weight: 700;
 `;
 
-export const ContainerPomodoroButtonsTimeBoxInputText = styled.Text`
-    font-size: ${RFValue(24)}px;
-    font-weight: 500;
+export const SeparatorText = styled.Text`
     color: ${({ theme }) => theme.colors.highlightColor};
-    margin-left: ${RFValue(8)}px;
+    font-size: ${RFValue(30)}px;
+    font-weight: 900;
+    margin: 0 ${RFValue(10)}px;
 `;
 
 export const ContainerPomodoroButtonsStartButton = styled.TouchableOpacity.attrs({
@@ -84,7 +87,7 @@ export const ContainerPomodoroButtonsStartButton = styled.TouchableOpacity.attrs
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: ${RFValue(30)}px;
+    margin-top: ${RFValue(32)}px;
 `;
 
 export const ContainerPomodoroButtonsStartButtonText = styled.Text`

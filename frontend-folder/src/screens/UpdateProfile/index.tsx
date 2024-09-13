@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
-import { Feather, Entypo } from "@expo/vector-icons"
-import { useTheme } from 'styled-components';
-import userService from '../../services/userService';
+import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import useAuth from '../../hook/useAuth';
+import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
+import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
-import { PropsNavigationStack, PropsStack } from '../../routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Loader from '../Loader';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Feather, Entypo } from "@expo/vector-icons";
+
+import Loader from '../Loader';
+import userService from '../../services/userService';
+import useAuth from '../../hook/useAuth';
+import { PropsNavigationStack, PropsStack } from '../../routes';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateProfile'>;
 

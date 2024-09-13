@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
-import { PropsNavigationStack, PropsStack } from '../../routes';
 import { useTheme } from 'styled-components';
-import noteService from '../../services/noteService';
-import { Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import DefaultHeader from '../../components/common/DefaultHeader/Index';
+
 import Loader from '../Loader';
+import DefaultHeader from '../../components/common/DefaultHeader';
+import { PropsNavigationStack, PropsStack } from '../../routes';
+import noteService from '../../services/noteService';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateNote'>
 
 const UpdateNote = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
+    
     const [noteTitle, setNoteTitle] = useState("");
     const [noteContent, setNoteContent] = useState("");
     const [isLoading, setIsLoading] = useState(false);

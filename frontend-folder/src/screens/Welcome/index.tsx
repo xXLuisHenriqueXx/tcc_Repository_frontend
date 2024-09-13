@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { BackButton, Container, ContainerButton, ContainerText, ContainerView, LoginButton, LoginButtonText, Logo, NormalText, OrContainer, OrLine, OrText, RegisterButton, RegisterButtonText, Title } from './styled';
-import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../routes';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Feather } from '@expo/vector-icons';
+
+import { PropsStack } from '../../routes';
 
 const logoImage = require("../../assets/logo_text.png");
 

@@ -1,6 +1,7 @@
-import React from 'react'
-import { CatGifLoading, Container, ContainerInfoText, NormalText, Title } from './styled'
-import { useTheme } from 'styled-components'
+import React from 'react';
+import { CatGifLoading, Container, ContainerInfoText, NormalText, Title } from './styled';
+import { useTheme } from 'styled-components';
+
 interface LoaderProps {
     type: string;
 }

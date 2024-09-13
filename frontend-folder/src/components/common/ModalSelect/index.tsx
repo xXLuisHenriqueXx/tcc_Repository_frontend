@@ -1,6 +1,6 @@
-import React from 'react'
-import { Modal } from 'react-native'
-import { AlarmButton, AlarmButtonText, ContainerButtons, ContainerView, ModalTitle, ModalView, PomodoroButton, PomodoroButtonText } from './styled'
+import React from 'react';
+import { Modal } from 'react-native';
+import { AlarmButton, AlarmButtonText, ContainerButtons, ContainerView, ModalTitle, ModalView, PomodoroButton, PomodoroButtonText } from './styled';
 
 interface ModalSelectProps {
     modalVisible: boolean;

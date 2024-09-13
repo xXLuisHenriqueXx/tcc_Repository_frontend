@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled'
-import { Feather, Entypo, FontAwesome } from "@expo/vector-icons"
-import { useNavigation } from '@react-navigation/native'
-import { PropsStack } from '../../routes'
-import { useTheme } from 'styled-components'
-import useAuth from '../../hook/useAuth'
-import { Alert } from 'react-native'
-import { RFValue } from 'react-native-responsive-fontsize'
-import Loader from '../Loader'
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { BackButton, Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled';
+import { useNavigation } from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
+import { Feather, Entypo, FontAwesome } from "@expo/vector-icons";
+
+import Loader from '../Loader';
+import { PropsStack } from '../../routes';
+import useAuth from '../../hook/useAuth';
 
 interface fieldsProps {
     email: string;
@@ -17,6 +18,7 @@ interface fieldsProps {
 const Login = () => {
     const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
+    
     const [fields, setFields] = useState<fieldsProps>({
         email: "",
         password: ""

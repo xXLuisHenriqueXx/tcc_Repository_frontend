@@ -3,17 +3,20 @@ import { FlatList, NativeScrollEvent, NativeSyntheticEvent, ViewToken } from 're
 import { Container, ContainerRender, ContainerRenderText, SeparatorText } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-interface HourMinutesPickerProps {
+interface PomodorTimerPickerProps {
     setHour: (hour: number) => void;
     setMinute: (minute: number) => void;
+    setSecond: (second: number) => void;
 }
 
 const hoursData = Array.from({ length: 24 }, (_, i) => i);
 const minutesData = Array.from({ length: 60 }, (_, i) => i);
+const secondsData = Array.from({ length: 60 }, (_, i) => i);
 
-const HourMinutesPicker = ({ setHour, setMinute }: HourMinutesPickerProps) => {
+const PomodorTimerPicker = ({ setHour, setMinute, setSecond }: PomodorTimerPickerProps) => {
     const hourListRef = useRef<FlatList>(null);
     const minuteListRef = useRef<FlatList>(null);
+    const secondListRef = useRef<FlatList>(null);
 
     const onViewableItemsChanged = (setFunction: (value: number) => void) => {
         return ({ viewableItems }: { viewableItems: Array<ViewToken> }) => {
@@ -64,8 +67,23 @@ const HourMinutesPicker = ({ setHour, setMinute }: HourMinutesPickerProps) => {
                     </ContainerRender>
                 )}
             />
+            <SeparatorText>:</SeparatorText>
+            <FlatList
+                style={{ height: RFValue(100), width: RFValue(40) }}
+                ref={secondListRef}
+                data={secondsData}
+                keyExtractor={item => item.toString()}
+                showsVerticalScrollIndicator={false}
+                onViewableItemsChanged={onViewableItemsChanged(setSecond)}
+                onMomentumScrollEnd={onMomentumScrollEnd(secondListRef, secondsData, setSecond)}
+                renderItem={({ item }) => (
+                    <ContainerRender>
+                        <ContainerRenderText>{item.toString().padStart(2, "0")}</ContainerRenderText>
+                    </ContainerRender>
+                )}
+            />
         </Container>
     )
 }
 
-export default HourMinutesPicker;
+export default PomodorTimerPicker;

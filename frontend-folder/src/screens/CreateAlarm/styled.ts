@@ -39,11 +39,11 @@ export const DateButton = styled.TouchableOpacity.attrs({
 
 export const ContainerText = styled.Text`
     width: 100%;
-    font-size: ${RFValue(16)}px;
-    font-weight: 500;
-    color: ${({ theme }) => theme.colors.highlightColor};
+    font-size: ${RFValue(14)}px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.text};
     text-align: start;
-    margin-bottom: ${RFValue(8)}px;
+    margin-bottom: ${RFValue(16)}px;
 `;
 
 export const ContainerDaysView = styled.View`
@@ -51,7 +51,7 @@ export const ContainerDaysView = styled.View`
     flex-direction: column;
     justify-content: flex-start;
     margin-top: ${RFValue(32)}px;
-    padding-bottom: ${RFValue(16)}px;
+    padding-bottom: ${RFValue(32)}px;
     margin-bottom: ${RFValue(32)}px;
     border-bottom-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.bdColor};
@@ -67,16 +67,16 @@ export const ContainerDays = styled.View`
 export const DayButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })<selectedProp>`
-    width: ${RFValue(35)}px;
-    height: ${RFValue(35)}px;
-    background-color: ${({ theme, selected }) => selected ? theme.colors.highlightColor : theme.colors.highlightColorInactive};
+    width: ${RFValue(30)}px;
+    height: ${RFValue(30)}px;
+    background-color: ${({ theme, selected }) => selected ? theme.colors.highlightColor : "transparent"};
     justify-content: center;
     align-items: center;
     border-radius: ${RFValue(50)}px;
 `;
 
-export const DayButtonText = styled.Text`
-    color: ${({ theme }) => theme.colors.bgColor};
+export const DayButtonText = styled.Text<selectedProp>`
+    color: ${({ theme, selected }) => selected ? theme.colors.bgColor : theme.colors.highlightColor};
     font-size: ${RFValue(16)}px;
     font-weight: bold;
 `;

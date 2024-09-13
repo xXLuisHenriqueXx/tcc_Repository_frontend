@@ -1,10 +1,11 @@
-import React from 'react'
-import { BackButton, ButtonAdd, ContainerHeader, Input } from './styled'
-import { Feather } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
-import { PropsStack } from '../../../routes'
-import { useTheme } from 'styled-components'
-import { RFValue } from 'react-native-responsive-fontsize'
+import React from 'react';
+import { BackButton, ButtonAdd, ContainerHeader, Input } from './styled';
+import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
+import { RFValue } from 'react-native-responsive-fontsize';
+
+import { PropsStack } from '../../../routes';
 
 interface DefaultHeaderProps {
     title: string;

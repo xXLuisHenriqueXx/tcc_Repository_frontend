@@ -1,6 +1,7 @@
-import React from 'react'
-import { Modal } from 'react-native'
-import { ContainerView, ModalButton, ModalButtonText, ModalText, ModalTitle, ModalView } from './styled'
+import React from 'react';
+import { Modal } from 'react-native';
+import { ContainerView, ModalButton, ModalButtonText, ModalText, ModalTitle, ModalView } from './styled';
+
 import { Achievement } from '../../../entities/Achievement';
 
 interface ModalInfoProps {

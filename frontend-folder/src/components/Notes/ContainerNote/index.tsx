@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ContainerNoteView, ContainerTitleDate, DeleteButton, TextDateNote, TitleNote } from './styled';
-import { AntDesign, Feather } from '@expo/vector-icons'
+import { Animated, Easing } from 'react-native';
+import { ContainerNoteView, ContainerTitleDate, TextContainer, TextDateNote, TitleNote } from './styled';
+import { useNavigation } from '@react-navigation/native';
+
+import ModalDelete from '../../common/ModalDelete';
+import ModalInfoContainer from '../../common/ModalInfoContainer';
+import { PropsStack } from '../../../routes';
 import { Note } from '../../../entities/Note';
 import getDate from '../../../utils/getDate';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components';
-import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../../routes';
-import ModalDelete from '../../common/ModalDelete';
-import { Animated, Easing } from 'react-native';
 
 interface ContainerNoteProps {
   note: Note;
@@ -16,9 +15,9 @@ interface ContainerNoteProps {
 }
 
 const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
-  const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
   const scaleAnimation = useRef(new Animated.Value(1)).current;
@@ -63,7 +62,7 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   }
 
   return (
-    <Animated.View style={{ transform: [{ translateX}, {scale: scaleAnimation}] }}>
+    <Animated.View style={{ transform: [{ translateX }, { scale: scaleAnimation }] }}>
       <ContainerNoteView
         onPress={navigateToUpdateNote}
         onLongPress={() => setModalVisible(true)}
@@ -72,15 +71,22 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
           <TitleNote>{note.title}</TitleNote>
           <TextDateNote>{getDate(note.createdAt.toString())}</TextDateNote>
         </ContainerTitleDate>
-        <AntDesign name='rightcircle' size={RFValue(30)} color={theme.colors.highlightColor} />
+        
+        <TextContainer numberOfLines={5}>
+          {note.content}
+        </TextContainer>
 
         <ModalDelete
           item={note}
           deleteItem={handleDelete}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
+          modalVisible={modalDeleteVisible}
+          setModalVisible={setModalDeleteVisible}
         />
+
       </ContainerNoteView>
+      {modalVisible &&
+        <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+      }
     </Animated.View>
   )
 }

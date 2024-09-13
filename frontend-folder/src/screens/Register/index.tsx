@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled'
-import { Feather, Entypo } from "@expo/vector-icons"
-import { useNavigation } from '@react-navigation/native'
-import { PropsStack } from '../../routes'
-import { useTheme } from 'styled-components'
-import useAuth from '../../hook/useAuth'
-import { Alert } from 'react-native'
-import { RFValue } from 'react-native-responsive-fontsize'
-import Loader from '../Loader'
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Feather, Entypo } from "@expo/vector-icons";
+
+import Loader from '../Loader';
+import { PropsStack } from '../../routes';
+import useAuth from '../../hook/useAuth';
 
 interface fieldsProps {
   name: string;
@@ -19,6 +20,7 @@ interface fieldsProps {
 const Register = () => {
   const navigation = useNavigation<PropsStack>();
   const theme = useTheme();
+  
   const [fields, setFields] = useState<fieldsProps>({
     name: "",
     email: "",

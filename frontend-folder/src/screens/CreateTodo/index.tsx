@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
-import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TaskButton, TaskContainer, TaskContainerButtons, TaskDoneButton, TasksContainer, TasksContainerTitle, TaskTitle } from './styled'
-import DefaultHeader from '../../components/common/DefaultHeader/Index'
-import { useTheme } from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
-import { PropsStack } from '../../routes'
-import todoService from '../../services/todoService'
-import { Alert } from 'react-native'
-import { Entypo, FontAwesome5 } from '@expo/vector-icons'
-import { RFValue } from 'react-native-responsive-fontsize'
-import taskService from '../../services/taskService'
-import Loader from '../Loader'
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TaskButton, TaskContainer, TaskContainerButtons, TaskDoneButton, TasksContainer, TasksContainerTitle, TaskTitle } from './styled';
+import { useTheme } from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Entypo, FontAwesome5 } from '@expo/vector-icons';
+
+import Loader from '../Loader';
+import DefaultHeader from '../../components/common/DefaultHeader';
+import { PropsStack } from '../../routes';
+import todoService from '../../services/todoService';
+import taskService from '../../services/taskService';
 
 interface TaskProps {
     title: string;

@@ -1,28 +1,31 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, RefreshControl } from 'react-native';
+import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, LogoutButton, ScrollContainer, ThemeButton, UserImagePlaceholder, UserName, UserNameButton } from './styled';
 import { useTheme } from "styled-components";
 import { ThemeContext } from '../../styles/themeContext';
-import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, LogoutButton, ScrollContainer, ThemeButton, UserImagePlaceholder, UserName, UserNameButton } from './styled';
-import { FontAwesome5, Feather } from '@expo/vector-icons'
-import Navbar from '../../components/common/Navbar';
-import useAuth from '../../hook/useAuth';
-import { User as UserEntitie } from '../../entities/User';
-import userService from '../../services/userService';
-import getDate from '../../utils/getDate';
-import Loader from '../Loader';
 import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../routes';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { MotiView } from 'moti';
+import { FontAwesome5, Feather } from '@expo/vector-icons'
+
+import Loader from '../Loader';
+import Navbar from '../../components/common/Navbar';
+import ModalInfo from '../../components/common/ModalInfo';
+import { User as UserEntitie } from '../../entities/User';
+import userService from '../../services/userService';
+import useAuth from '../../hook/useAuth';
+import getDate from '../../utils/getDate';
+import { PropsStack } from '../../routes';
 import { Achievement } from '../../entities/Achievement';
 import achievementService from '../../services/achievementService';
-import ModalInfo from '../../components/common/ModalInfo';
-import { Alert, RefreshControl } from 'react-native';
-import { MotiView } from 'moti';
 
 const User = () => {
   const navigation = useNavigation<PropsStack>();
   const theme = useTheme();
+
   const { toggleTheme } = useContext(ThemeContext);
+  
   const [userInfo, setUserInfo] = useState<UserEntitie | undefined>();
   const [progress, setProgress] = useState<number>(0);
   const [achievementsNote, setAchievementsNote] = useState<Achievement[] | undefined>([]);

@@ -2,13 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing } from 'react-native';
 import { ContainerTitleDate, ContainerTodoView, TextDateTodo, TitleTodo } from './styled';
 import { Feather } from '@expo/vector-icons'
-import getDate from '../../../utils/getDate';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
-import { PropsStack } from '../../../routes';
+
 import ModalDelete from '../../common/ModalDelete';
+import ModalInfoContainer from '../../common/ModalInfoContainer';
+import { PropsStack } from '../../../routes';
 import { Todo } from '../../../entities/Todo';
+import getDate from '../../../utils/getDate';
 
 interface ContainerTodoProps {
   todo: Todo;
@@ -19,14 +21,15 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
   const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const handleDelete = async () => {
     Animated.timing(translateX, {
-      toValue: 500, // Valor para mover o container para a direita
-      duration: 100, // Duração da animação
+      toValue: 500,
+      duration: 100,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start(async () => {
@@ -76,10 +79,13 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
         <ModalDelete
           item={todo}
           deleteItem={handleDelete}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
+          modalVisible={modalDeleteVisible}
+          setModalVisible={setModalDeleteVisible}
         />
       </ContainerTodoView>
+      {modalVisible &&
+        <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+      }
     </Animated.View>
   )
 }

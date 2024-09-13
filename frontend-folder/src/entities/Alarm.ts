@@ -10,6 +10,7 @@ export interface Alarm {
         thursday: boolean;
         friday: boolean;
         saturday: boolean;
-    }
+    };
+    date: Date | null;
     status: boolean;
 }

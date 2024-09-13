@@ -1,12 +1,12 @@
-import React from 'react'
-import { ButtonText, Container, IconButton } from './styled'
-import { FontAwesome } from '@expo/vector-icons'
+import React from 'react';
+import { ButtonText, Container, IconButton } from './styled';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 import { PropsStack } from '../../../routes';
 import useAuth from '../../../hook/useAuth';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { StyleSheet } from 'react-native';
 
 interface NavbarProps {
     screen: string;

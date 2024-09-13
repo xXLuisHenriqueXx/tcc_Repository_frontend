@@ -10,7 +10,7 @@ export const ContainerNoteView = styled.TouchableOpacity.attrs({
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 ${RFValue(16)}px;
+    padding: ${RFValue(16)}px;
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
@@ -18,24 +18,25 @@ export const ContainerNoteView = styled.TouchableOpacity.attrs({
 `;
 
 export const ContainerTitleDate = styled.View`
+    width: 64%;
     flex-direction: column;
 `
 
 export const TextDateNote = styled.Text`
-    font-size: ${RFValue(12)}px;
+    font-size: ${RFValue(10)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
 `;  
 
 export const TitleNote = styled.Text`
-    font-size: ${RFValue(22)}px;
+    font-size: ${RFValue(20)}px;
     font-weight: 500;
     color: ${({ theme }) => theme.colors.text};
 `;
 
-export const DeleteButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    position: absolute;
-    top: ${RFValue(10)}px;
-    right: ${RFValue(10)}px;
+export const TextContainer = styled.Text`
+    width: 32%;
+    height: 100%;
+    font-size: ${RFValue(10)}px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.text};
 `;
