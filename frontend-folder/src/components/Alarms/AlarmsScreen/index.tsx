@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import { ContainerModeSelect, DiasText, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components/native';
+import { useTheme } from 'styled-components';
 import { useIsFocused } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 

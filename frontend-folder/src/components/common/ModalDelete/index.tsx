@@ -3,7 +3,7 @@ import { Modal } from 'react-native';
 import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled';
 
 interface ModalDeleteProps {
-    item: any
+    item: any;
     deleteItem: (item: any) => void;
     modalVisible: boolean;
     setModalVisible: (visible: boolean) => void;
@@ -23,6 +23,8 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ type: 'timing', duration: 300 }}
+                exit={{ opacity: 0 }}
+                exitTransition={{ type: 'timing', duration: 300 }}
             >
                 <ModalView>
                     <ModalTitle>

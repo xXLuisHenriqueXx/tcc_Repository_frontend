@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, RefreshControl } from 'react-native';
 import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, LogoutButton, ScrollContainer, ThemeButton, UserImagePlaceholder, UserName, UserNameButton } from './styled';
-import { useTheme } from "styled-components";
+import { useTheme } from "styled-components/native";
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MotiView } from 'moti';
@@ -120,10 +120,7 @@ const User = () => {
         <MotiView
           from={{ translateX: -300, opacity: 0 }}
           animate={{ translateX: 0, opacity: 1 }}
-          transition={{
-            type: 'timing',
-            duration: 200,
-          }}>
+          transition={{ type: 'timing', duration: 200 }}>
           <ContainerInfo>
             <ContainerInfoGroupBox>
               <ContainerInfoGroupBoxText>Informações do usuário</ContainerInfoGroupBoxText>
@@ -166,10 +163,7 @@ const User = () => {
         <MotiView
           from={{ translateX: 300, opacity: 0 }}
           animate={{ translateX: 0, opacity: 1 }}
-          transition={{
-            type: 'timing',
-            duration: 200,
-          }}>
+          transition={{ type: 'timing', duration: 200 }}>
           <ContainerAchievements>
             <ContainerAchievementsTitle>Conquistas</ContainerAchievementsTitle>
             <ContainerAchievementsGroupBox>

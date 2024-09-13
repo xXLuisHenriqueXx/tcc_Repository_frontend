@@ -23,6 +23,8 @@ const ModalSelect = ({ modalVisible, setModalVisible, screen, setScreen }: Modal
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ type: 'timing', duration: 300 }}
+                exit={{ opacity: 0 }}
+                exitTransition={{ type: 'timing', duration: 300 }}
             >
                 <ModalView>
                     <ModalTitle>

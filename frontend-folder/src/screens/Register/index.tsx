@@ -80,10 +80,7 @@ const Register = () => {
         <ContainerForm
           from={{translateY: 300, opacity: 0}}
           animate={{translateY: 0, opacity: 1}}
-          transition={{
-              type: 'timing',
-              duration: 200,
-          }}
+          transition={{  type: 'timing', duration: 200 }}
         >
           <InputContainer>
             <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />

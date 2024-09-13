@@ -7,7 +7,7 @@ export const ContainerButton = styled.TouchableOpacity.attrs({
     position: absolute;
     bottom: ${RFValue(80)}px;
     right: ${RFValue(10)}px;
-    z-index: 99;
+    z-index: 9;
 `;
 
 export const BgButton = styled.ImageBackground.attrs({

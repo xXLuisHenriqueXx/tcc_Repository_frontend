@@ -20,7 +20,6 @@ import useAuth from '../hook/useAuth';
 import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
 import { Todo } from '../entities/Todo';
-import ConfigScreen from '../screens/ConfigScreen';
 
 export type PropsNavigationStack = {
   Alarms: {
@@ -48,7 +47,6 @@ export type PropsNavigationStack = {
   UpdateProfile: {
     userInfo?: UserEntitie;
   };
-  ConfigScreen: undefined;
 }
 
 const Stack = createNativeStackNavigator<PropsNavigationStack>();
@@ -63,7 +61,7 @@ const Routes = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          animation: "none"
+          animation: "none",
         }}
       >
         {token === null ? (
@@ -86,7 +84,6 @@ const Routes = () => {
             <Stack.Screen name="UpdateTodo" component={UpdateTodo} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
-            <Stack.Screen name="ConfigScreen" component={ConfigScreen} />
           </>
         )}
       </Stack.Navigator>
@@ -94,4 +91,4 @@ const Routes = () => {
   )
 }
 
-export default Routes
+export default Routes;

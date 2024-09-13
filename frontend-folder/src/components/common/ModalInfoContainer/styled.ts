@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { MotiView } from "moti";
 
-export const ContainerModal = styled.View`
+export const ContainerModal = styled(MotiView)`
     position: absolute;
     top: ${RFValue(-28)}px;
     right: 0;

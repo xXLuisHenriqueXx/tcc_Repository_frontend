@@ -1,27 +1,23 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { MotiView } from "moti";
 
-export const Container = styled.View`
-    flex: 1;
+export const ContainerScreen = styled(MotiView)`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.fadeBgColor};
+    z-index: 10;
+`;
+
+export const ContainerSide = styled(MotiView)`
+    width: 80%;
+    height: 100%;
     background-color: ${({ theme }) => theme.colors.bgColor};
     align-items: center;
     padding: 0 ${RFValue(16)}px;
     padding-top: ${RFValue(60)}px;
-`;
-
-export const BackButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(20)}px;
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-    z-index: 2;
+    z-index: 11;
 `;
 
 export const ContainerButton = styled.TouchableOpacity.attrs({

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ContainerModeSelect, ContainerPomodoro, ContainerPomodoroButtons, ContainerPomodoroButtonsStartButton, ContainerPomodoroButtonsStartButtonText, ContainerPomodoroButtonsTimeBox, ContainerPomodoroButtonsTimeBoxText, ContainerPomodoroButtonsTitle, ContainerPomodoroTitle, NormalText, SeparatorText, Title } from './styled';
-import { useTheme } from 'styled-components/native';
+import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 
