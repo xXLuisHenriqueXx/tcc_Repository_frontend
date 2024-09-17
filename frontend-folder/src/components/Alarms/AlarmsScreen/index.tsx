@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
+import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
 import { ContainerModeSelect, DiasText, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
@@ -125,11 +125,11 @@ const AlarmScreen = ({newAlarm, setModalSelectVisible}: AlarmScreenProps) => {
 
     return (
         <FlatList
-            style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
+            style={{ marginBottom: RFValue(70) }}
             data={alarms}
             keyExtractor={item => item._id}
             ListHeaderComponent={
-                <>
+                <View style={{ marginHorizontal: RFValue(16) }}>
                     <ContainerModeSelect onPress={() => { setModalSelectVisible(true) }}>
                         <Title>Alarmes</Title>
                         <Entypo name="chevron-down" size={RFValue(28)} color={theme.colors.text} />
@@ -143,7 +143,7 @@ const AlarmScreen = ({newAlarm, setModalSelectVisible}: AlarmScreenProps) => {
                         {nextAlarm && nextAlarm.value > 0 && <DiasText>{nextAlarm.value}</DiasText>}
                         {nextAlarm && nextAlarm.value > 0 && ` ${nextAlarm.unit}...`}
                     </NormalText>
-                </>
+                </View>
             }
             renderItem={renderItem}
             refreshControl={

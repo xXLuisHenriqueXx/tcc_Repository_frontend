@@ -20,14 +20,42 @@ export const ContainerSide = styled(MotiView)`
     z-index: 11;
 `;
 
+export const ContainerUser = styled.View`
+    flex-direction: column;
+    margin-bottom: ${RFValue(32)}px;
+`;
+
+export const UserImage = styled.View`
+    width: ${RFValue(100)}px;
+    aspect-ratio: 1;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    border-radius: ${RFValue(50)}px;
+    border: ${RFValue(4)}px solid ${({ theme }) => theme.colors.highlightColor};
+`;
+
+export const UserName = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: 600;
+    margin-top: ${RFValue(4)}px;
+    text-align: center;
+`;
+
 export const ContainerButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
+    flex-direction: row;
     width: 100%;
-    height: ${RFValue(60)}px;
+    height: ${RFValue(50)}px;
     border-radius: ${RFValue(5)}px;
     background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     align-items: center;
     justify-content: center;
     margin-bottom: ${RFValue(16)}px;
+`;
+
+export const ContainerButtonText = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: 500;
 `;

@@ -11,6 +11,7 @@ import ModalInfoContainer from '../../common/ModalInfoContainer';
 import { PropsStack } from '../../../routes';
 import { Todo } from '../../../entities/Todo';
 import getDate from '../../../utils/getDate';
+import { MotiView } from 'moti';
 
 interface ContainerTodoProps {
   todo: Todo;
@@ -37,55 +38,38 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
     });
   };
 
-  useEffect(() => {
-    if (modalVisible) {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(scaleAnimation, {
-            toValue: 1.01,
-            duration: 1000,
-            easing: Easing.inOut(Easing.ease),
-            useNativeDriver: true,
-          }),
-          Animated.timing(scaleAnimation, {
-            toValue: 1,
-            duration: 1000,
-            easing: Easing.inOut(Easing.ease),
-            useNativeDriver: true,
-          }),
-        ])
-      ).start();
-    } else {
-      scaleAnimation.setValue(1);
-    }
-  }, [modalVisible]);
-
   const navigateToUpdateTodo = () => {
     navigation.navigate("UpdateTodo", { todoInfo: todo });
   }
 
   return (
-    <Animated.View style={{ transform: [{translateX}, {scale: scaleAnimation}] }}>
-      <ContainerTodoView
-        onPress={navigateToUpdateTodo}
-        onLongPress={() => setModalVisible(true)}
+    <Animated.View style={{ transform: [{ translateX }] }}>
+      <MotiView
+        transition={{ type: 'timing', duration: 300 }}
+        from={{ transform: modalVisible ? [{ scale: 1 }] : [{ scale: 1.05 }] }}
+        animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
       >
-        <ContainerTitleDate>
-          <TitleTodo>{todo.title}</TitleTodo>
-          <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>
-        </ContainerTitleDate>
-        <Feather name='check' size={RFValue(30)} color={theme.colors.textInactive} />
+        <ContainerTodoView
+          onPress={navigateToUpdateTodo}
+          onLongPress={() => setModalVisible(true)}
+        >
+          <ContainerTitleDate>
+            <TitleTodo>{todo.title}</TitleTodo>
+            <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>
+          </ContainerTitleDate>
+          <Feather name='check' size={RFValue(30)} color={theme.colors.textInactive} />
 
-        <ModalDelete
-          item={todo}
-          deleteItem={handleDelete}
-          modalVisible={modalDeleteVisible}
-          setModalVisible={setModalDeleteVisible}
-        />
-      </ContainerTodoView>
-      {modalVisible &&
-        <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
-      }
+          <ModalDelete
+            item={todo}
+            deleteItem={handleDelete}
+            modalVisible={modalDeleteVisible}
+            setModalVisible={setModalDeleteVisible}
+          />
+        </ContainerTodoView>
+        {modalVisible &&
+          <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+        }
+      </MotiView>
     </Animated.View>
   )
 }

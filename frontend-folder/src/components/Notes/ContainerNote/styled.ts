@@ -5,11 +5,12 @@ export const ContainerNoteView = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
     border-radius: ${RFValue(5)}px;
-    width: 100%;
+    width: 90%;
     height: ${RFValue(90)}px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    align-self: center;
     padding: ${RFValue(16)}px;
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;

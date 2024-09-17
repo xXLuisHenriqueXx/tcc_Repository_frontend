@@ -11,8 +11,9 @@ export const ContainerModeSelect = styled.TouchableOpacity.attrs({
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(40)}px;
-    font-weight: bold;
+    font-size: ${RFValue(32)}px;
+    font-weight: 900;
+    text-transform: uppercase;
     margin-right: ${RFValue(8)}px;
 `;
 
@@ -25,6 +26,6 @@ export const NormalText = styled.Text`
 
 export const DiasText = styled(NormalText)`
     color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
+    font-weight: 600;
 `;
 

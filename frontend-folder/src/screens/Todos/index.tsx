@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
-import { NormalText, Title } from './styled';
+import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
+import { HighlightText, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -75,14 +75,14 @@ const Todos = ({ route }: Props) => {
   return (
     <ContainerGradient screen='Todos'>
       <FlatList
-        style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
+        style={{ marginBottom: RFValue(70) }}
         data={todos}
         keyExtractor={item => item._id}
         ListHeaderComponent={
-          <>
+          <View style={{ marginHorizontal: RFValue(16) }}>
             <Title>Listas de tarefas</Title>
-            <NormalText>Suas listas de tarefas se encontram aqui...</NormalText>
-          </>
+            <NormalText>Você possui <HighlightText>{todos.length}</HighlightText> {todos.length > 1 ? 'listas de tarefas criadas' : 'lista de tarefa criada'}...</NormalText>
+          </View>
         }
         renderItem={renderItem}
         refreshControl={

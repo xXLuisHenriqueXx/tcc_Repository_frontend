@@ -7,17 +7,16 @@ interface SwitchEnabledProps {
 
 export const ContainerAlarmView = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
-})<SwitchEnabledProps>`
+}) <SwitchEnabledProps>`
     border-radius: ${RFValue(5)}px;
-    width: 100%;
+    width: 90%;
     height: ${RFValue(90)}px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    align-self: center;
     padding: 0 ${RFValue(16)}px;
     margin-bottom: ${RFValue(16)}px;
-    margin-left: auto;
-    margin-right: auto;
     background-color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.bgContainerColorActive : theme.colors.bgContainerColorInactive};
 `;
 
@@ -25,7 +24,7 @@ export const TextMaterialAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(12)}px;
     font-weight: 500;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.highlightColor : theme.colors.textInactive};
-`;  
+`;
 
 export const TextHorarioAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(32)}px;

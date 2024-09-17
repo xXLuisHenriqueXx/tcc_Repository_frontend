@@ -5,8 +5,8 @@ import { MotiView } from "moti";
 export const ContainerModal = styled(MotiView)`
     position: absolute;
     top: ${RFValue(-28)}px;
-    right: 0;
-    width: 50%;
+    right: ${RFValue(16)}px;
+    width: ${RFValue(140)}px;
     height: ${RFValue(36)}px;
     border-radius: ${RFValue(5)}px;
     flex-direction: row;

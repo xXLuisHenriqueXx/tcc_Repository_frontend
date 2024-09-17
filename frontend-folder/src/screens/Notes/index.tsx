@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, ListRenderItem, RefreshControl } from 'react-native';
-import { NormalText, Title } from './styled';
+import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
+import { HighlightText, NormalText, Title } from './styled';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -74,14 +74,14 @@ const Notes = ({ route }: Props) => {
   return (
     <ContainerGradient screen='Notes'>
       <FlatList
-        style={{ marginBottom: RFValue(70), marginHorizontal: RFValue(16) }}
+        style={{ marginBottom: RFValue(70) }}
         data={notes}
         keyExtractor={item => item._id}
         ListHeaderComponent={
-          <>
+          <View style={{ marginHorizontal: RFValue(16) }}>
             <Title>Notas</Title>
-            <NormalText>Suas notas encontram aqui...</NormalText>
-          </>
+            <NormalText>Você possui <HighlightText>{notes.length}</HighlightText> {notes.length > 1 ? 'notas criadas' : 'nota criada'}...</NormalText>
+          </View>
         }
         renderItem={renderItem}
         refreshControl={
@@ -94,4 +94,4 @@ const Notes = ({ route }: Props) => {
   )
 }
 
-export default Notes
+export default Notes;
