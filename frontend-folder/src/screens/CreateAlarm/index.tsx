@@ -5,15 +5,16 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import uuid from 'react-native-uuid';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { MotiView } from 'moti';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { CalendarDays } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
-import HourMinutesPicker from '../../components/Alarms/HourMInutesPicker';
 import alarmsService from '../../services/alarmsService';
 import getDate from '../../utils/getDate';
 import { PropsStack } from '../../routes';
+import { TimePicker } from '../../components/common/TimePicker';
 
 type DaysState = {
     sunday: boolean,
@@ -102,10 +103,14 @@ const CreateAlarm = () => {
                 <ContainerButtons>
                     <ContainerButtonsView>
                         <ContainerText>{getDate(date.toString())}</ContainerText>
-                        <HourMinutesPicker setHour={setHour} setMinute={setMinute} />
+                        <TimePicker.Root>
+                            <TimePicker.List length={24} setPicker={setHour} />
+                            <TimePicker.Separator />
+                            <TimePicker.List length={60} setPicker={setMinute} />
+                        </TimePicker.Root>
 
                         <DateButton onPress={showDatepicker}>
-                            <FontAwesome5 name="calendar" size={25} color={theme.colors.highlightColor} />
+                            <CalendarDays size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         </DateButton>
 
                         <ContainerDaysView>

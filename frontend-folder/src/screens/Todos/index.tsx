@@ -19,11 +19,11 @@ type Props = NativeStackScreenProps<PropsNavigationStack, 'Todos'>;
 const Todos = ({ route }: Props) => {
   const navigation = useNavigation<PropsStack>();
   const isFocused = useIsFocused();
-
   const { newTodo } = route.params || {};
+  
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     if (isFocused || newTodo) {

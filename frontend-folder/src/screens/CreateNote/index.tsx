@@ -12,9 +12,10 @@ import noteService from '../../services/noteService';
 const CreateNote = () => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteContent, setNoteContent] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [noteTitle, setNoteTitle] = useState<string>("");
+  const [noteContent, setNoteContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSaveNote = async () => {
     setIsLoading(true);

@@ -4,7 +4,7 @@ import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, Container
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Pencil, Plus, Trash } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
@@ -20,11 +20,12 @@ interface TaskProps {
 const CreateTodo = () => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-    const [todoTitle, setTodoTitle] = useState("");
+
+    const [todoTitle, setTodoTitle] = useState<string>("");
     const [tasks, setTasks] = useState<TaskProps[]>([]);
-    const [taskTitle, setTaskTitle] = useState("");
-    const [taskDone, setTaskDone] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [taskTitle, setTaskTitle] = useState<string>("");
+    const [taskDone, setTaskDone] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSaveTodo = async () => {
         setIsLoading(true);
@@ -117,7 +118,7 @@ const CreateTodo = () => {
 
                     <AddTaskButton onPress={handleAddTask}>
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
-                        <Entypo name="plus" size={RFValue(24)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
+                        <Plus style={{ position: 'absolute', right: RFValue(30) }} size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                     </AddTaskButton>
 
                     <TasksContainer>
@@ -131,10 +132,10 @@ const CreateTodo = () => {
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
                                 <TaskContainerButtons>
                                     <TaskButton>
-                                        <Entypo name="edit" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                        <Pencil size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
                                     <TaskButton onPress={() => handleDeleteTask(index)}>
-                                        <FontAwesome5 name="trash" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                        <Trash size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
                                 </TaskContainerButtons>
                             </TaskContainer>

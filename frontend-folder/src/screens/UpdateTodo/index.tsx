@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import todoService from '../../services/todoService';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Pencil, Plus, Trash } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
@@ -19,13 +19,14 @@ type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateTodo'>
 const UpdateTodo = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-    const [todoTitle, setTodoTitle] = useState("");
-    const [tasks, setTasks] = useState<Task[]>([]);
-    const [taskTitle, setTaskTitle] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [isTaskLoading, setIsTaskLoading] = useState(false);
-
     const { todoInfo } = route.params || {};
+
+    const [todoTitle, setTodoTitle] = useState<string>("");
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [taskTitle, setTaskTitle] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isTaskLoading, setIsTaskLoading] = useState<boolean>(false);
+
 
     useEffect(() => {
         handleSetInfos();
@@ -145,7 +146,7 @@ const UpdateTodo = ({ route }: Props) => {
 
                     <AddTaskButton onPress={handleAddTask} disabled={isTaskLoading}>
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
-                        <Entypo name="plus" size={RFValue(24)} color={theme.colors.bgColor} style={{ position: 'absolute', right: RFValue(30) }} />
+                        <Plus style={{ position: 'absolute', right: RFValue(30) }} size={RFValue(24)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                     </AddTaskButton>
 
                     <TasksContainer>
@@ -159,10 +160,10 @@ const UpdateTodo = ({ route }: Props) => {
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
                                 <TaskContainerButtons>
                                     <TaskButton>
-                                        <Entypo name="edit" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                        <Pencil size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
                                     <TaskButton onPress={() => handleDeleteTask(task._id)}>
-                                        <FontAwesome5 name="trash" size={RFValue(20)} color={theme.colors.highlightColor} />
+                                        <Trash size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
                                 </TaskContainerButtons>
                             </TaskContainer>

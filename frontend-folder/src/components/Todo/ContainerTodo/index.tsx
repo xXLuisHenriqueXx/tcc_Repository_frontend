@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Animated, Easing } from 'react-native';
 import { ContainerTitleDate, ContainerTodoView, TextDateTodo, TitleTodo } from './styled';
-import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
+import { MotiView } from 'moti';
+import { Check } from 'lucide-react-native';
 
 import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
 import { PropsStack } from '../../../routes';
 import { Todo } from '../../../entities/Todo';
 import getDate from '../../../utils/getDate';
-import { MotiView } from 'moti';
 
 interface ContainerTodoProps {
   todo: Todo;
@@ -21,11 +21,11 @@ interface ContainerTodoProps {
 const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
-  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const handleDelete = async () => {
     Animated.timing(translateX, {
@@ -57,7 +57,7 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
             <TitleTodo>{todo.title}</TitleTodo>
             <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>
           </ContainerTitleDate>
-          <Feather name='check' size={RFValue(30)} color={theme.colors.textInactive} />
+          <Check size={RFValue(30)} color={theme.colors.textInactive} strokeWidth={RFValue(2)} />
 
           <ModalDelete
             item={todo}

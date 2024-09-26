@@ -1,11 +1,9 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const ContainerModeSelect = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    flex-direction: row;
-    align-items: center;
+export const ContainerPomodoro = styled.View`
+    flex: 1;
+    padding: 0 ${RFValue(16)}px;
     margin-top: ${RFValue(60)}px;
 `;
 
@@ -29,14 +27,6 @@ export const DiasText = styled(NormalText)`
     font-weight: bold;
 `;
 
-export const ContainerPomodoro = styled.View`
-    flex: 1;
-    padding: 0 ${RFValue(16)}px;
-`;
-
-export const ContainerPomodoroTitle = styled.View`
-`;
-
 export const ContainerPomodoroButtons = styled.View`
     width: 100%;
     flex-direction: column;
@@ -48,7 +38,7 @@ export const ContainerPomodoroButtonsTitle = styled.Text`
     width: 100%;
     text-align: start;
     font-size: ${RFValue(14)}px;
-    font-weight: 400;
+    font-weight: 600;
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: ${RFValue(8)}px;
 `;

@@ -25,7 +25,6 @@ declare module "styled-components" {
     },
     images: {
         bgButton: any;
-        catImage: any;
         catLoadingGif: any;
     }
     }

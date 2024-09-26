@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ContainerModal, IconButton } from './styled';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import { Info, Trash, X } from 'lucide-react-native';
 
 interface ModalInfoContainerProps {
     setModalVisible: (visible: boolean) => void;
@@ -12,7 +12,7 @@ interface ModalInfoContainerProps {
 const ModalInfoContainer = ({ setModalVisible, setModalDeleteVisible }: ModalInfoContainerProps) => {
     const theme = useTheme();
 
-    const [isClosing, setIsClosing] = useState(false);
+    const [isClosing, setIsClosing] = useState<boolean>(false);
 
     return (
         <ContainerModal
@@ -23,21 +23,21 @@ const ModalInfoContainer = ({ setModalVisible, setModalDeleteVisible }: ModalInf
             <IconButton onPress={() => {
                 setModalVisible(false)
             }}>
-                <AntDesign name="infocirlceo" size={RFValue(20)} color={theme.colors.bgColor} />
+                <Info size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </IconButton>
 
             <IconButton onPress={() => {
                 setModalVisible(false)
                 setModalDeleteVisible(true)
             }}>
-                <Ionicons name="trash-bin-outline" size={RFValue(20)} color={theme.colors.bgColor} />
+                <Trash size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </IconButton>
 
             <IconButton onPress={() => {
                 setIsClosing(true)
                 setTimeout(() => setModalVisible(false), 200);
             }}>
-                <AntDesign name="closecircleo" size={RFValue(20)} color={theme.colors.bgColor} />
+                <X size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </IconButton>
         </ContainerModal>
     )

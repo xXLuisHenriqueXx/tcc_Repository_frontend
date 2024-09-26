@@ -20,8 +20,10 @@ import useAuth from '../hook/useAuth';
 import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
 import { Todo } from '../entities/Todo';
+import Pomodoro from '../screens/Pomodoro';
 
 export type PropsNavigationStack = {
+  Pomodoro: undefined;
   Alarms: {
     newAlarm?: boolean;
   };
@@ -66,6 +68,7 @@ const Routes = () => {
       >
         {token === null ? (
           <>
+            <Stack.Screen name="Pomodoro" component={Pomodoro} />
             <Stack.Screen name="Alarms" component={Alarms} />
             <Stack.Screen name="CreateAlarm" component={CreateAlarm} />
             <Stack.Screen name="Welcome" component={Welcome} />
@@ -74,6 +77,7 @@ const Routes = () => {
           </>
         ) : (
           <>
+            <Stack.Screen name="Pomodoro" component={Pomodoro} />
             <Stack.Screen name="Alarms" component={Alarms} />
             <Stack.Screen name="CreateAlarm" component={CreateAlarm} />
             <Stack.Screen name="Notes" component={Notes} />

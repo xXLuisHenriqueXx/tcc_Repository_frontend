@@ -17,11 +17,10 @@ interface ContainerNoteProps {
 
 const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
   const navigation = useNavigation<PropsStack>();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
-  const scaleAnimation = useRef(new Animated.Value(1)).current;
 
   const handleDelete = async () => {
     Animated.timing(translateX, {

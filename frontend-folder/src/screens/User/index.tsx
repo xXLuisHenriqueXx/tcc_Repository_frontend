@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, RefreshControl } from 'react-native';
-import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, LogoutButton, ScrollContainer, ThemeButton, UserImagePlaceholder, UserName, UserNameButton } from './styled';
+import { AchievementBoxCompleted, AchievementBoxNotCompleted, AchievementImage, ContainerAchievements, ContainerAchievementsBoxRow, ContainerAchievementsBoxTitle, ContainerAchievementsGroupBox, ContainerAchievementsTitle, ContainerInfo, ContainerInfoBox, ContainerInfoBoxText, ContainerInfoBoxTitle, ContainerInfoGroupBox, ContainerInfoGroupBoxText, ContainerInfoGroupRow, ContainerLevel, ContainerLevelBar, ContainerLevelBarFill, ContainerLevelText, ContainerLevelTextBar, ContainerUser, CreatedText, HighlightedText, ScrollContainer, UserImagePlaceholder, UserName, UserNameButton } from './styled';
 import { useTheme } from "styled-components/native";
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MotiView } from 'moti';
-import { FontAwesome5, Feather } from '@expo/vector-icons'
 
 import Loader from '../Loader';
 import ModalInfo from '../../components/common/ModalInfo';
@@ -16,6 +15,7 @@ import { PropsStack } from '../../routes';
 import { Achievement } from '../../entities/Achievement';
 import achievementService from '../../services/achievementService';
 import ContainerGradient from '../../components/common/ContainerGradient';
+import { Bell, BookmarkCheck, Pencil, Plus, SquareCheck, StickyNote } from 'lucide-react-native';
 
 const User = () => {
   const navigation = useNavigation<PropsStack>();
@@ -28,21 +28,21 @@ const User = () => {
   const [achievementsTask, setAchievementsTask] = useState<Achievement[] | undefined>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     handleUserInfo();
   }, []);
-  
+
   const handleUserInfo = async () => {
     setIsLoading(true);
-    
+
     try {
       const { data } = await userService.getUserProfile();
-      
+
       setUserInfo(data);
-      
+
       let progressValue = handleCalculateProgress(data.experience, data.experienceToNextLevel,);
       setProgress(parseFloat(progressValue));
     } catch (error) {
@@ -51,32 +51,32 @@ const User = () => {
       setIsLoading(false);
     }
   }
-  
+
   const handleCalculateProgress = (experience: number, experienceToNextLevel: number) => {
     const experiencePercentage = (experience / experienceToNextLevel) * 100;
-    
+
     const progress = experiencePercentage.toFixed(2);
-    
+
     return progress;
   }
-  
+
   useEffect(() => {
     if (userInfo) {
       handleLoadAchievements();
     }
   }, [userInfo]);
-  
+
   const handleLoadAchievements = async () => {
     const { data } = await achievementService.getAll();
-    
+
     handleFilterAchievements(data);
   }
-  
+
   const handleFilterAchievements = (data: Achievement[]) => {
     const achievementsNote = data.filter(achievement => achievement.type === '_note');
     const achievementsTodo = data.filter(achievement => achievement.type === '_todo');
     const achievementsTask = data.filter(achievement => achievement.type === '_task');
-    
+
     setAchievementsNote(achievementsNote);
     setAchievementsTodo(achievementsTodo);
     setAchievementsTask(achievementsTask);
@@ -98,12 +98,12 @@ const User = () => {
       >
         <ContainerUser>
           <UserImagePlaceholder>
-            <Feather name='plus' size={100} color={theme.colors.white} />
+            <Plus size={RFValue(90)} color={theme.colors.white} strokeWidth={RFValue(2)} />
           </UserImagePlaceholder>
 
           <UserNameButton onPress={handleNavigateToUpdateProfile}>
             <UserName>{userInfo?.name}</UserName>
-            <FontAwesome5 name='edit' size={RFValue(20)} color={theme.colors.highlightColor} />
+            <Pencil size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
           </UserNameButton>
 
           <CreatedText>Usuário desde: <HighlightedText>{getDate(userInfo?.createdAt ?? '')}</HighlightedText></CreatedText>
@@ -127,14 +127,20 @@ const User = () => {
 
               <ContainerInfoGroupRow>
                 <ContainerInfoBox>
-                  <ContainerInfoBoxTitle>Alarmes</ContainerInfoBoxTitle>
+                  <ContainerInfoBoxTitle>
+                    <Bell size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
+                    Alarmes
+                  </ContainerInfoBoxTitle>
                   <ContainerInfoBoxText>Criados: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Ativos: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletados: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
                 </ContainerInfoBox>
 
                 <ContainerInfoBox>
-                  <ContainerInfoBoxTitle>Notas</ContainerInfoBoxTitle>
+                  <ContainerInfoBoxTitle>
+                    <StickyNote size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
+                    Notas
+                  </ContainerInfoBoxTitle>
                   <ContainerInfoBoxText>Criadas: <HighlightedText>{userInfo?.numberCreateNotes}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Atualizadas: <HighlightedText>{userInfo?.numberUpdateNotes}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletadas: <HighlightedText>{userInfo?.numberDeleteNotes}</HighlightedText></ContainerInfoBoxText>
@@ -143,14 +149,20 @@ const User = () => {
 
               <ContainerInfoGroupRow>
                 <ContainerInfoBox>
-                  <ContainerInfoBoxTitle>Listas de tarefas</ContainerInfoBoxTitle>
+                  <ContainerInfoBoxTitle>
+                    <BookmarkCheck size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
+                    Listas de tarefas
+                  </ContainerInfoBoxTitle>
                   <ContainerInfoBoxText>Criadas: <HighlightedText>{userInfo?.numberCreateTodos}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Atualizadas: <HighlightedText>{userInfo?.numberUpdateTodos}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletadas: <HighlightedText>{userInfo?.numberDeleteTodos}</HighlightedText></ContainerInfoBoxText>
                 </ContainerInfoBox>
 
                 <ContainerInfoBox>
-                  <ContainerInfoBoxTitle>Tarefas</ContainerInfoBoxTitle>
+                  <ContainerInfoBoxTitle>
+                  <SquareCheck size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
+                    Tarefas
+                    </ContainerInfoBoxTitle>
                   <ContainerInfoBoxText>Criadas: <HighlightedText>{userInfo?.numberCreateTasks}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Atualizadas: <HighlightedText>{userInfo?.numberUpdateTasks}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletadas: <HighlightedText>{userInfo?.numberDeleteTasks}</HighlightedText></ContainerInfoBoxText>

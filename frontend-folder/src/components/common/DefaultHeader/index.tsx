@@ -1,9 +1,9 @@
 import React from 'react';
 import { BackButton, ButtonAdd, ContainerHeader, Input } from './styled';
-import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { ArrowLeft, Check } from 'lucide-react-native';
 
 import { PropsStack } from '../../../routes';
 
@@ -21,10 +21,8 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
 
     return (
         <ContainerHeader style={{ marginBottom: RFValue(marginBottom) }}>
-            <BackButton
-                onPress={() => navigation.goBack()}
-            >
-                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
+            <BackButton onPress={() => navigation.goBack()}>
+                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BackButton>
 
             <Input
@@ -34,10 +32,8 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
                 onChangeText={setTitle}
             />
 
-            <ButtonAdd
-                onPress={handleSave}
-            >
-                <Feather name="check" size={RFValue(20)} color={theme.colors.text} />
+            <ButtonAdd onPress={handleSave}>
+                <Check size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
             </ButtonAdd>
         </ContainerHeader>
     )

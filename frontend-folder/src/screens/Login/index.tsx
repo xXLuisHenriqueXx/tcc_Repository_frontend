@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import { BackButton, Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
-import { Feather, Entypo, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
+import { ArrowLeft, ArrowRightCircle, Lock, Mail } from 'lucide-react-native';
 
-import Loader from '../Loader';
 import { PropsStack } from '../../routes';
 import useAuth from '../../hook/useAuth';
 
@@ -18,16 +18,16 @@ interface fieldsProps {
 const Login = () => {
     const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
-    
+    const { login } = useAuth();
+
     const [fields, setFields] = useState<fieldsProps>({
         email: "",
         password: ""
     });
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const { login } = useAuth();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         setIsLoading(true);
 
         try {
@@ -39,7 +39,7 @@ const Login = () => {
                 return;
             }
 
-            login(trimmedEmail, trimmedPassword);
+            await login(trimmedEmail, trimmedPassword);
         } catch (error) {
             Alert.alert("Erro", "Erro ao realizar login!");
         } finally {
@@ -47,14 +47,10 @@ const Login = () => {
         }
     }
 
-    if (isLoading) return <Loader type='load' />
-
     return (
         <Container>
-            <BackButton
-                onPress={() => navigation.goBack()}
-            >
-                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
+            <BackButton onPress={() => navigation.goBack()}>
+                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BackButton>
 
             <ContainerView>
@@ -69,7 +65,7 @@ const Login = () => {
                     transition={{ type: 'timing', duration: 200 }}
                 >
                     <InputContainer>
-                        <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Mail size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             placeholder='Digite seu email...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -81,7 +77,7 @@ const Login = () => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Lock size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             placeholder='Digite sua senha...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -94,8 +90,16 @@ const Login = () => {
                     </InputContainer>
 
                     <LoginButton onPress={handleLogin} disabled={isLoading}>
-                        <LoginButtonText>ACESSAR</LoginButtonText>
-                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
+                        {!isLoading ? (
+                            <>
+                                <LoginButtonText>ACESSAR</LoginButtonText>
+                                <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+                            </>
+                        ) : (
+                            <ActivityIndicator size={RFValue(26)} color={theme.colors.bgColor} />
+                        )
+
+                        }
                     </LoginButton>
                     <ForgotPasswordButton>
                         <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
@@ -108,9 +112,9 @@ const Login = () => {
                     </OrContainer>
 
                     <GoogleButton>
-                        <FontAwesome name="google" size={RFValue(22)} color={theme.colors.highlightColor} style={{ position: "absolute", left: RFValue(16) }} />
+                        <FontAwesome name="google" size={RFValue(20)} color={theme.colors.highlightColor} style={{ position: "absolute", left: RFValue(16) }} />
                         <GoogleButtonText>ACESSAR COM GOOGLE</GoogleButtonText>
-                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{ position: "absolute", right: RFValue(16) }} />
+                        <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                     </GoogleButton>
                 </ContainerForm>
             </ContainerView>

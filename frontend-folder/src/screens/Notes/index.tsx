@@ -19,12 +19,11 @@ type Props = NativeStackScreenProps<PropsNavigationStack, 'Notes'>;
 const Notes = ({ route }: Props) => {
   const navigation = useNavigation<PropsStack>();
   const isFocused = useIsFocused();
-
   const { newNote } = route.params || {};
 
   const [notes, setNotes] = useState<Note[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     if (isFocused || newNote) {

@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { ContainerSide, ContainerButton, ContainerScreen, ContainerUser, UserImage, UserName, ContainerButtonText } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Feather, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import { Bell, BookmarkCheck, LogOut, StickyNote, SunMoon, Timer } from 'lucide-react-native';
 
 import { ThemeContext } from '../../../styles/themeContext';
 import useAuth from '../../../hook/useAuth';
@@ -18,15 +18,18 @@ interface ConfigSideModalProps {
 const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
-
     const { toggleTheme } = useContext(ThemeContext);
     const { logout, token } = useAuth();
 
-    const [isClosing, setIsClosing] = useState(false);
+    const [isClosing, setIsClosing] = useState<boolean>(false);
 
     const navigateToAlarms = () => {
         navigation.navigate("Alarms", { newAlarm: false });
     };
+
+    const navigateToPomodoro = () => {
+        navigation.navigate("Pomodoro");
+    }
 
     const navigateToNotes = () => {
         token === null
@@ -38,12 +41,6 @@ const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
         token === null
             ? navigation.navigate("Welcome")
             : navigation.navigate("Todos", { newTodo: false });
-    }
-
-    const navigateToUser = () => {
-        token === null
-            ? navigation.navigate("Welcome")
-            : navigation.navigate("User")
     }
 
     return (
@@ -68,12 +65,21 @@ const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
                         </ContainerUser>
 
                         <ContainerButton onPress={() => {
+                            navigateToPomodoro();
+                            setIsClosing(true)
+                            setTimeout(() => setModalVisible(false), 300);
+                        }}>
+                            <ContainerButtonText>Pomodoro</ContainerButtonText>
+                            <Timer style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
+                        </ContainerButton>
+
+                        <ContainerButton onPress={() => {
                             navigateToAlarms();
                             setIsClosing(true)
                             setTimeout(() => setModalVisible(false), 300);
                         }}>
                             <ContainerButtonText>Alarmes</ContainerButtonText>
-                            <FontAwesome name='bell-o' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
+                            <Bell style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
                         </ContainerButton>
 
                         <ContainerButton onPress={() => {
@@ -82,7 +88,7 @@ const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
                             setTimeout(() => setModalVisible(false), 300);
                         }}>
                             <ContainerButtonText>Notas</ContainerButtonText>
-                            <FontAwesome name='sticky-note-o' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
+                            <StickyNote style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
                         </ContainerButton>
 
                         <ContainerButton onPress={() => {
@@ -91,27 +97,17 @@ const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
                             setTimeout(() => setModalVisible(false), 300);
                         }}>
                             <ContainerButtonText>Listas de tarefa</ContainerButtonText>
-                            <FontAwesome name='bookmark-o' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
-                        </ContainerButton>
-
-
-                        <ContainerButton onPress={() => {
-                            navigateToUser();
-                            setIsClosing(true)
-                            setTimeout(() => setModalVisible(false), 300);
-                        }}>
-                            <ContainerButtonText>Usuário</ContainerButtonText>
-                            <FontAwesome name='user-o' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
+                            <BookmarkCheck style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
                         </ContainerButton>
 
                         <ContainerButton onPress={toggleTheme}>
                             <ContainerButtonText>Mudar tema</ContainerButtonText>
-                            <FontAwesome5 name='moon' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
+                            <SunMoon style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
                         </ContainerButton>
 
                         <ContainerButton onPress={() => logout()}>
                             <ContainerButtonText>Desconectar</ContainerButtonText>
-                            <Feather name='log-out' size={RFValue(20)} color={theme.colors.text} style={{ position: 'absolute', left: RFValue(8) }} />
+                            <LogOut style={{ position: 'absolute', left: RFValue(8) }} size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
                         </ContainerButton>
                     </ContainerSide>
                 </TouchableWithoutFeedback>

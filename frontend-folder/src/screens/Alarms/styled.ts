@@ -1,14 +1,6 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const ContainerModeSelect = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    flex-direction: row;
-    align-items: center;
-    margin-top: ${RFValue(60)}px;
-`;
-
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(32)}px;

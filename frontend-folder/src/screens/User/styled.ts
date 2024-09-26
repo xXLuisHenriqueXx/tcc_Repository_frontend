@@ -1,22 +1,6 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const ThemeButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    position: absolute;
-    top: ${RFValue(16)}px;
-    right: ${RFValue(16)}px;
-`;
-
-export const LogoutButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-`;
-
 export const ScrollContainer = styled.ScrollView`
     flex: 1;
     margin: ${RFValue(40)}px ${RFValue(16)}px;
@@ -149,7 +133,7 @@ export const ContainerInfoGroupRow = styled.View`
 export const ContainerInfoBox = styled.View`
     width: 47%;
     height: ${RFValue(100)}px;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorInactive};
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     border-top-width: ${RFValue(4)}px;
     border-top-color: ${({ theme }) => theme.colors.highlightColor};
     border-radius: ${RFValue(5)}px;
@@ -191,7 +175,7 @@ export const ContainerAchievementsTitle = styled.Text`
 export const ContainerAchievementsGroupBox = styled.View`
     width: 100%;
     height: auto;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorInactive};
+    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     border-radius: ${RFValue(5)}px;
     flex-direction: column;
     align-items: center;

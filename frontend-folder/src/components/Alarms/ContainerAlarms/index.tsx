@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Animated, Easing } from 'react-native';
 import { ContainerAlarmView, SwitchButton, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
 import { useTheme } from 'styled-components';
+import { MotiView } from 'moti';
 
 import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
 import { Alarm } from '../../../entities/Alarm';
-import { MotiView } from 'moti';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ContainerAlarmProps {
   alarm: Alarm;
@@ -18,9 +17,9 @@ interface ContainerAlarmProps {
 const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlarmProps) => {
   const theme = useTheme();
 
-  const [switchEnabled, setSwitchEnabled] = useState(alarm.status);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+  const [switchEnabled, setSwitchEnabled] = useState<boolean>(alarm.status);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -40,9 +39,9 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
   return (
     <Animated.View style={{ transform: [{ translateX }] }}>
       <MotiView
-        transition={{type: 'timing', duration: 300}}
-        from={{transform: modalVisible ? [{scale: 1}] : [{scale: 1.05}], }}
-        animate={{transform: modalVisible ? [{scale: 1.05}] : [{scale: 1}]}}
+        transition={{ type: 'timing', duration: 300 }}
+        from={{ transform: modalVisible ? [{ scale: 1 }] : [{ scale: 1.05 }], }}
+        animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
       >
         <ContainerAlarmView
           onLongPress={() => setModalVisible(true)}

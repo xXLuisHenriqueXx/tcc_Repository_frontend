@@ -3,9 +3,9 @@ import { BackButton, Container, ContainerButton, ContainerText, ContainerView, L
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Feather } from '@expo/vector-icons';
 
 import { PropsStack } from '../../routes';
+import { ArrowLeft, ArrowLeftCircle } from 'lucide-react-native';
 
 const logoImage = require("../../assets/logo_text.png");
 
@@ -24,7 +24,7 @@ const Welcome = () => {
   return (
     <Container>
       <BackButton onPress={() => navigation.goBack()}>
-        <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
+        <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
       </BackButton>
 
       <ContainerView>
@@ -42,7 +42,7 @@ const Welcome = () => {
         >
           <LoginButton onPress={handleNavigateToLogin}>
             <LoginButtonText>ACESSAR</LoginButtonText>
-            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
+            <ArrowLeftCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
           </LoginButton>
 
           <OrContainer>
@@ -53,7 +53,7 @@ const Welcome = () => {
 
           <RegisterButton onPress={handleNavigateToRegister}>
             <RegisterButtonText>CADASTRAR</RegisterButtonText>
-            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.highlightColor} style={{ position: "absolute", right: RFValue(16) }} />
+            <ArrowLeftCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
           </RegisterButton>
         </ContainerButton>
       </ContainerView>

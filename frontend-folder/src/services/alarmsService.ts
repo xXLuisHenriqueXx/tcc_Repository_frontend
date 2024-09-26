@@ -59,7 +59,7 @@ const alarmsService = {
             console.log(error);
             return [];
         }
-    }
+    },
 };
 
 export default alarmsService;

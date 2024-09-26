@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Feather, Entypo } from "@expo/vector-icons";
+import { ArrowLeft, ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import { PropsStack } from '../../routes';
@@ -20,16 +20,15 @@ interface fieldsProps {
 const Register = () => {
   const navigation = useNavigation<PropsStack>();
   const theme = useTheme();
-  
+  const { register } = useAuth();
+
   const [fields, setFields] = useState<fieldsProps>({
     name: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { register } = useAuth();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRegister = async () => {
     setIsLoading(true);
@@ -39,23 +38,23 @@ const Register = () => {
       const trimmedEmail = fields.email.trim();
       const trimmedPassword = fields.password.trim();
       const trimmedConfirmPassword = fields.confirmPassword.trim();
-      
+
       if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
         Alert.alert("Aviso", "Preencha todos os campos!");
         return;
       }
-  
+
       if (trimmedPassword.length < 8) {
         Alert.alert("Aviso", "A senha deve ter no mínimo 8 caracteres!");
         return;
       }
-  
+
       if (trimmedPassword != trimmedConfirmPassword) {
         Alert.alert("Aviso", "As senhas são diferentes!");
         return;
       }
-      
-      register(trimmedName, trimmedEmail, trimmedPassword);
+
+      await register(trimmedName, trimmedEmail, trimmedPassword);
     } catch (error) {
       Alert.alert("Erro", "Erro ao realizar cadastro!");
     } finally {
@@ -63,12 +62,10 @@ const Register = () => {
     }
   }
 
-  if (isLoading) return <Loader type='load' />
-
   return (
     <Container>
       <BackButton onPress={() => navigation.goBack()}>
-        <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
+        <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
       </BackButton>
 
       <ContainerView>
@@ -78,12 +75,12 @@ const Register = () => {
         </ContainerText>
 
         <ContainerForm
-          from={{translateY: 300, opacity: 0}}
-          animate={{translateY: 0, opacity: 1}}
-          transition={{  type: 'timing', duration: 200 }}
+          from={{ translateY: 300, opacity: 0 }}
+          animate={{ translateY: 0, opacity: 1 }}
+          transition={{ type: 'timing', duration: 200 }}
         >
           <InputContainer>
-            <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
+            <User size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
             <Input
               placeholder='Digite seu nome de usuário...'
               placeholderTextColor={theme.colors.textInactive}
@@ -95,7 +92,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
+            <Mail size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
             <Input
               placeholder='Digite seu email...'
               placeholderTextColor={theme.colors.textInactive}
@@ -107,7 +104,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+            <Lock size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
             <Input
               placeholder='Digite sua senha...'
               placeholderTextColor={theme.colors.textInactive}
@@ -120,7 +117,7 @@ const Register = () => {
           </InputContainer>
 
           <InputContainer>
-            <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+            <Lock size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
             <Input
               placeholder='Digite sua senha novamente...'
               placeholderTextColor={theme.colors.textInactive}
@@ -133,8 +130,14 @@ const Register = () => {
           </InputContainer>
 
           <RegisterButton onPress={handleRegister} disabled={isLoading}>
-            <RegisterButtonText>CADASTRAR</RegisterButtonText>
-            <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
+            {!isLoading ? (
+              <>
+                <RegisterButtonText>CADASTRAR</RegisterButtonText>
+                <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+              </>
+            ) : (
+              <ActivityIndicator size={RFValue(26)} color={theme.colors.bgColor} />
+            )}
           </RegisterButton>
         </ContainerForm>
       </ContainerView>

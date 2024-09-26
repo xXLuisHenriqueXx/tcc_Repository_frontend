@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Feather, Entypo } from "@expo/vector-icons";
+import { ArrowLeft, ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import userService from '../../services/userService';
@@ -89,7 +89,7 @@ const UpdateProfile = ({ route }: Props) => {
     return (
         <Container>
             <BackButton onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={RFValue(20)} color={theme.colors.bgColor} />
+                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BackButton>
 
             <ContainerView>
@@ -104,7 +104,7 @@ const UpdateProfile = ({ route }: Props) => {
                     transition={{ type: 'timing', duration: 200 }}
                 >
                     <InputContainer>
-                        <Entypo name="user" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <User size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             value={fields.name}
                             onChangeText={(text) => {
@@ -114,7 +114,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="mail" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Mail size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             value={fields.email}
                             onChangeText={(text) => {
@@ -124,7 +124,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Lock size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             placeholder='Digite sua senha atual...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -133,7 +133,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Lock size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                         <Input
                             placeholder='Digite sua nova senha...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -142,7 +142,7 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <InputContainer>
-                        <Entypo name="lock" size={RFValue(22)} color={theme.colors.highlightColor} />
+                        <Lock size={RFValue(22)} color={theme.colors.highlightColor}  strokeWidth={RFValue(2)} />
                         <Input
                             placeholder='Digite sua nova senha novamente...'
                             placeholderTextColor={theme.colors.textInactive}
@@ -151,8 +151,14 @@ const UpdateProfile = ({ route }: Props) => {
                     </InputContainer>
 
                     <UpdateButton onPress={handleUpdate} disabled={isLoading}>
-                        <UpdateButtonText>SALVAR</UpdateButtonText>
-                        <Feather name='arrow-right-circle' size={RFValue(26)} color={theme.colors.bgColor} style={{ position: "absolute", right: RFValue(16) }} />
+                        {!isLoading ? (
+                            <>
+                                <UpdateButtonText>SALVAR</UpdateButtonText>
+                                <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+                            </>
+                        ) : (
+                            <ActivityIndicator size={RFValue(26)} color={theme.colors.bgColor} />
+                        )}
                     </UpdateButton>
                 </ContainerForm>
             </ContainerView>
