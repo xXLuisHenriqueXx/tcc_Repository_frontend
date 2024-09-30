@@ -15,12 +15,10 @@ const alarmsService = {
     saveAlarm: async (key: string, newAlarm: Alarm) => {
         try {
             let alarmsStored = await alarmsService.getAlarms(key);
-
             const hasAlarm = alarmsStored.some(item => item._id === newAlarm._id);
 
             if (hasAlarm) return;
             alarmsStored.push(newAlarm);
-
             await AsyncStorage.setItem(key, JSON.stringify(alarmsStored));
         } catch (error) {
             console.log(error);
