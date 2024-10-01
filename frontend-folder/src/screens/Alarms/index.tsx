@@ -40,12 +40,15 @@ const Alarms = ({ route }: Props) => {
 
     const handleGetAlarms = async () => {
         setIsLoading(true);
+
         try {
-            const alarms = await alarmsService.getAlarms('@alarms');
-            setAlarms(alarms);
+            const { data } = await alarmsService.getAlarms();
+            setAlarms(data);
             calculateDaysUntilNextAlarm(alarms);
+
         } catch (err) {
             Alert.alert('Erro', 'Erro ao buscar alarmes');
+
         } finally {
             setIsLoading(false);
         }
@@ -57,15 +60,16 @@ const Alarms = ({ route }: Props) => {
     }, []);
 
     const handleDeleteAlarm = async (alarmId: string) => {
-        const newAlarms = await alarmsService.deleteAlarm(alarmId);
-        setAlarms(newAlarms);
-        calculateDaysUntilNextAlarm(newAlarms);
+        await alarmsService.deleteAlarm({ _id: alarmId });
+
+        setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmId));
+        calculateDaysUntilNextAlarm(alarms);
     };
 
-    const handleToggleAlarmStatus = async (alarmId: string, status: boolean) => {
-        const newAlarms = await alarmsService.toggleAlarmStatus(alarmId, !status);
-        setAlarms(newAlarms);
-        calculateDaysUntilNextAlarm(newAlarms);
+    const handleToggleAlarmStatus = async (alarmId: string) => {
+        await alarmsService.toggleAlarmStatus({ _id: alarmId });
+
+        calculateDaysUntilNextAlarm(alarms);
     };
 
     const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
@@ -121,7 +125,7 @@ const Alarms = ({ route }: Props) => {
             <ContainerAlarm
                 alarm={item}
                 deleteAlarm={() => handleDeleteAlarm(item._id)}
-                toggleAlarmStatus={() => handleToggleAlarmStatus(item._id, item.status)}
+                toggleAlarmStatus={() => handleToggleAlarmStatus(item._id)}
             />
         </ContainerRenderAnimated>
     )

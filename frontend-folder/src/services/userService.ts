@@ -13,13 +13,13 @@ const userService = {
         const user = await AsyncStorage.getItem("@user");
 
         const { _id } = JSON.parse(user || "");
-    
+
         const response = await api.get(`/user/${_id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         });
-        
+
         return response;
     },
 

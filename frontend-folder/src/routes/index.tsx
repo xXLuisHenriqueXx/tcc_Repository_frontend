@@ -69,8 +69,6 @@ const Routes = () => {
         {token === null ? (
           <>
             <Stack.Screen name="Pomodoro" component={Pomodoro} />
-            <Stack.Screen name="Alarms" component={Alarms} />
-            <Stack.Screen name="CreateAlarm" component={CreateAlarm} />
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />

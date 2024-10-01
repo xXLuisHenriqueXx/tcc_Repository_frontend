@@ -1,62 +1,104 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alarm } from "../entities/Alarm";
+import * as SecureStore from 'expo-secure-store';
+import api from './api';
+
+interface AddParams {
+    title: string;
+    hour: Date;
+    days: {
+        sunday: boolean;
+        monday: boolean;
+        tuesday: boolean;
+        wednesday: boolean;
+        thursday: boolean;
+        friday: boolean;
+        saturday: boolean;
+    };
+    date: Date | null;
+}
+
+interface UpdateParams {
+    _id: string | undefined;
+    title: string;
+    hour: Date;
+    days: {
+        sunday: boolean;
+        monday: boolean;
+        tuesday: boolean;
+        wednesday: boolean;
+        thursday: boolean;
+        friday: boolean;
+        saturday: boolean;
+    };
+    date: Date | null;
+}
+
+interface DeleteParams {
+    _id: string;
+}
+
+interface ToggleStatusParams {
+    _id: string;
+}
 
 const alarmsService = {
-    getAlarms: async (key: string): Promise<Alarm[]> => {
-        try {
-            const alarms = await AsyncStorage.getItem(key);
-            return alarms ? JSON.parse(alarms) : [];
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+    getAlarms: async () => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
+
+        const response = await api.get('/alarm', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
     },
 
-    saveAlarm: async (key: string, newAlarm: Alarm) => {
-        try {
-            let alarmsStored = await alarmsService.getAlarms(key);
-            const hasAlarm = alarmsStored.some(item => item._id === newAlarm._id);
+    saveAlarm: async (params: AddParams) => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
 
-            if (hasAlarm) return;
-            alarmsStored.push(newAlarm);
-            await AsyncStorage.setItem(key, JSON.stringify(alarmsStored));
-        } catch (error) {
-            console.log(error);
-        }
+        const response = await api.post('/alarm', params, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
     },
 
-    deleteAlarm: async (_id: string) => {
-        try {
-            const alarmsStored = await alarmsService.getAlarms('@alarms');
-            const alarmsFiltered = alarmsStored.filter(item => item._id !== _id);
+    updateAlarm: async (params: UpdateParams) => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
 
-            await AsyncStorage.setItem('@alarms', JSON.stringify(alarmsFiltered));
+        const response = await api.put(`/alarm/${params._id}`, params, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
-            return alarmsFiltered;
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+        return response;
     },
 
-    toggleAlarmStatus: async (_id: string, status: boolean) => {
-        try {
-            const alarmsStored = await alarmsService.getAlarms('@alarms');
-            const alarmsUpdated = alarmsStored.map(item => {
-                if (item._id === _id) {
-                    return { ...item, status: status };
-                }
-                return item;
-            });
-    
-            await AsyncStorage.setItem('@alarms', JSON.stringify(alarmsUpdated));
-            
-            return alarmsUpdated;
+    deleteAlarm: async (params: DeleteParams) => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
 
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
+        const response = await api.delete(`/alarm/${params._id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
+    },
+
+    toggleAlarmStatus: async (params: ToggleStatusParams) => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
+
+        const response = await api.put(`/alarm/${params._id}/status`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
     },
 };
 

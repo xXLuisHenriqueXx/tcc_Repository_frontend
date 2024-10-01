@@ -31,7 +31,7 @@ const noteService = {
 
     addNote: async (params: AddParams) => {
         const token = await SecureStore.getItemAsync('luisapp-token');
-        
+
         const response = await api.post('/note', params, {
             headers: {
                 Authorization: `Bearer ${token}`

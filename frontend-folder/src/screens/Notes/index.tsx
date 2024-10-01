@@ -33,16 +33,19 @@ const Notes = ({ route }: Props) => {
 
   const handleGetNotes = async () => {
     setIsLoading(true);
+
     try {
       const { data } = await noteService.getNotes();
 
       setNotes(data);
+
     } catch (err) {
       Alert.alert('Erro', 'Erro ao buscar notas');
+
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);

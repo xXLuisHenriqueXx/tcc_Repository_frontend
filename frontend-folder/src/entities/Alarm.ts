@@ -13,4 +13,6 @@ export interface Alarm {
     };
     date: Date | null;
     status: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }

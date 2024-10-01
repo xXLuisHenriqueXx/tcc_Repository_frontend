@@ -131,9 +131,9 @@ const User = () => {
                     <Bell size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                     Alarmes
                   </ContainerInfoBoxTitle>
-                  <ContainerInfoBoxText>Criados: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
-                  <ContainerInfoBoxText>Ativos: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
-                  <ContainerInfoBoxText>Deletados: <HighlightedText>0</HighlightedText></ContainerInfoBoxText>
+                  <ContainerInfoBoxText>Criados: <HighlightedText>{userInfo?.numberCreateAlarms}</HighlightedText></ContainerInfoBoxText>
+                  <ContainerInfoBoxText>Ativos: <HighlightedText>{userInfo?.numberUpdateAlarms}</HighlightedText></ContainerInfoBoxText>
+                  <ContainerInfoBoxText>Deletados: <HighlightedText>{userInfo?.numberDeleteAlarms}</HighlightedText></ContainerInfoBoxText>
                 </ContainerInfoBox>
 
                 <ContainerInfoBox>

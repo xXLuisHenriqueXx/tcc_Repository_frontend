@@ -17,7 +17,7 @@ interface LoginParams {
 const authService = {
     register: async (params: RegisterParams) => {
         const response = await api.post('/register', params);
-    
+
         return response;
     },
 

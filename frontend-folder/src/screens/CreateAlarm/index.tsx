@@ -61,9 +61,13 @@ const CreateAlarm = () => {
                 alarmTime.setHours(hour);
                 alarmTime.setMinutes(minute);
 
-                await alarmsService.saveAlarm("@alarms", { _id: uuid.v4().toString(), title, hour: alarmTime, days, date: null, status: true });
+                const params = { title, hour: alarmTime, days, date: null, status: true };
 
-                navigation.navigate("Alarms", { newAlarm: true });
+                const { status } = await alarmsService.saveAlarm(params);
+
+                if (status === 201) {
+                    navigation.navigate("Alarms", { newAlarm: true });
+                }
 
                 setIsLoading(false);
             }

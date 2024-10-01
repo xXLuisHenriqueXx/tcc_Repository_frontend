@@ -23,13 +23,15 @@ const ConfigSideModal = ({ setModalVisible }: ConfigSideModalProps) => {
 
     const [isClosing, setIsClosing] = useState<boolean>(false);
 
-    const navigateToAlarms = () => {
-        navigation.navigate("Alarms", { newAlarm: false });
-    };
-
     const navigateToPomodoro = () => {
         navigation.navigate("Pomodoro");
     }
+
+    const navigateToAlarms = () => {
+        token === null
+            ? navigation.navigate("Welcome")
+            : navigation.navigate("Alarms", { newAlarm: false });
+    };
 
     const navigateToNotes = () => {
         token === null

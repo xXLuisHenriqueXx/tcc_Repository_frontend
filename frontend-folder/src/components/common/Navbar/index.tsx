@@ -24,7 +24,9 @@ export default function Navbar({ screen }: NavbarProps) {
     };
 
     const navigateToAlarms = () => {
-        navigation.navigate("Alarms", { newAlarm: false });
+        token === null
+            ? navigation.navigate("Welcome")
+            : navigation.navigate("Alarms", { newAlarm: false });
     };
 
     const navigateToNotes = () => {
@@ -51,7 +53,7 @@ export default function Navbar({ screen }: NavbarProps) {
     const colorNote = screen === "Notes" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorTodo = screen === "Todos" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
     const colorUser = screen === "User" ? theme.colors.tintActiveColor : theme.colors.tintInactiveColor;
-    const iconPomodoro = screen === "Pomodoro" ? 2 : 1; 
+    const iconPomodoro = screen === "Pomodoro" ? 2 : 1;
     const iconAlarm = screen === "Alarms" ? 2 : 1;
     const iconNote = screen === "Notes" ? 2 : 1;
     const iconTodo = screen === "Todos" ? 2 : 1;
@@ -70,9 +72,9 @@ export default function Navbar({ screen }: NavbarProps) {
             <IconButton onPress={navigateToPomodoro}>
                 <Timer size={size} color={colorPomodoro} strokeWidth={iconPomodoro} />
                 {screen === "Pomodoro" ? (
-                    <ButtonText screenEnabled={true}>Pomodoros</ButtonText>
+                    <ButtonText screenEnabled={true}>Pomodoro</ButtonText>
                 ) : (
-                    <ButtonText screenEnabled={false}>Pomodoros</ButtonText>
+                    <ButtonText screenEnabled={false}>Pomodoro</ButtonText>
                 )}
             </IconButton>
 

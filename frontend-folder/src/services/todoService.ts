@@ -29,7 +29,7 @@ const todoService = {
 
     addTodo: async (params: AddParams) => {
         const token = await SecureStore.getItemAsync('luisapp-token');
-        
+
         const response = await api.post('/todo', params, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -41,7 +41,7 @@ const todoService = {
 
     updateTodo: async (params: UpdateParams) => {
         const token = await SecureStore.getItemAsync('luisapp-token');
-    
+
         const response = await api.put(`/todo/${params._id}`, params, {
             headers: {
                 Authorization: `Bearer ${token}`
