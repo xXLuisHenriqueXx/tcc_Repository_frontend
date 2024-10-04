@@ -51,3 +51,9 @@ export const TextDiasAlarmHighlight = styled(TextDiasAlarm)`
 
 export const SwitchButton = styled.Switch`
 `;
+
+export const TextDateAlarm = styled.Text<SwitchEnabledProps>`
+    font-size: ${RFValue(10)}px;
+    font-weight: 500;
+    color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.highlightColor : theme.colors.textInactive};
+`;

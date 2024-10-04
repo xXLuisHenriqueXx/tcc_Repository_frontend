@@ -56,7 +56,7 @@ const CreateAlarm = () => {
                 alarmTime.setHours(hour);
                 alarmTime.setMinutes(minute);
 
-                const params = { title, hour: alarmTime, days, date: null, status: true };
+                const params = { title, hour: alarmTime, days, date: date, status: true };
 
                 const { status } = await alarmsService.saveAlarm(params);
 

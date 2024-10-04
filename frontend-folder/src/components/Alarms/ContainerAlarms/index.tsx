@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { View, Animated, Easing } from 'react-native';
-import { ContainerAlarmView, SwitchButton, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
+import { ContainerAlarmView, SwitchButton, TextDateAlarm, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
 import { useTheme } from 'styled-components';
 import { MotiView } from 'moti';
 
 import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
 import { Alarm } from '../../../entities/Alarm';
+import getDate from '../../../utils/getDate';
 
 interface ContainerAlarmProps {
   alarm: Alarm;
@@ -24,6 +25,10 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
   const translateX = useRef(new Animated.Value(0)).current;
 
   const trackColor = { false: theme.colors.trackColorInactive, true: theme.colors.trackColorActive };
+
+  const hasAnyDayEnabled = (days: { [key: string]: boolean }) => {
+    return days && Object.values(days).some(day => day === true);
+  };
 
   const handleDelete = async () => {
     Animated.timing(translateX, {
@@ -54,15 +59,21 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             <TextHorarioAlarm switchEnabled={switchEnabled}>
               {new Date(alarm.hour).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </TextHorarioAlarm>
-            <TextDiasAlarmView>
-              {alarm.days?.sunday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>D</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>D</TextDiasAlarm>}
-              {alarm.days?.monday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-              {alarm.days?.tuesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>T</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>T</TextDiasAlarm>}
-              {alarm.days?.wednesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
-              {alarm.days?.thursday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
-              {alarm.days?.friday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-              {alarm.days?.saturday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-            </TextDiasAlarmView>
+            {hasAnyDayEnabled(alarm.days) ? (
+              <TextDiasAlarmView>
+                {alarm.days?.sunday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>D</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>D</TextDiasAlarm>}
+                {alarm.days?.monday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+                {alarm.days?.tuesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>T</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>T</TextDiasAlarm>}
+                {alarm.days?.wednesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
+                {alarm.days?.thursday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
+                {alarm.days?.friday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+                {alarm.days?.saturday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+              </TextDiasAlarmView>
+            ) : (
+              <TextDateAlarm switchEnabled={switchEnabled}>
+                {alarm?.date ? getDate(alarm.date.toString()) : ''}
+              </TextDateAlarm>
+            )}
           </View>
 
           <SwitchButton
