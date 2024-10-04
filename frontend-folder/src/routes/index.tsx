@@ -21,6 +21,7 @@ import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
 import { Todo } from '../entities/Todo';
 import Pomodoro from '../screens/Pomodoro';
+import { Alarm } from '../entities/Alarm';
 
 export type PropsNavigationStack = {
   Pomodoro: undefined;
@@ -28,6 +29,9 @@ export type PropsNavigationStack = {
     newAlarm?: boolean;
   };
   CreateAlarm: undefined;
+  UpdateAlarm: {
+    alarmInfo?: Alarm;
+  }
   Notes: {
     newNote?: boolean;
   };

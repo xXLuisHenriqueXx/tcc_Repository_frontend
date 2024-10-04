@@ -5,42 +5,57 @@ import { ThemeProvider } from "styled-components/native";
 import { darkTheme, lightTheme } from "./src/styles";
 import Routes from "./src/routes";
 import { AuthContextProvider } from "./src/contexts/AuthContext";
-import * as Notifications from 'expo-notifications';
+import * as Notification from 'expo-notifications';
 import 'react-native-reanimated';
 import 'react-native-gesture-handler'
 
+Notification.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+})
+
 export default function App() {
   const [theme, setTheme] = useState<typeof darkTheme>(darkTheme);
+  const [notification, setNotification] = useState<Notification.Notification | null>(null);
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    requestPermission();
 
-    const subscription = Notifications.addNotificationReceivedListener(notification => {
-      console.log(notification);
+    const subscription = Notification.addNotificationReceivedListener(notification => {
+      setNotification(notification);
     });
 
     return () => subscription.remove();
   }, []);
 
-  const registerForPushNotificationsAsync = async () => {
-    let token;
-
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-      });
-    }
-
-    const { status } = await Notifications.requestPermissionsAsync();
+  async function requestPermission() {
+    const { status } = await Notification.getPermissionsAsync();
     if (status !== 'granted') {
-      Alert.alert('Aviso', 'A permisssão de notificações é necessário para o funcionamento pleno!');
-    } 
-  };
+      const { status } = await Notification.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Sem permissão para notificações', 'Você não permitiu que o aplicativo envie notificações.');
+        return;
+      }
+    }
+  }
 
   const toggleTheme = () => {
     setTheme(theme === darkTheme ? lightTheme : darkTheme);
   }
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      Notification.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notification.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  }, []);
 
   return (
     <AuthContextProvider>

@@ -3,6 +3,7 @@ import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-nat
 import { DiasText, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import * as Notifications from 'expo-notifications';
 
 import Loader from '../Loader';
 import ContainerAlarm from '../../components/Alarms/ContainerAlarms';
@@ -32,6 +33,23 @@ const Alarms = ({ route }: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
+    const scheduleNotification = async (alarmTitle: string, alarmTime: Date) => {
+        const notificationId = await Notifications.scheduleNotificationAsync({
+            content: {
+                title: alarmTitle,
+                body: "Seu alarme está tocando!",
+                sound: 'default',
+            },
+            trigger: {
+                date: alarmTime,
+            }
+        });
+
+        console.log('Scheduled notification with id:', notificationId);
+
+        return notificationId;
+    };
+
     useEffect(() => {
         if (isFocused || newAlarm) {
             handleGetAlarms();
@@ -44,12 +62,21 @@ const Alarms = ({ route }: Props) => {
         try {
             const { data } = await alarmsService.getAlarms();
             setAlarms(data);
-            calculateDaysUntilNextAlarm(alarms);
+
+            data.forEach((alarm: Alarm) => {
+                if (alarm.status) {
+                    const nextAlarmTime = calculateNextAlarmTime(alarm);
+                    scheduleNotification(alarm.title, nextAlarmTime);
+                }
+            });
+
+            calculateNextAlarm(alarms);
 
         } catch (err) {
             Alert.alert('Erro', 'Erro ao buscar alarmes');
 
         } finally {
+            calculateNextAlarm(alarms);
             setIsLoading(false);
         }
     };
@@ -63,16 +90,16 @@ const Alarms = ({ route }: Props) => {
         await alarmsService.deleteAlarm({ _id: alarmId });
 
         setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmId));
-        calculateDaysUntilNextAlarm(alarms);
+        calculateNextAlarm(alarms);
     };
 
     const handleToggleAlarmStatus = async (alarmId: string) => {
         await alarmsService.toggleAlarmStatus({ _id: alarmId });
 
-        calculateDaysUntilNextAlarm(alarms);
+        calculateNextAlarm(alarms);
     };
 
-    const calculateDaysUntilNextAlarm = (alarms: Alarm[]) => {
+    const calculateNextAlarm = (alarms: Alarm[]) => {
         const today = new Date();
         let nextAlarmTime: Date | null = null;
 
@@ -114,6 +141,50 @@ const Alarms = ({ route }: Props) => {
         } else {
             setNextAlarm(null);
         }
+    };
+
+    const calculateNextAlarmTime = (alarm: Alarm): Date => {
+        const today = new Date();
+        const todayDayIndex = today.getDay(); 
+        const alarmTime = new Date(alarm.hour);
+    
+        const daysOfWeek = [
+            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
+        ];
+    
+        const activeDays = daysOfWeek
+            .map((day, index) => (alarm.days[day as keyof typeof alarm.days] ? index : null))
+            .filter(dayIndex => dayIndex !== null) as number[];
+    
+        activeDays.sort((a, b) => a - b);
+    
+        let nextAlarmDayIndex: number | null = null;
+    
+        const currentTime = today.getHours() * 60 + today.getMinutes(); // Minutes since start of the day
+        const alarmTimeInMinutes = alarmTime.getHours() * 60 + alarmTime.getMinutes(); // Alarm time in minutes
+    
+        if (activeDays.includes(todayDayIndex) && alarmTimeInMinutes > currentTime) {
+            nextAlarmDayIndex = todayDayIndex;
+        } else {
+            for (const day of activeDays) {
+                if (day > todayDayIndex) {
+                    nextAlarmDayIndex = day;
+                    break;
+                }
+            }
+    
+            if (nextAlarmDayIndex === null) {
+                nextAlarmDayIndex = activeDays[0];
+            }
+        }
+    
+        const daysUntilNextAlarm = (nextAlarmDayIndex! + 7 - todayDayIndex) % 7;
+        const nextAlarmDate = new Date(today);
+    
+        nextAlarmDate.setDate(today.getDate() + daysUntilNextAlarm);
+        nextAlarmDate.setHours(alarmTime.getHours(), alarmTime.getMinutes(), 0, 0);
+    
+        return nextAlarmDate;
     };
 
     const navigateToCreateAlarm = () => {

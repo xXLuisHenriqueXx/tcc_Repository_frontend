@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { Alert, Platform } from 'react-native';
-import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerText, DateButton, DayButton, DayButtonText } from './styled';
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { Alert } from 'react-native';
+import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerText, DayButton, DayButtonText } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
-import uuid from 'react-native-uuid';
 import { MotiView } from 'moti';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { CalendarDays } from 'lucide-react-native';
 
 import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
@@ -15,6 +11,7 @@ import alarmsService from '../../services/alarmsService';
 import getDate from '../../utils/getDate';
 import { PropsStack } from '../../routes';
 import { TimePicker } from '../../components/common/TimePicker';
+import DatePicker from '../../components/Alarms/DatePicker';
 
 type DaysState = {
     sunday: boolean,
@@ -32,10 +29,8 @@ const CreateAlarm = () => {
 
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
-    const [alarmTitle, setAlarmTitle] = useState<string>("");
     const [date, setDate] = useState<Date>(new Date());
-    const [mode, setMode] = useState<"date" | "time">('date');
-    const [show, setShow] = useState<boolean>(false);
+    const [alarmTitle, setAlarmTitle] = useState<string>("");
     const [days, setDays] = useState<DaysState>({
         sunday: false,
         monday: false,
@@ -78,21 +73,6 @@ const CreateAlarm = () => {
         }
     }
 
-    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-    };
-
-    const showMode = (currentMode: "date") => {
-        setShow(true);
-        setMode('date');
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
     if (isLoading) return <Loader type='save' />
 
     return (
@@ -113,9 +93,7 @@ const CreateAlarm = () => {
                             <TimePicker.List length={60} setPicker={setMinute} />
                         </TimePicker.Root>
 
-                        <DateButton onPress={showDatepicker}>
-                            <CalendarDays size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
-                        </DateButton>
+                        <DatePicker date={date} setDate={setDate} />
 
                         <ContainerDaysView>
                             <ContainerDays>
@@ -131,15 +109,6 @@ const CreateAlarm = () => {
                     </ContainerButtonsView>
                 </ContainerButtons>
             </MotiView>
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={'date'}
-                    display="calendar"
-                    onChange={onChange}
-                />
-            )}
         </Container>
     )
 }
