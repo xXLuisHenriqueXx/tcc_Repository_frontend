@@ -6,9 +6,12 @@ import { Check } from 'lucide-react-native';
 
 import { TimePicker } from '../../components/common/TimePicker';
 import ContainerGradient from '../../components/common/ContainerGradient';
+import { useNavigation } from '@react-navigation/native';
+import { PropsStack } from '../../routes';
 
 const Pomodoro = () => {
     const theme = useTheme();
+    const navigation = useNavigation<PropsStack>();
 
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
@@ -39,6 +42,16 @@ const Pomodoro = () => {
         setRestSecond(restSecond);
     };
 
+    const navigateToPomodoroRunning = () => {
+        const studyTimeInSeconds = hour * 3600 + minute * 60 + second;
+        const restTimeInSeconds = restHour * 3600 + restMinute * 60 + restSecond;
+
+        navigation.navigate('PomodoroRunning', {
+            studyTime: studyTimeInSeconds,
+            restTime: restTimeInSeconds
+        });
+    }
+
     return (
         <ContainerGradient screen='Pomodoro' >
             <ContainerPomodoro>
@@ -66,8 +79,7 @@ const Pomodoro = () => {
                         <ContainerPomodoroButtonsTimeBoxText>{restSecond.toString().padStart(2, "0")}</ContainerPomodoroButtonsTimeBoxText>
                     </ContainerPomodoroButtonsTimeBox>
 
-                    <ContainerPomodoroButtonsStartButton onPress={() => {
-                    }}>
+                    <ContainerPomodoroButtonsStartButton onPress={navigateToPomodoroRunning}>
                         <ContainerPomodoroButtonsStartButtonText>COMEÇAR</ContainerPomodoroButtonsStartButtonText>
                         <Check style={{ position: 'absolute', right: RFValue(16) }} size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                     </ContainerPomodoroButtonsStartButton>
