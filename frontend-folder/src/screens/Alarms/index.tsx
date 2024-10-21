@@ -38,12 +38,10 @@ const Alarms = ({ route }: Props) => {
                 content: {
                     title: alarmTitle,
                     body: "Seu alarme está tocando!",
-                    sound: 'default',
+                    sound: 'default'
                 },
                 trigger: {
-                    date: alarmTime.getDate(),
-                    hour: alarmTime.getHours(),
-                    minute: alarmTime.getMinutes(),
+                    date: alarmTime
                 }
             });
 

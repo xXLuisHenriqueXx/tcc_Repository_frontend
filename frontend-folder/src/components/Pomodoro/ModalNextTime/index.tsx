@@ -30,7 +30,7 @@ const ModalNextTime = ({ showModal, setShowModal, isStudyTime, handleNext, handl
                 <ModalView>
                     <ModalTitle>
                         <ModalTitleHighlight>{isStudyTime ? 'Estudo finalizado!' : 'Descanso finalizado!'}</ModalTitleHighlight> 
-                        ${'\n'}O que deseja fazer?
+                        {'\n'}O que deseja fazer?
                     </ModalTitle>
 
                     <ContainerButtons>
