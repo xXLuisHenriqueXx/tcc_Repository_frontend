@@ -32,22 +32,27 @@ const Alarms = ({ route }: Props) => {
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
     const scheduleNotification = async (alarmTitle: string, alarmTime: Date) => {
-        const notificationId = await Notifications.scheduleNotificationAsync({
-            content: {
-                title: alarmTitle,
-                body: "Seu alarme está tocando!",
-                sound: 'default',
-            },
-            trigger: {
-                date: alarmTime,
-            }
-        });
+        if (alarmTime > new Date()) {
+            const notificationId = await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: alarmTitle,
+                    body: "Seu alarme está tocando!",
+                    sound: 'default',
+                },
+                trigger: {
+                    date: alarmTime.getDate(),
+                    hour: alarmTime.getHours(),
+                    minute: alarmTime.getMinutes(),
+                }
+            });
 
-        console.log('Scheduled notification with id:', notificationId);
-
-        return notificationId;
+            console.log('Scheduled notification with id:', notificationId);
+            return notificationId;
+        } else {
+            console.log('Alarm time is in the past, notification not scheduled.');
+            return null;
+        }
     };
 
     useEffect(() => {
@@ -58,25 +63,21 @@ const Alarms = ({ route }: Props) => {
 
     const handleGetAlarms = async () => {
         setIsLoading(true);
-
         try {
             const { data } = await alarmsService.getAlarms();
             setAlarms(data);
 
-            data.forEach((alarm: Alarm) => {
-                if (alarm.status) {
-                    const nextAlarmTime = calculateNextAlarmTime(alarm);
-                    scheduleNotification(alarm.title, nextAlarmTime);
-                }
+            const validAlarms = data.filter((alarm: Alarm) => alarm.status);
+            validAlarms.forEach((alarm: Alarm) => {
+                const nextAlarmTime = calculateNextAlarmTime(alarm);
+                if (nextAlarmTime) scheduleNotification(alarm.title, nextAlarmTime);
             });
 
-            calculateNextAlarm(alarms);
+            calculateNextAlarm(validAlarms);
 
         } catch (err) {
             Alert.alert('Erro', 'Erro ao buscar alarmes');
-
         } finally {
-            calculateNextAlarm(alarms);
             setIsLoading(false);
         }
     };
@@ -88,14 +89,13 @@ const Alarms = ({ route }: Props) => {
 
     const handleDeleteAlarm = async (alarmId: string) => {
         await alarmsService.deleteAlarm({ _id: alarmId });
-
-        setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmId));
-        calculateNextAlarm(alarms);
+        const updatedAlarms = alarms.filter(alarm => alarm._id !== alarmId);
+        setAlarms(updatedAlarms);
+        calculateNextAlarm(updatedAlarms);
     };
 
     const handleToggleAlarmStatus = async (alarmId: string) => {
         await alarmsService.toggleAlarmStatus({ _id: alarmId });
-
         calculateNextAlarm(alarms);
     };
 
@@ -131,7 +131,7 @@ const Alarms = ({ route }: Props) => {
             const timeDiff = new Date(nextAlarmTime).getTime() - today.getTime();
             const minutesDiff = Math.floor(timeDiff / (1000 * 60));
             const hoursDiff = Math.floor(timeDiff / (1000 * 3600));
-            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24))
+            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
 
             if (hoursDiff < 24) {
                 setNextAlarm({ value: hoursDiff < 1 ? minutesDiff : hoursDiff, unit: hoursDiff < 1 ? 'minutos' : 'horas' });
@@ -143,47 +143,34 @@ const Alarms = ({ route }: Props) => {
         }
     };
 
-    const calculateNextAlarmTime = (alarm: Alarm): Date => {
+    const calculateNextAlarmTime = (alarm: Alarm): Date | null => {
         const today = new Date();
-        const todayDayIndex = today.getDay(); 
+        const todayDayIndex = today.getDay();
         const alarmTime = new Date(alarm.hour);
-    
-        const daysOfWeek = [
-            'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
-        ];
-    
+
+        const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         const activeDays = daysOfWeek
             .map((day, index) => (alarm.days[day as keyof typeof alarm.days] ? index : null))
             .filter(dayIndex => dayIndex !== null) as number[];
-    
-        activeDays.sort((a, b) => a - b);
-    
-        let nextAlarmDayIndex: number | null = null;
-    
-        const currentTime = today.getHours() * 60 + today.getMinutes(); // Minutes since start of the day
-        const alarmTimeInMinutes = alarmTime.getHours() * 60 + alarmTime.getMinutes(); // Alarm time in minutes
-    
-        if (activeDays.includes(todayDayIndex) && alarmTimeInMinutes > currentTime) {
-            nextAlarmDayIndex = todayDayIndex;
-        } else {
-            for (const day of activeDays) {
-                if (day > todayDayIndex) {
-                    nextAlarmDayIndex = day;
-                    break;
-                }
-            }
-    
-            if (nextAlarmDayIndex === null) {
-                nextAlarmDayIndex = activeDays[0];
-            }
+
+        if (activeDays.length === 0) {
+            return null;
         }
-    
-        const daysUntilNextAlarm = (nextAlarmDayIndex! + 7 - todayDayIndex) % 7;
+
+        activeDays.sort((a, b) => a - b);
+
+        const currentTimeInMinutes = today.getHours() * 60 + today.getMinutes();
+        const alarmTimeInMinutes = alarmTime.getHours() * 60 + alarmTime.getMinutes();
+
+        let nextAlarmDayIndex = activeDays.find(day => 
+            (day > todayDayIndex) || (day === todayDayIndex && alarmTimeInMinutes > currentTimeInMinutes)
+        ) ?? activeDays[0];
+
+        const daysUntilNextAlarm = (nextAlarmDayIndex + 7 - todayDayIndex) % 7;
         const nextAlarmDate = new Date(today);
-    
         nextAlarmDate.setDate(today.getDate() + daysUntilNextAlarm);
         nextAlarmDate.setHours(alarmTime.getHours(), alarmTime.getMinutes(), 0, 0);
-    
+
         return nextAlarmDate;
     };
 
