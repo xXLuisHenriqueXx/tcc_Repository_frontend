@@ -47,7 +47,7 @@ const UpdateTodo = ({ route }: Props) => {
 
             } else {
                 const title = todoTitle.trim();
-                const params = { _id: todoInfo?._id, title: title };
+                const params = { _id: todoInfo?._id, title: title, tasks };
 
                 const { status } = await todoService.updateTodo(params);
 
@@ -63,63 +63,32 @@ const UpdateTodo = ({ route }: Props) => {
     }
 
     const handleAddTask = async () => {
-        setIsTaskLoading(true);
+        if (taskTitle === "") {
+            Alert.alert("Aviso", "Digite um título para a tarefa!");
+            return;
+        } else {
+            const trimmedTitle = taskTitle.trim();
 
-        try {
-            const title = taskTitle.trim();
-
-            if (title === "") {
-                Alert.alert("Aviso", "Digite um título para a tarefa!");
-                return;
-            }
-
-            const newTask = await taskService.addTask({ todoId: todoInfo?._id, title: title, done: false });
-            setTasks([...tasks, newTask.data]);
+            setTasks([...tasks, { title: trimmedTitle, done: false }]);
             setTaskTitle("");
-        } catch (error) {
-            Alert.alert("Erro", "Erro ao adicionar tarefa!");
-        } finally {
-            setIsTaskLoading(false);
         }
     }
 
-    const handleUpdateTaskDone = async (taskId: string) => {
-        setIsLoading(true);
-
-        try {
-            const task = tasks.find(task => task._id === taskId);
-
-            if (task) {
-                const updatedTask = { ...task, done: !task.done };
-                const response = await taskService.updateTaskDone({ _id: taskId, todoId: todoInfo?._id, done: updatedTask.done });
-
-                if (response.status === 200) {
-                    const updatedTasks = tasks.map(task => task._id === taskId ? updatedTask : task);
-                    setTasks(updatedTasks);
-                }
+    const handleUpdateTaskDone = async (index: number) => {
+        const updatedTasks = tasks.map((task, i) => {
+            if (i === index) {
+                task.done = !task.done;
             }
-        } catch (error) {
-            Alert.alert("Erro", "Erro ao atualizar tarefa!");
-        } finally {
-            setIsLoading(false);
-        }
+
+            return task;
+        });
+
+        setTasks(updatedTasks);
     }
 
-    const handleDeleteTask = async (taskId: string) => {
-        setIsTaskLoading(true);
-
-        try {
-            const response = await taskService.deleteTask({ _id: taskId, todoId: todoInfo?._id });
-
-            if (response.status === 204) {
-                const updatedTasks = tasks.filter(task => task._id !== taskId);
-                setTasks(updatedTasks);
-            }
-        } catch (error) {
-            Alert.alert("Erro", "Erro ao deletar tarefa!");
-        } finally {
-            setIsTaskLoading(false);
-        }
+    const handleDeleteTask = async (index: number) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
     }
 
     if (isLoading) return <Loader type='save' />
@@ -155,14 +124,14 @@ const UpdateTodo = ({ route }: Props) => {
                             <TaskContainer key={index}>
                                 <TaskDoneButton
                                     style={task.done ? { backgroundColor: theme.colors.highlightColor } : { backgroundColor: 'transparent' }}
-                                    onPress={() => handleUpdateTaskDone(task._id)}
+                                    onPress={() => handleUpdateTaskDone(index)}
                                 />
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
                                 <TaskContainerButtons>
                                     <TaskButton>
                                         <Pencil size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
-                                    <TaskButton onPress={() => handleDeleteTask(task._id)}>
+                                    <TaskButton onPress={() => handleDeleteTask(index)}>
                                         <Trash size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                                     </TaskButton>
                                 </TaskContainerButtons>

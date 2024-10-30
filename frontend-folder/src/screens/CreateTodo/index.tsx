@@ -10,19 +10,14 @@ import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
 import { PropsStack } from '../../routes';
 import todoService from '../../services/todoService';
-import taskService from '../../services/taskService';
-
-interface TaskProps {
-    title: string;
-    done: boolean;
-}
+import { Task } from '../../entities/Todo';
 
 const CreateTodo = () => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
 
     const [todoTitle, setTodoTitle] = useState<string>("");
-    const [tasks, setTasks] = useState<TaskProps[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [taskTitle, setTaskTitle] = useState<string>("");
     const [taskDone, setTaskDone] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,23 +32,12 @@ const CreateTodo = () => {
 
             } else {
                 const title = todoTitle.trim();
-                const params = { title }
+                const params = { title, tasks }
 
-                const { status, data } = await todoService.addTodo(params);
+                const { status } = await todoService.addTodo(params);
 
                 if (status === 201) {
-                    if (tasks.length === 0) {
-                        navigation.navigate("Todos", { newTodo: true });
-                    } else {
-                        const taskPromises = tasks.map(task => {
-                            const taskParams = { todoId: data._id, title: task.title, done: task.done };
-                            return taskService.addTask(taskParams);
-                        });
-
-                        await Promise.all(taskPromises);
-
-                        navigation.navigate("Todos", { newTodo: true });
-                    }
+                    navigation.navigate("Todos", { newTodo: true });
                 }
             }
         } catch (err) {

@@ -23,9 +23,9 @@ const User = () => {
 
   const [userInfo, setUserInfo] = useState<UserEntitie | undefined>();
   const [progress, setProgress] = useState<number>(0);
+  const [achievementsAlarm, setAchievementsAlarm] = useState<Achievement[] | undefined>([]);
   const [achievementsNote, setAchievementsNote] = useState<Achievement[] | undefined>([]);
   const [achievementsTodo, setAchievementsTodo] = useState<Achievement[] | undefined>([]);
-  const [achievementsTask, setAchievementsTask] = useState<Achievement[] | undefined>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -73,13 +73,13 @@ const User = () => {
   }
 
   const handleFilterAchievements = (data: Achievement[]) => {
+    const achievementsAlarm = data.filter(achievement => achievement.type === '_alarm');
     const achievementsNote = data.filter(achievement => achievement.type === '_note');
     const achievementsTodo = data.filter(achievement => achievement.type === '_todo');
-    const achievementsTask = data.filter(achievement => achievement.type === '_task');
 
+    setAchievementsAlarm(achievementsAlarm);
     setAchievementsNote(achievementsNote);
     setAchievementsTodo(achievementsTodo);
-    setAchievementsTask(achievementsTask);
   }
 
   const handleNavigateToUpdateProfile = () => {
@@ -132,7 +132,7 @@ const User = () => {
                     Alarmes
                   </ContainerInfoBoxTitle>
                   <ContainerInfoBoxText>Criados: <HighlightedText>{userInfo?.numberCreateAlarms}</HighlightedText></ContainerInfoBoxText>
-                  <ContainerInfoBoxText>Ativos: <HighlightedText>{userInfo?.numberUpdateAlarms}</HighlightedText></ContainerInfoBoxText>
+                  <ContainerInfoBoxText>Atualizados: <HighlightedText>{userInfo?.numberUpdateAlarms}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletados: <HighlightedText>{userInfo?.numberDeleteAlarms}</HighlightedText></ContainerInfoBoxText>
                 </ContainerInfoBox>
 
@@ -157,16 +157,6 @@ const User = () => {
                   <ContainerInfoBoxText>Atualizadas: <HighlightedText>{userInfo?.numberUpdateTodos}</HighlightedText></ContainerInfoBoxText>
                   <ContainerInfoBoxText>Deletadas: <HighlightedText>{userInfo?.numberDeleteTodos}</HighlightedText></ContainerInfoBoxText>
                 </ContainerInfoBox>
-
-                <ContainerInfoBox>
-                  <ContainerInfoBoxTitle>
-                  <SquareCheck size={RFValue(10)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
-                    Tarefas
-                    </ContainerInfoBoxTitle>
-                  <ContainerInfoBoxText>Criadas: <HighlightedText>{userInfo?.numberCreateTasks}</HighlightedText></ContainerInfoBoxText>
-                  <ContainerInfoBoxText>Atualizadas: <HighlightedText>{userInfo?.numberUpdateTasks}</HighlightedText></ContainerInfoBoxText>
-                  <ContainerInfoBoxText>Deletadas: <HighlightedText>{userInfo?.numberDeleteTasks}</HighlightedText></ContainerInfoBoxText>
-                </ContainerInfoBox>
               </ContainerInfoGroupRow>
             </ContainerInfoGroupBox>
           </ContainerInfo>
@@ -179,6 +169,27 @@ const User = () => {
           <ContainerAchievements>
             <ContainerAchievementsTitle>Conquistas</ContainerAchievementsTitle>
             <ContainerAchievementsGroupBox>
+              <ContainerAchievementsBoxTitle>Alarmes</ContainerAchievementsBoxTitle>
+              <ContainerAchievementsBoxRow horizontal={true} showsHorizontalScrollIndicator={false}>
+                {achievementsAlarm?.map(achievement => (
+                  userInfo?.achievements.includes(achievement._id) ? (
+                    <AchievementBoxCompleted key={achievement._id} onPress={() => {
+                      setModalVisible(true)
+                      setSelectedAchievement(achievement)
+                    }}>
+                      <AchievementImage source={{ uri: achievement.imageUrl }} />
+                    </AchievementBoxCompleted>
+                  ) : (
+                    <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
+                      setModalVisible(true)
+                      setSelectedAchievement(achievement)
+                    }}>
+                      <AchievementImage source={{ uri: achievement.imageUrl }} />
+                    </AchievementBoxNotCompleted>
+                  )
+                ))}
+              </ContainerAchievementsBoxRow>
+
               <ContainerAchievementsBoxTitle>Notas</ContainerAchievementsBoxTitle>
               <ContainerAchievementsBoxRow horizontal={true} showsHorizontalScrollIndicator={false}>
                 {achievementsNote?.map(achievement => (
@@ -203,27 +214,6 @@ const User = () => {
               <ContainerAchievementsBoxTitle>Listas de tarefas</ContainerAchievementsBoxTitle>
               <ContainerAchievementsBoxRow horizontal={true} showsHorizontalScrollIndicator={false}>
                 {achievementsTodo?.map(achievement => (
-                  userInfo?.achievements.includes(achievement._id) ? (
-                    <AchievementBoxCompleted key={achievement._id} onPress={() => {
-                      setModalVisible(true)
-                      setSelectedAchievement(achievement)
-                    }}>
-                      <AchievementImage source={{ uri: achievement.imageUrl }} />
-                    </AchievementBoxCompleted>
-                  ) : (
-                    <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
-                      setModalVisible(true)
-                      setSelectedAchievement(achievement)
-                    }}>
-                      <AchievementImage source={{ uri: achievement.imageUrl }} />
-                    </AchievementBoxNotCompleted>
-                  )
-                ))}
-              </ContainerAchievementsBoxRow>
-
-              <ContainerAchievementsBoxTitle>Tarefas</ContainerAchievementsBoxTitle>
-              <ContainerAchievementsBoxRow horizontal={true} showsHorizontalScrollIndicator={false}>
-                {achievementsTask?.map(achievement => (
                   userInfo?.achievements.includes(achievement._id) ? (
                     <AchievementBoxCompleted key={achievement._id} onPress={() => {
                       setModalVisible(true)

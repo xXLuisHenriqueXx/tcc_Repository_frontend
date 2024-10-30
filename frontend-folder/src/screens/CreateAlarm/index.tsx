@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerText, DayButton, DayButtonText } from './styled';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from 'styled-components';
 import { MotiView } from 'moti';
+import moment from 'moment-timezone';
 
 import Loader from '../Loader';
 import DefaultHeader from '../../components/common/DefaultHeader';
@@ -25,11 +25,10 @@ type DaysState = {
 
 const CreateAlarm = () => {
     const navigation = useNavigation<PropsStack>();
-    const theme = useTheme();
 
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
-    const [date, setDate] = useState<Date>(new Date());
+    const [date, setDate] = useState<Date | null>(null);
     const [alarmTitle, setAlarmTitle] = useState<string>("");
     const [days, setDays] = useState<DaysState>({
         sunday: false,
@@ -52,9 +51,13 @@ const CreateAlarm = () => {
             } else {
                 const title = alarmTitle.trim();
 
+                // Create a new Date object and set the hours and minutes
                 const alarmTime = new Date();
-                alarmTime.setHours(hour);
-                alarmTime.setMinutes(minute);
+                alarmTime.setHours(hour, minute, 0, 0);
+
+                console.log(alarmTime);
+                console.log(hour);
+                console.log(minute);
 
                 const params = { title, hour: alarmTime, days, date: date, status: true };
 
@@ -86,7 +89,10 @@ const CreateAlarm = () => {
             >
                 <ContainerButtons>
                     <ContainerButtonsView>
-                        <ContainerText>{getDate(date.toString())}</ContainerText>
+                        {date
+                            ? <ContainerText>{getDate(date.toString())}</ContainerText>
+                            : <ContainerText>Nenhuma data selecionada</ContainerText>
+                        }
                         <TimePicker.Root>
                             <TimePicker.List length={24} setPicker={setHour} />
                             <TimePicker.Separator />

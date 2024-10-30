@@ -8,6 +8,8 @@ import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
 import { Alarm } from '../../../entities/Alarm';
 import getDate from '../../../utils/getDate';
+import { PropsStack } from '../../../routes';
+import { useNavigation } from '@react-navigation/native';
 
 interface ContainerAlarmProps {
   alarm: Alarm;
@@ -17,6 +19,7 @@ interface ContainerAlarmProps {
 
 const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlarmProps) => {
   const theme = useTheme();
+  const navigation = useNavigation<PropsStack>();
 
   const [switchEnabled, setSwitchEnabled] = useState<boolean>(alarm.status);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -41,6 +44,10 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
     });
   };
 
+  const navigateToUpdateAlarm = () => {
+    navigation.navigate("UpdateAlarm", { alarmInfo: alarm });
+  }
+
   return (
     <Animated.View style={{ transform: [{ translateX }] }}>
       <MotiView
@@ -49,6 +56,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
         animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
       >
         <ContainerAlarmView
+          onPress={navigateToUpdateAlarm}
           onLongPress={() => setModalVisible(true)}
           switchEnabled={switchEnabled}
         >

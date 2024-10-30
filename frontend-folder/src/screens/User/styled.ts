@@ -86,7 +86,7 @@ export const ContainerLevelText = styled.Text`
 export const ContainerLevelBar = styled.View`
     width: 100%;
     height: ${RFValue(16)}px;
-    background-color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.textInactive};
     border-radius: ${RFValue(8)}px;
     align-items: start;
     justify-content: center;

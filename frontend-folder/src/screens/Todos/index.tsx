@@ -20,7 +20,7 @@ const Todos = ({ route }: Props) => {
   const navigation = useNavigation<PropsStack>();
   const isFocused = useIsFocused();
   const { newTodo } = route.params || {};
-  
+
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -81,7 +81,10 @@ const Todos = ({ route }: Props) => {
         ListHeaderComponent={
           <View style={{ marginHorizontal: RFValue(16) }}>
             <Title>Listas de tarefas</Title>
-            <NormalText>Você possui <HighlightText>{todos.length}</HighlightText> {todos.length > 1 ? 'listas de tarefas criadas' : 'lista de tarefa criada'}...</NormalText>
+            {todos.length > 0
+              ? <NormalText>Você possui <HighlightText>{todos.length}</HighlightText> {todos.length > 1 ? 'listas de tarefas criadas' : 'lista de tarefa criada'}...</NormalText>
+              : <NormalText>Você ainda não possui nenhuma lista de tarefa criada...</NormalText>
+            }
           </View>
         }
         renderItem={renderItem}

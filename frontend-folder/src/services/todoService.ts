@@ -1,13 +1,20 @@
 import * as SecureStore from 'expo-secure-store';
 import api from './api';
 
+interface TaskProps {
+    title: string;
+    done: boolean;
+}
+
 interface AddParams {
     title: string;
+    tasks: TaskProps[];
 }
 
 interface UpdateParams {
     _id: string | undefined;
     title: string;
+    tasks: TaskProps[];
 }
 
 interface DeleteParams {

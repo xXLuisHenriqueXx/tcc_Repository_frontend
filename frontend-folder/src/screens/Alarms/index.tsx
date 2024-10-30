@@ -32,26 +32,26 @@ const Alarms = ({ route }: Props) => {
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const scheduleNotification = async (alarmTitle: string, alarmTime: Date) => {
-        if (alarmTime > new Date()) {
-            const notificationId = await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: alarmTitle,
-                    body: "Seu alarme está tocando!",
-                    sound: 'default'
-                },
-                trigger: {
-                    date: alarmTime
-                }
-            });
+    // const scheduleNotification = async (alarmTitle: string, alarmTime: Date) => {
+    //     if (alarmTime > new Date()) {
+    //         const notificationId = await Notifications.scheduleNotificationAsync({
+    //             content: {
+    //                 title: alarmTitle,
+    //                 body: "Seu alarme está tocando!",
+    //                 sound: 'default'
+    //             },
+    //             trigger: {
+    //                 date: alarmTime
+    //             }
+    //         });
 
-            console.log('Scheduled notification with id:', notificationId);
-            return notificationId;
-        } else {
-            console.log('Alarm time is in the past, notification not scheduled.');
-            return null;
-        }
-    };
+    //         console.log('Scheduled notification with id:', notificationId);
+    //         return notificationId;
+    //     } else {
+    //         console.log('Alarm time is in the past, notification not scheduled.');
+    //         return null;
+    //     }
+    // };
 
     useEffect(() => {
         if (isFocused || newAlarm) {
@@ -68,7 +68,7 @@ const Alarms = ({ route }: Props) => {
             const validAlarms = data.filter((alarm: Alarm) => alarm.status);
             validAlarms.forEach((alarm: Alarm) => {
                 const nextAlarmTime = calculateNextAlarmTime(alarm);
-                if (nextAlarmTime) scheduleNotification(alarm.title, nextAlarmTime);
+                // if (nextAlarmTime) scheduleNotification(alarm.title, nextAlarmTime);
             });
 
             calculateNextAlarm(validAlarms);

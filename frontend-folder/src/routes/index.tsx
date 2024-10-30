@@ -23,6 +23,7 @@ import { Todo } from '../entities/Todo';
 import Pomodoro from '../screens/Pomodoro';
 import { Alarm } from '../entities/Alarm';
 import PomodoroRunning from '../screens/PomodoroRunning';
+import UpdateAlarm from '../screens/UpdateAlarm';
 
 export type PropsNavigationStack = {
   Pomodoro: undefined;
@@ -88,6 +89,7 @@ const Routes = () => {
             <Stack.Screen name='PomodoroRunning' component={PomodoroRunning} />
             <Stack.Screen name="Alarms" component={Alarms} />
             <Stack.Screen name="CreateAlarm" component={CreateAlarm} />
+            <Stack.Screen name="UpdateAlarm" component={UpdateAlarm} />
             <Stack.Screen name="Notes" component={Notes} />
             <Stack.Screen name="CreateNote" component={CreateNote} />
             <Stack.Screen name="UpdateNote" component={UpdateNote} />

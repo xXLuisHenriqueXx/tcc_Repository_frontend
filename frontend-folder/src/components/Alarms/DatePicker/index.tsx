@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { DateButton } from './styled';
@@ -7,7 +7,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 
 interface DatePickerProps {
-    date: Date;
+    date: Date | null;
     setDate: (date: Date) => void;
 }
 
@@ -16,10 +16,18 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
 
     const [show, setShow] = useState<boolean>(false);
     const [mode, setMode] = useState<"date" | "time">('date');
+    const [dateState, setDateState] = useState<Date>(new Date());
+
+    useEffect(() => {
+        if (date) {
+            setDateState(date);
+        }
+    }, [date]);
 
     const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate || dateState;
         setShow(Platform.OS === 'ios');
+
         setDate(currentDate);
     };
 
@@ -41,7 +49,7 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
             {show && (
                 <DateTimePicker
                     testID="dateTimePicker"
-                    value={date}
+                    value={dateState}
                     mode={'date'}
                     display="calendar"
                     onChange={onChange}
