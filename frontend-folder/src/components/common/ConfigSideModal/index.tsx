@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import { ContainerSide, ContainerButton, ContainerScreen, ContainerUser, UserImage, UserName, ContainerButtonText } from './styled';
 import { useTheme } from 'styled-components';

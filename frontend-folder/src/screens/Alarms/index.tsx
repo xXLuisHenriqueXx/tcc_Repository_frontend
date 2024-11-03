@@ -32,27 +32,6 @@ const Alarms = ({ route }: Props) => {
     const [nextAlarm, setNextAlarm] = useState<NextAlarm | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    // const scheduleNotification = async (alarmTitle: string, alarmTime: Date) => {
-    //     if (alarmTime > new Date()) {
-    //         const notificationId = await Notifications.scheduleNotificationAsync({
-    //             content: {
-    //                 title: alarmTitle,
-    //                 body: "Seu alarme está tocando!",
-    //                 sound: 'default'
-    //             },
-    //             trigger: {
-    //                 date: alarmTime
-    //             }
-    //         });
-
-    //         console.log('Scheduled notification with id:', notificationId);
-    //         return notificationId;
-    //     } else {
-    //         console.log('Alarm time is in the past, notification not scheduled.');
-    //         return null;
-    //     }
-    // };
-
     useEffect(() => {
         if (isFocused || newAlarm) {
             handleGetAlarms();
@@ -64,14 +43,6 @@ const Alarms = ({ route }: Props) => {
         try {
             const { data } = await alarmsService.getAlarms();
             setAlarms(data);
-
-            const validAlarms = data.filter((alarm: Alarm) => alarm.status);
-            validAlarms.forEach((alarm: Alarm) => {
-                const nextAlarmTime = calculateNextAlarmTime(alarm);
-                // if (nextAlarmTime) scheduleNotification(alarm.title, nextAlarmTime);
-            });
-
-            calculateNextAlarm(validAlarms);
 
         } catch (err) {
             Alert.alert('Erro', 'Erro ao buscar alarmes');
@@ -89,87 +60,10 @@ const Alarms = ({ route }: Props) => {
         await alarmsService.deleteAlarm({ _id: alarmId });
         const updatedAlarms = alarms.filter(alarm => alarm._id !== alarmId);
         setAlarms(updatedAlarms);
-        calculateNextAlarm(updatedAlarms);
     };
 
     const handleToggleAlarmStatus = async (alarmId: string) => {
         await alarmsService.toggleAlarmStatus({ _id: alarmId });
-        calculateNextAlarm(alarms);
-    };
-
-    const calculateNextAlarm = (alarms: Alarm[]) => {
-        const today = new Date();
-        let nextAlarmTime: Date | null = null;
-
-        alarms.forEach(alarm => {
-            if (alarm.status) {
-                const alarmHour = new Date(alarm.hour);
-                const days = Object.keys(alarm?.days).filter(day => alarm?.days[day as keyof typeof alarm.days]);
-
-                days.forEach(day => {
-                    const dayIndex = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].indexOf(day);
-                    let alarmTime = new Date(today);
-                    alarmTime.setHours(alarmHour.getHours(), alarmHour.getMinutes(), 0, 0);
-
-                    const diffDays = (dayIndex + 7 - today.getDay()) % 7;
-                    alarmTime.setDate(today.getDate() + diffDays);
-
-                    if (diffDays === 0 && alarmTime <= today) {
-                        alarmTime.setDate(alarmTime.getDate() + 7);
-                    }
-
-                    if (!nextAlarmTime || alarmTime < nextAlarmTime) {
-                        nextAlarmTime = alarmTime;
-                    }
-                });
-            }
-        });
-
-        if (nextAlarmTime) {
-            const timeDiff = new Date(nextAlarmTime).getTime() - today.getTime();
-            const minutesDiff = Math.floor(timeDiff / (1000 * 60));
-            const hoursDiff = Math.floor(timeDiff / (1000 * 3600));
-            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-
-            if (hoursDiff < 24) {
-                setNextAlarm({ value: hoursDiff < 1 ? minutesDiff : hoursDiff, unit: hoursDiff < 1 ? 'minutos' : 'horas' });
-            } else {
-                setNextAlarm({ value: daysDiff, unit: 'dias' });
-            }
-        } else {
-            setNextAlarm(null);
-        }
-    };
-
-    const calculateNextAlarmTime = (alarm: Alarm): Date | null => {
-        const today = new Date();
-        const todayDayIndex = today.getDay();
-        const alarmTime = new Date(alarm.hour);
-
-        const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        const activeDays = daysOfWeek
-            .map((day, index) => (alarm.days[day as keyof typeof alarm.days] ? index : null))
-            .filter(dayIndex => dayIndex !== null) as number[];
-
-        if (activeDays.length === 0) {
-            return null;
-        }
-
-        activeDays.sort((a, b) => a - b);
-
-        const currentTimeInMinutes = today.getHours() * 60 + today.getMinutes();
-        const alarmTimeInMinutes = alarmTime.getHours() * 60 + alarmTime.getMinutes();
-
-        let nextAlarmDayIndex = activeDays.find(day => 
-            (day > todayDayIndex) || (day === todayDayIndex && alarmTimeInMinutes > currentTimeInMinutes)
-        ) ?? activeDays[0];
-
-        const daysUntilNextAlarm = (nextAlarmDayIndex + 7 - todayDayIndex) % 7;
-        const nextAlarmDate = new Date(today);
-        nextAlarmDate.setDate(today.getDate() + daysUntilNextAlarm);
-        nextAlarmDate.setHours(alarmTime.getHours(), alarmTime.getMinutes(), 0, 0);
-
-        return nextAlarmDate;
     };
 
     const navigateToCreateAlarm = () => {
@@ -200,13 +94,7 @@ const Alarms = ({ route }: Props) => {
                             <Title>Alarmes</Title>
                         </>
                         <NormalText>
-                            {nextAlarm && nextAlarm.value > 0 ? (
-                                `Próximo alarme em `
-                            ) : (
-                                "Nenhum alarme em progresso..."
-                            )}
-                            {nextAlarm && nextAlarm.value > 0 && <DiasText>{nextAlarm.value}</DiasText>}
-                            {nextAlarm && nextAlarm.value > 0 && ` ${nextAlarm.unit}...`}
+                            Próximo alarme em X horas \ minutos \ dias
                         </NormalText>
                     </View>
                 }
