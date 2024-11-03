@@ -4,10 +4,10 @@
     "slug": "frontend-folder",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/logo.png",
+    "icon": "./src/assets/common/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/splashScreen.png",
+      "image": "./src/assets/common/splashScreen.png",
       "resizeMode": "contain",
       "backgroundColor": "#08041B"
     },

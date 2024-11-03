@@ -22,8 +22,8 @@ export const darkTheme: DefaultTheme =  {
         white: "#FFFFFF",
     },
     images: {
-        bgButton: require("../assets/bgButton_dark.png"),
-        catLoadingGif: require("../assets/cat_loading.gif")
+        bgButton: require("../assets/dark/bgButton_dark.png"),
+        catLoadingGif: require("../assets/common/cat_loading.gif")
     }
 };
 
@@ -49,7 +49,7 @@ export const lightTheme: DefaultTheme = {
         white: "#FEFEFE",
     },
     images: {
-        bgButton: require("../assets/bgButton_light.png"),
-        catLoadingGif: require("../assets/cat_loading.gif")
+        bgButton: require("../assets/light/bgButton_light.png"),
+        catLoadingGif: require("../assets/common/cat_loading.gif")
     }
 };

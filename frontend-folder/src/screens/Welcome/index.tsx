@@ -7,7 +7,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { PropsStack } from '../../routes';
 import { ArrowLeft, ArrowLeftCircle } from 'lucide-react-native';
 
-const logoImage = require("../../assets/logo_text.png");
+const logoImage = require("../../assets/common/logo.png");
 
 const Welcome = () => {
   const theme = useTheme();
