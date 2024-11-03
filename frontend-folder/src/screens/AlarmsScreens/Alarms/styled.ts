@@ -3,8 +3,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(32)}px;
-    font-weight: 900;
+    font-size: ${RFValue(50)}px;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
     text-transform: uppercase;
     margin-right: ${RFValue(8)}px;
 `;

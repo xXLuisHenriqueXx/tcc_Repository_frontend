@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import { Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, InputContent } from './styled';
+import { Container, ContainerInputLine, ContainerInputs, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -72,7 +72,8 @@ const UpdateNote = ({ route }: Props) => {
                 transition={{ type: 'timing', duration: 200 }}
             >
                 <ContainerInputsView>
-                    <ContainerInputsTitle>Conteúdo da nota</ContainerInputsTitle>
+                    <ContainerInputLine />
+                    
                     <InputContent
                         style={{ textAlignVertical: "top" }}
                         placeholder="Digite o conteúdo"

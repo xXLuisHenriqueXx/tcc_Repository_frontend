@@ -19,7 +19,7 @@ export const ContainerNoteView = styled.TouchableOpacity.attrs({
 `;
 
 export const ContainerTitleDate = styled.View`
-    width: 64%;
+    width: 60%;
     flex-direction: column;
 `
 

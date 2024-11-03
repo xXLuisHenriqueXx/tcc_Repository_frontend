@@ -85,7 +85,7 @@ const CreateAlarm = () => {
                     <ContainerButtonsView>
                         {date
                             ? <ContainerText>{getDate(date.toString())}</ContainerText>
-                            : <ContainerText>Nenhuma data selecionada</ContainerText>
+                            : <ContainerText>Nenhuma data selecionada...</ContainerText>
                         }
                         <TimePicker.Root>
                             <TimePicker.List length={24} setPicker={setHour} />

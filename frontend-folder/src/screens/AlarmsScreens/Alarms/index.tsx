@@ -82,10 +82,8 @@ const Alarms = ({ route }: Props) => {
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={
-                    <View style={{ marginHorizontal: RFValue(16) }}>
-                        <>
-                            <Title>Alarmes</Title>
-                        </>
+                    <View style={{ marginHorizontal: RFValue(16) }}>      
+                        <Title>Alarmes</Title>
                         <NormalText>
                             Próximo alarme em X horas \ minutos \ dias
                         </NormalText>

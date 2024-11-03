@@ -14,7 +14,7 @@ const BotaoAdd = ({ navigate }: BotaoAddProps) => {
     return (
         <ContainerButton onPress={navigate}>
             <BgButton source={theme.images.bgButton}>
-                <Plus  size={RFValue(28)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+                <Plus size={RFValue(28)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BgButton>
         </ContainerButton>
     )

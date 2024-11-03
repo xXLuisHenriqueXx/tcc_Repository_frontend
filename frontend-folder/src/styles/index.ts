@@ -24,7 +24,11 @@ export const darkTheme: DefaultTheme =  {
     images: {
         bgButton: require("../assets/dark/bgButton_dark.png"),
         catLoadingGif: require("../assets/common/cat_loading.gif")
-    }
+    },
+    fonts: {
+        karantinaRegular: 'Karantina-Regular',
+        karantinaBold: 'Karantina-Bold',
+    },
 };
 
 export const lightTheme: DefaultTheme = {
@@ -51,5 +55,9 @@ export const lightTheme: DefaultTheme = {
     images: {
         bgButton: require("../assets/light/bgButton_light.png"),
         catLoadingGif: require("../assets/common/cat_loading.gif")
-    }
+    },
+    fonts: {
+        karantinaRegular: 'Karantina-Regular',
+        karantinaBold: 'Karantina-Bold',
+    },
 };

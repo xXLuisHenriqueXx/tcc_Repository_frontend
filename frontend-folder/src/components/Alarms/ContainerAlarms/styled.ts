@@ -16,21 +16,22 @@ export const ContainerAlarmView = styled.TouchableOpacity.attrs({
     align-items: center;
     align-self: center;
     padding: 0 ${RFValue(16)}px;
-    margin-bottom: ${RFValue(16)}px;
+    margin-bottom: ${RFValue(20)}px;
     background-color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.bgContainerColorActive : theme.colors.bgContainerColorInactive};
 `;
 
 export const TextMaterialAlarm = styled.Text<SwitchEnabledProps>`
+    width: 100%;
     font-size: ${RFValue(12)}px;
-    font-weight: 500;
+    font-weight: 700;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.highlightColor : theme.colors.textInactive};
 `;
 
 export const TextHorarioAlarm = styled.Text<SwitchEnabledProps>`
     font-size: ${RFValue(32)}px;
     font-weight: 700;
-    margin-bottom: ${RFValue(-5)}px;
-    margin-top: ${RFValue(-5)}px;
+    margin-bottom: ${RFValue(-2)}px;
+    margin-top: ${RFValue(-2)}px;
     color: ${({ switchEnabled, theme }) => switchEnabled ? theme.colors.text : theme.colors.textInactive};
 `;
 

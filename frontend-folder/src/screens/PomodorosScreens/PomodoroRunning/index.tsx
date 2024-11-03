@@ -76,7 +76,7 @@ const PomodoroRunning = ({ route }: Props) => {
                 </TimerContainer>
 
                 <TimerButton onPress={handleFinish}>
-                    <TimerButtonText>Finalizar</TimerButtonText>
+                    <TimerButtonText>FINALIZAR</TimerButtonText>
                     <Check style={{ position: 'absolute', right: RFValue(16) }} size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                 </TimerButton>
             </ContainerPomodoro>

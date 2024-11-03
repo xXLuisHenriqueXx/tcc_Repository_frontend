@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import { AddTaskButton, AddTaskButtonText, Container, ContainerInputs, ContainerInputsTitle, ContainerInputsView, ContainerTitle, InputTitle, TaskButton, TaskContainer, TaskContainerButtons, TaskDoneButton, TasksContainer, TasksContainerTitle, TaskTitle } from './styled';
+import { AddTaskButton, AddTaskButtonText, Container, ContainerInputLine, ContainerInputs, ContainerInputsView, InputTitle, TaskButton, TaskContainer, TaskDoneButton, TasksContainer, TaskTitle } from './styled';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Pencil, Plus, Trash } from 'lucide-react-native';
+import { Plus, X } from 'lucide-react-native';
 
 import Loader from '../../Loader';
 import todoService from '../../../services/todoService';
@@ -102,15 +102,14 @@ const UpdateTodo = ({ route }: Props) => {
                 transition={{ type: 'timing', duration: 200 }}
             >
                 <ContainerInputsView>
-                    <ContainerInputsTitle>
-                        <ContainerTitle>Título da tarefa</ContainerTitle>
-                        <InputTitle
-                            placeholder="Digite o título da tarefa..."
-                            placeholderTextColor={theme.colors.textInactive}
-                            value={taskTitle}
-                            onChangeText={setTaskTitle}
-                        />
-                    </ContainerInputsTitle>
+                    <ContainerInputLine />
+
+                    <InputTitle
+                        placeholder="Digite o título da tarefa..."
+                        placeholderTextColor={theme.colors.textInactive}
+                        value={taskTitle}
+                        onChangeText={setTaskTitle}
+                    />
 
                     <AddTaskButton onPress={handleAddTask} disabled={isTaskLoading}>
                         <AddTaskButtonText>ADICIONAR ITEM</AddTaskButtonText>
@@ -118,7 +117,6 @@ const UpdateTodo = ({ route }: Props) => {
                     </AddTaskButton>
 
                     <TasksContainer>
-                        <TasksContainerTitle>Tarefas</TasksContainerTitle>
                         {tasks.map((task, index) => (
                             <TaskContainer key={index}>
                                 <TaskDoneButton
@@ -126,14 +124,10 @@ const UpdateTodo = ({ route }: Props) => {
                                     onPress={() => handleUpdateTaskDone(index)}
                                 />
                                 <TaskTitle numberOfLines={1}>{task.title}</TaskTitle>
-                                <TaskContainerButtons>
-                                    <TaskButton>
-                                        <Pencil size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
-                                    </TaskButton>
-                                    <TaskButton onPress={() => handleDeleteTask(index)}>
-                                        <Trash size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
-                                    </TaskButton>
-                                </TaskContainerButtons>
+
+                                <TaskButton onPress={() => handleDeleteTask(index)}>
+                                    <X size={RFValue(20)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
+                                </TaskButton>
                             </TaskContainer>
                         ))}
                     </TasksContainer>

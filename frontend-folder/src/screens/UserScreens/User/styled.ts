@@ -3,7 +3,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 export const ScrollContainer = styled.ScrollView`
     flex: 1;
-    margin: ${RFValue(40)}px ${RFValue(16)}px;
+    margin: ${RFValue(60)}px ${RFValue(16)}px;
     margin-bottom: ${RFValue(72)}px;
 `;
 

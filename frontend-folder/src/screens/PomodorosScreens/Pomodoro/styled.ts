@@ -9,35 +9,22 @@ export const ContainerPomodoro = styled.View`
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(32)}px;
-    font-weight: 900;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
+    font-size: ${RFValue(50)}px;
     text-transform: uppercase;
-    margin-right: ${RFValue(8)}px;
-`;
-
-export const NormalText = styled.Text`
-    margin-top: ${RFValue(2)}px;
     margin-bottom: ${RFValue(60)}px;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(14)}px;
-`;
-
-export const DiasText = styled(NormalText)`
-    color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
 `;
 
 export const ContainerPomodoroButtons = styled.View`
     width: 100%;
     flex-direction: column;
     align-items: center;
-    padding-top: ${RFValue(16)}px;
 `;
 
 export const ContainerPomodoroButtonsTitle = styled.Text`
     width: 100%;
     text-align: start;
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(12)}px;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.text};
     margin-bottom: ${RFValue(8)}px;
@@ -78,7 +65,7 @@ export const ContainerPomodoroButtonsStartButton = styled.TouchableOpacity.attrs
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: ${RFValue(32)}px;
+    margin-top: ${RFValue(40)}px;
 `;
 
 export const ContainerPomodoroButtonsStartButtonText = styled.Text`

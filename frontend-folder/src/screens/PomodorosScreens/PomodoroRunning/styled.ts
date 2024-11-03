@@ -60,7 +60,7 @@ export const TimerButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
     position: absolute;
-    bottom: ${RFValue(64)}px;
+    bottom: ${RFValue(80)}px;
     right: ${RFValue(16)}px;
     width: 100%;
     height: ${RFValue(50)}px;

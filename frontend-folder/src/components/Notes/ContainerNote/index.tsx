@@ -49,7 +49,7 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
           onLongPress={() => setModalVisible(true)}
         >
           <ContainerTitleDate>
-            <TitleNote>{note.title}</TitleNote>
+            <TitleNote numberOfLines={1} ellipsizeMode='tail'>{note.title}</TitleNote>
             <TextDateNote>{getDate(note.createdAt.toString())}</TextDateNote>
           </ContainerTitleDate>
 

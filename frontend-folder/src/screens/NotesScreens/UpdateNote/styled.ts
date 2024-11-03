@@ -29,15 +29,12 @@ export const ContainerInputsView = styled.View`
     padding: 0 ${RFValue(16)}px;
 `;
 
-export const ContainerInputsTitle = styled.Text`
-    width: 100%;
-    font-size: ${RFValue(20)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
-    padding: ${RFValue(16)}px 0;
-    text-align: center;
-    border-bottom-width: ${RFValue(2)}px;
-    border-bottom-color: ${({ theme }) => theme.colors.bdColor};
+export const ContainerInputLine = styled.View`
+    width: ${RFValue(140)}px;
+    height: ${RFValue(6)}px;
+    border-radius: ${RFValue(3)}px;
+    background-color: ${({ theme }) => theme.colors.bgColor};
+    margin: ${RFValue(20)}px 0;
 `;
 
 export const InputContent = styled.TextInput`

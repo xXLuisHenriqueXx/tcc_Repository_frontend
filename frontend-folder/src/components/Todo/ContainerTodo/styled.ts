@@ -19,24 +19,17 @@ export const ContainerTodoView = styled.TouchableOpacity.attrs({
 `;
 
 export const ContainerTitleDate = styled.View`
+    width: 60%;
     flex-direction: column;
 `
 
 export const TextDateTodo = styled.Text`
-    font-size: ${RFValue(12)}px;
+    font-size: ${RFValue(10)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
 `;  
 
 export const TitleTodo = styled.Text`
-    font-size: ${RFValue(22)}px;
+    font-size: ${RFValue(20)}px;
     font-weight: 500;
     color: ${({ theme }) => theme.colors.text};
-`;
-
-export const DeleteButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    position: absolute;
-    top: ${RFValue(10)}px;
-    right: ${RFValue(10)}px;
 `;

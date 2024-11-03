@@ -1,32 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
-import { ThemeContext } from "./src/styles/themeContext";
 import { ThemeProvider } from "styled-components/native";
-import { darkTheme, lightTheme } from "./src/styles";
-import Routes from "./src/routes";
-import { AuthContextProvider } from "./src/contexts/AuthContext";
+import * as SplashScreen from 'expo-splash-screen';
+import { Karantina_400Regular, Karantina_700Bold, useFonts } from '@expo-google-fonts/karantina';
 import 'react-native-reanimated';
 import 'react-native-gesture-handler';
-import themeService from "./src/services/themeService";
-import { MotiView } from "moti";
 
-const splashScreen = require('./src/assets/splashScreen.png');
+import Routes from "./src/routes";
+import { ThemeContext } from "./src/styles/themeContext";
+import { darkTheme, lightTheme } from "./src/styles";
+import { AuthContextProvider } from "./src/contexts/AuthContext";
+import themeService from "./src/services/themeService";
 
 export default function App() {
   const [theme, setTheme] = useState<typeof darkTheme>(darkTheme);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [fontsLoaded] = useFonts({
+    "Karantina-Regular": Karantina_400Regular,
+    "Karantina-Bold": Karantina_700Bold
+  })
 
   useEffect(() => {
-    setIsLoading(true);
+    const prepare = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
 
-    themeService.getTheme().then((storedTheme) => {
-      if (storedTheme) {
-        setTheme(storedTheme === 'dark' ? darkTheme : lightTheme);
+        const storedTheme = await themeService.getTheme();
+        if (storedTheme) {
+          setTheme(storedTheme === 'dark' ? darkTheme : lightTheme);
+        }
+        
+      } catch (error) {
+        console.warn(error);
+
+      } finally {
+        if (fontsLoaded) {
+          await SplashScreen.hideAsync();
+        }
       }
-    });
+    };
 
-    setIsLoading(false);
-  }, []);
+    prepare();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   const toggleTheme = () => {
     setTheme(theme === darkTheme ? lightTheme : darkTheme);

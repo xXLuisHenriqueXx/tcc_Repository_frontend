@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ContainerPomodoro, ContainerPomodoroButtons, ContainerPomodoroButtonsStartButton, ContainerPomodoroButtonsStartButtonText, ContainerPomodoroButtonsTimeBox, ContainerPomodoroButtonsTimeBoxText, ContainerPomodoroButtonsTitle, NormalText, SeparatorText, Title } from './styled';
+import { ContainerPomodoro, ContainerPomodoroButtons, ContainerPomodoroButtonsStartButton, ContainerPomodoroButtonsStartButtonText, ContainerPomodoroButtonsTimeBox, ContainerPomodoroButtonsTimeBoxText, ContainerPomodoroButtonsTitle, SeparatorText, Title } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Check } from 'lucide-react-native';
@@ -56,9 +56,6 @@ const Pomodoro = () => {
         <ContainerGradient screen='Pomodoro' >
             <ContainerPomodoro>
                 <Title>Pomodoro</Title>
-                <NormalText>
-                    Crie seu pomodoro aqui...
-                </NormalText>
 
                 <ContainerPomodoroButtons>
                     <ContainerPomodoroButtonsTitle>Tempo de estudo:</ContainerPomodoroButtonsTitle>
@@ -70,7 +67,7 @@ const Pomodoro = () => {
                         <TimePicker.List length={60} setPicker={setSecond} />
                     </TimePicker.Root>
 
-                    <ContainerPomodoroButtonsTitle style={{ marginTop: RFValue(32) }}>Tempo de descanso:</ContainerPomodoroButtonsTitle>
+                    <ContainerPomodoroButtonsTitle style={{ marginTop: RFValue(40) }}>Tempo de descanso:</ContainerPomodoroButtonsTitle>
                     <ContainerPomodoroButtonsTimeBox>
                         <ContainerPomodoroButtonsTimeBoxText>{restHour.toString().padStart(2, "0")}</ContainerPomodoroButtonsTimeBoxText>
                         <SeparatorText>:</SeparatorText>

@@ -54,10 +54,10 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
           onLongPress={() => setModalVisible(true)}
         >
           <ContainerTitleDate>
-            <TitleTodo>{todo.title}</TitleTodo>
+            <TitleTodo numberOfLines={1} ellipsizeMode='tail'>{todo.title}</TitleTodo>
             <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>
           </ContainerTitleDate>
-          <Check size={RFValue(30)} color={theme.colors.textInactive} strokeWidth={RFValue(2)} />
+          <Check size={RFValue(32)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
 
           <ModalDelete
             item={todo}

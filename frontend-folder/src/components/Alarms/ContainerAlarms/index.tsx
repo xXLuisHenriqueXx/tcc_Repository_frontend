@@ -60,8 +60,8 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
           onLongPress={() => setModalVisible(true)}
           switchEnabled={switchEnabled}
         >
-          <View>
-            <TextMaterialAlarm switchEnabled={switchEnabled}>
+          <View style={{ width: '80%' }}>
+            <TextMaterialAlarm switchEnabled={switchEnabled} numberOfLines={1} ellipsizeMode='tail'>
               {alarm.title}
             </TextMaterialAlarm>
             <TextHorarioAlarm switchEnabled={switchEnabled}>
@@ -85,7 +85,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
           </View>
 
           <SwitchButton
-            style={{ transform: [{ scaleX: 1.15 }, { scaleY: 1.15 }] }}
+            style={{ transform: [{ scaleX: 1.05 }, { scaleY: 1.05 }] }}
             trackColor={trackColor}
             thumbColor={theme.colors.thumbColor}
             onValueChange={async (newValue) => {

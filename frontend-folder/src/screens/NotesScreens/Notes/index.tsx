@@ -86,15 +86,15 @@ const Notes = ({ route }: Props) => {
               ? <NormalText> Você possui <HighlightText>{notes.length}</HighlightText> {notes.length > 1 ? 'notas criadas' : 'nota criada'}...</NormalText>
               : <NormalText>Você ainda não possui nenhuma nota criada...</NormalText>
             }
-              </View>
+          </View>
         }
-renderItem = { renderItem }
-refreshControl = {
-          <RefreshControl refreshing = { isRefreshing } onRefresh = { onRefresh } />
+        renderItem={renderItem}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }
       />
 
-  <BotaoAdd navigate = { handleNavigateToCreateNote } />
+      <BotaoAdd navigate={handleNavigateToCreateNote} />
     </ContainerGradient>
   )
 }

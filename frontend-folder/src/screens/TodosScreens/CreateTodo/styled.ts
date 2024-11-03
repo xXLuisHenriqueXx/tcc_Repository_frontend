@@ -29,31 +29,23 @@ export const ContainerInputsView = styled.View`
     padding: 0 ${RFValue(16)}px;
 `;
 
-export const ContainerInputsTitle = styled.View`
-    width: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: ${RFValue(40)}px;
-    margin-bottom: ${RFValue(16)}px;
-`;
-
-export const ContainerTitle = styled.Text`
-    width: 100%;
-    font-size: ${RFValue(16)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: 500;
-    padding-bottom: ${RFValue(4)}px;
+export const ContainerInputLine = styled.View`
+    width: ${RFValue(140)}px;
+    height: ${RFValue(6)}px;
+    border-radius: ${RFValue(3)}px;
+    background-color: ${({ theme }) => theme.colors.bgColor};
+    margin: ${RFValue(20)}px 0;
 `;
 
 export const InputTitle = styled.TextInput`
     width: 100%;
-    height: ${RFValue(40)}px;
+    height: ${RFValue(50)}px;
     color: ${({ theme }) => theme.colors.text};
     border-radius: ${RFValue(5)}px;
     background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     font-size: ${RFValue(14)}px;
     padding: 0 ${RFValue(8)}px;
+    margin: ${RFValue(16)}px 0;
 `;
 
 export const AddTaskButton = styled.TouchableOpacity.attrs({
@@ -68,9 +60,9 @@ export const AddTaskButton = styled.TouchableOpacity.attrs({
 `;
 
 export const AddTaskButtonText = styled.Text`
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.bgColor};
-    font-weight: bold;
+    font-weight: 600;
 `;
 
 export const TasksContainer = styled.View`
@@ -79,17 +71,9 @@ export const TasksContainer = styled.View`
     justify-content: flex-start;
     align-items: center;
     margin-top: ${RFValue(16)}px;
+    padding-top: ${RFValue(16)}px;
     border-top-width: ${RFValue(2)}px;
     border-top-color: ${({ theme }) => theme.colors.bdColor};
-`;
-
-export const TasksContainerTitle = styled.Text`
-    width: 100%;
-    font-size: ${RFValue(20)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
-    font-weight: bold;
-    text-align: center;
-    padding: ${RFValue(16)}px 0;
 `;
 
 export const TaskContainer = styled.View`
@@ -106,9 +90,6 @@ export const TaskTitle = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     margin-left: ${RFValue(10)}px;
     margin-right: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 export const TaskDoneButton = styled.TouchableOpacity.attrs({
@@ -119,13 +100,6 @@ export const TaskDoneButton = styled.TouchableOpacity.attrs({
     justify-content: center;
     align-items: center;
     border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.highlightColor};
-`;
-
-export const TaskContainerButtons = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: ${RFValue(12)}px;
 `;
 
 export const TaskButton = styled.TouchableOpacity.attrs({
