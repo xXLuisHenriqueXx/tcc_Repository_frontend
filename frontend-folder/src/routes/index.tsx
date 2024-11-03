@@ -2,28 +2,32 @@ import React from 'react'
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 
-import Welcome from '../screens/Welcome';
-import Login from '../screens/Login';
-import Register from '../screens/Register';
-import User from '../screens/User';
-import UpdateProfile from '../screens/UpdateProfile';
-import Alarms from '../screens/Alarms';
-import CreateAlarm from '../screens/CreateAlarm';
-import Notes from "../screens/Notes";
-import CreateNote from "../screens/CreateNote";
-import UpdateNote from '../screens/UpdateNote';
-import Todos from '../screens/Todos';
-import CreateTodo from '../screens/CreateTodo';
-import UpdateTodo from '../screens/UpdateTodo';
+import Welcome from '../screens/WelcomeScreens/Welcome';
+import Login from '../screens/WelcomeScreens/Login';
+import Register from '../screens/WelcomeScreens/Register';
+import User from '../screens/UserScreens/User';
+import UpdateProfile from '../screens/UserScreens/UpdateProfile';
+
+import Pomodoro from '../screens/PomodorosScreens/Pomodoro';
+import PomodoroRunning from '../screens/PomodorosScreens/PomodoroRunning';
+
+import Alarms from '../screens/AlarmsScreens/Alarms';
+import CreateAlarm from '../screens/AlarmsScreens/CreateAlarm';
+import UpdateAlarm from '../screens/AlarmsScreens/UpdateAlarm';
+
+import Notes from "../screens/NotesScreens/Notes";
+import CreateNote from "../screens/NotesScreens/CreateNote";
+import UpdateNote from '../screens/NotesScreens/UpdateNote';
+
+import Todos from '../screens/TodosScreens/Todos';
+import CreateTodo from '../screens/TodosScreens/CreateTodo';
+import UpdateTodo from '../screens/TodosScreens/UpdateTodo';
 
 import useAuth from '../hook/useAuth';
 import { User as UserEntitie } from '../entities/User';
 import { Note } from '../entities/Note';
 import { Todo } from '../entities/Todo';
-import Pomodoro from '../screens/Pomodoro';
 import { Alarm } from '../entities/Alarm';
-import PomodoroRunning from '../screens/PomodoroRunning';
-import UpdateAlarm from '../screens/UpdateAlarm';
 
 export type PropsNavigationStack = {
   Pomodoro: undefined;
