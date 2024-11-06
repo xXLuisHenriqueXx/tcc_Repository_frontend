@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BackButton, Container, ContainerButton, ContainerText, ContainerView, LoginButton, LoginButtonText, Logo, NormalText, OrContainer, OrLine, OrText, RegisterButton, RegisterButtonText, Title } from './styled';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { PropsStack } from '../../../routes';
-import { ArrowLeft, ArrowLeftCircle } from 'lucide-react-native';
-
-const logoImage = require("../../../assets/common/logo.png");
+import { ArrowLeft } from 'lucide-react-native';
+import { WelcomeComponent } from '../../../components/Welcome';
 
 const Welcome = () => {
   const theme = useTheme();
   const navigation = useNavigation<PropsStack>();
+  const [currentScreen, setCurrentScreen] = useState(0);
+
+  const handleNext = () => {
+    setCurrentScreen((prev) => (prev < 5 ? prev + 1 : 5));
+  };
+
+  const handlePrevious = () => {
+    setCurrentScreen((prev) => (prev > 0 ? prev - 1 : 0));
+  };
 
   const handleNavigateToLogin = () => {
     navigation.navigate("Login");
@@ -22,12 +30,8 @@ const Welcome = () => {
   }
 
   return (
-    <Container>
-      <BackButton onPress={() => navigation.goBack()}>
-        <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
-      </BackButton>
-
-      <ContainerView>
+    <>
+      {/* <ContainerView>
         <Logo source={logoImage} />
 
         <ContainerText>
@@ -56,8 +60,26 @@ const Welcome = () => {
             <ArrowLeftCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
           </RegisterButton>
         </ContainerButton>
-      </ContainerView>
-    </Container>
+      </ContainerView> */}
+
+      {currentScreen === 0 && (
+        <WelcomeComponent.RootNoImage>
+          <WelcomeComponent.Main />
+
+          <WelcomeComponent.Controllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
+        </WelcomeComponent.RootNoImage>
+      )}
+
+      {currentScreen === 1 && (
+        <WelcomeComponent.RootNoImage>
+          <WelcomeComponent.RootImage image={theme.images.bgWelcomeAlarms}>
+            <WelcomeComponent.Controllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
+          </WelcomeComponent.RootImage>
+        </WelcomeComponent.RootNoImage>
+      )}
+
+
+    </>
   )
 }
 

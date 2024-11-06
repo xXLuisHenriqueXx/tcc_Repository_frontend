@@ -25,6 +25,10 @@ declare module "styled-components" {
         images: {
             bgButton: any;
             catLoadingGif: any;
+            bgWelcomeAlarms: any;
+            bgWelcomeNotes: any;
+            bgWelcomeTodos: any;
+            bgWelcomeInfos: any;
         },
         fonts: {
             karantinaRegular: string;

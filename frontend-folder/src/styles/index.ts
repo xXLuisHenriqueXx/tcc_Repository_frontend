@@ -23,7 +23,11 @@ export const darkTheme: DefaultTheme =  {
     },
     images: {
         bgButton: require("../assets/dark/bgButton_dark.png"),
-        catLoadingGif: require("../assets/common/cat_loading.gif")
+        catLoadingGif: require("../assets/common/cat_loading.gif"),
+        bgWelcomeAlarms: require("../assets/dark/bg_WelcomeAlarms_dark.png"),
+        bgWelcomeNotes: require("../assets/dark/bg_WelcomeNotes_dark.png"),
+        bgWelcomeTodos: require("../assets/dark/bg_WelcomeTodos_dark.png"),
+        bgWelcomeInfos: require("../assets/dark/bg_WelcomeInfos_dark.png"),
     },
     fonts: {
         karantinaRegular: 'Karantina-Regular',
@@ -54,7 +58,7 @@ export const lightTheme: DefaultTheme = {
     },
     images: {
         bgButton: require("../assets/light/bgButton_light.png"),
-        catLoadingGif: require("../assets/common/cat_loading.gif")
+        catLoadingGif: require("../assets/common/cat_loading.gif"),
     },
     fonts: {
         karantinaRegular: 'Karantina-Regular',
