@@ -10,20 +10,6 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const BackButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(20)}px;
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-`;
-
 export const ContainerPomodoro = styled(MotiView)`
     flex: 1;
     margin-top: ${statusBarHeight + RFValue(140)}px;

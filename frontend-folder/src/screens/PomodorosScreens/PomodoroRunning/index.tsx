@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { BackButton, Container, ContainerPomodoro, TimerButton, TimerButtonText, TimerContainer, TimerText, TimerTextSmall, TimerTitle } from './styled';
+import { Container, ContainerPomodoro, TimerButton, TimerButtonText, TimerContainer, TimerText, TimerTextSmall, TimerTitle } from './styled';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { ArrowLeft, Check } from 'lucide-react-native';
+import { Check } from 'lucide-react-native';
+import { Audio } from 'expo-av';
 
 import { PropsNavigationStack, PropsStack } from '../../../routes';
 import ModalNextTime from '../../../components/Pomodoro/ModalNextTime';
+import BackButton from '../../../components/common/BackButton';
 
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'PomodoroRunning'>;
@@ -20,6 +22,7 @@ const PomodoroRunning = ({ route }: Props) => {
     const [time, setTime] = useState(studyTime);
     const [isStudyTime, setIsStudyTime] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
 
     const formatTime = (timeInSeconds: number) => {
         const hours = Math.floor(timeInSeconds / 3600);
@@ -28,12 +31,30 @@ const PomodoroRunning = ({ route }: Props) => {
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
+    const playSound = async () => {
+            const { sound } = await Audio.Sound.createAsync(
+                require('../../../assets/sounds/sound_alarmPomodo.mp3')
+            );
+
+            setSound(sound);
+            await sound.playAsync();
+    }
+
+    useEffect(() => {
+        return sound
+            ? () => {
+                sound.unloadAsync();
+            }
+            : undefined;
+    }, [sound]);
+
     useEffect(() => {
         const timer = setInterval(() => {
             setTime((prevTime) => {
                 if (prevTime === 0) {
                     clearInterval(timer);
                     setShowModal(true);
+                    playSound();
                     return 0;
                 }
                 return prevTime - 1;
@@ -56,9 +77,7 @@ const PomodoroRunning = ({ route }: Props) => {
 
     return (
         <Container>
-            <BackButton onPress={handleFinish}>
-                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
-            </BackButton>
+            <BackButton />
             <ContainerPomodoro
                 from={{ opacity: 0, translateY: 100 }}
                 animate={{ opacity: 1, translateY: 0 }}

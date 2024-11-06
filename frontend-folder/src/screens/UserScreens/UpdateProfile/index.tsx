@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
+import { Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, Title, UpdateButton, UpdateButtonText } from './styled';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { ArrowLeft, ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
+import { ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
 import Loader from '../../Loader';
 import userService from '../../../services/userService';
 import useAuth from '../../../hook/useAuth';
 import { PropsNavigationStack, PropsStack } from '../../../routes';
+import BackButton from '../../../components/common/BackButton';
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'UpdateProfile'>;
 
@@ -88,9 +89,7 @@ const UpdateProfile = ({ route }: Props) => {
 
     return (
         <Container>
-            <BackButton onPress={() => navigation.goBack()}>
-                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
-            </BackButton>
+            <BackButton />
 
             <ContainerView>
                 <ContainerText>
