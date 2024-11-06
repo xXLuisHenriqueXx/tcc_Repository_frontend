@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled';
-import { useNavigation } from '@react-navigation/native';
+import { Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordButton, ForgotPasswordText, GoogleButton, GoogleButtonText, Input, InputContainer, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { FontAwesome } from '@expo/vector-icons';
-import { ArrowLeft, ArrowRightCircle, Lock, Mail } from 'lucide-react-native';
+import {  ArrowRightCircle, Lock, Mail } from 'lucide-react-native';
 
-import { PropsStack } from '../../../routes';
 import useAuth from '../../../hook/useAuth';
+import BackButton from '../../../components/common/BackButton';
 
 interface fieldsProps {
     email: string;
@@ -16,7 +15,6 @@ interface fieldsProps {
 }
 
 const Login = () => {
-    const navigation = useNavigation<PropsStack>();
     const theme = useTheme();
     const { login } = useAuth();
 
@@ -49,13 +47,11 @@ const Login = () => {
 
     return (
         <Container>
-            <BackButton onPress={() => navigation.goBack()}>
-                <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
-            </BackButton>
+            <BackButton />
 
             <ContainerView>
                 <ContainerText>
-                    <Title>Que bom te ver de novo!</Title>
+                    <Title>Bom te ver de novo!</Title>
                     <NormalText>Para prosseguir realize o login nos campos abaixo!</NormalText>
                 </ContainerText>
 
@@ -114,7 +110,7 @@ const Login = () => {
                     <GoogleButton>
                         <FontAwesome name="google" size={RFValue(20)} color={theme.colors.highlightColor} style={{ position: "absolute", left: RFValue(16) }} />
                         <GoogleButtonText>ACESSAR COM GOOGLE</GoogleButtonText>
-                        <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+                        <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                     </GoogleButton>
                 </ContainerForm>
             </ContainerView>

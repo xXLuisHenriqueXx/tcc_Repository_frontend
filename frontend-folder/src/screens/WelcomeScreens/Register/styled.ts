@@ -10,20 +10,6 @@ export const Container = styled.ScrollView`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const BackButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(20)}px;
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-`;
-
 export const ContainerView = styled.View`
     flex: 1;
     justify-content: center;
@@ -40,8 +26,8 @@ export const ContainerText = styled.View`
 `;
 
 export const Title = styled.Text`
-    font-size: ${RFValue(30)}px;
-    font-weight: bold;
+    font-size: ${RFValue(50)}px;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
     color: ${({ theme }) => theme.colors.highlightColor};
     text-align: center;
 `;

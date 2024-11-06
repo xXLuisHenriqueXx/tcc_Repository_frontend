@@ -2,11 +2,13 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const ContainerControllers = styled.View`
+    position: absolute;
+    bottom: ${RFValue(80)}px;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: ${RFValue(100)}px;
+    padding: 0 ${RFValue(16)}px;
 `;
 
 export const ButtonPrevious = styled.TouchableOpacity.attrs({
@@ -33,10 +35,10 @@ export const ButtonNext = styled.TouchableOpacity.attrs({
 `;
 
 export const DotsContainer = styled.View`
+    flex: 1;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex: 1;
 `;
 
 export const Dot = styled.View<{ active: boolean }>`
@@ -44,5 +46,5 @@ export const Dot = styled.View<{ active: boolean }>`
     height: ${({ active }) => (active ? RFValue(10) : RFValue(6))}px;
     border-radius: ${RFValue(5)}px;
     background-color: ${({ theme, active }) => (active ? theme.colors.highlightColor : theme.colors.textInactive)};
-    margin: 0 ${RFValue(3)}px;
+    margin: 0 ${RFValue(8)}px;
 `;

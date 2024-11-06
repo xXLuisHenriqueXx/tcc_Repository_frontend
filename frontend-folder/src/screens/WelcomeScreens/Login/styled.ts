@@ -10,20 +10,6 @@ export const Container = styled.ScrollView`
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
-export const BackButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(20)}px;
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-`;
-
 export const ContainerView = styled.View`
     flex: 1;
     justify-content: center;
@@ -40,8 +26,8 @@ export const ContainerText = styled.View`
 `;
 
 export const Title = styled.Text`
-    font-size: ${RFValue(30)}px;
-    font-weight: bold;
+    font-size: ${RFValue(50)}px;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
     color: ${({ theme }) => theme.colors.highlightColor};
     text-align: center;
 `;
@@ -102,15 +88,15 @@ export const ForgotPasswordButton = styled.TouchableOpacity.attrs({
 export const ForgotPasswordText = styled.Text`
     font-size: ${RFValue(12)}px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.text};
-    margin-top: ${RFValue(8)}px;
+    color: ${({ theme }) => theme.colors.highlightColor};
+    margin-top: ${RFValue(10)}px;
 `;
 
 export const OrContainer = styled.View`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    margin: ${RFValue(32)}px 0;
+    margin: ${RFValue(16)}px 0;
 `;
 
 export const OrLine = styled.View`
@@ -133,7 +119,6 @@ export const GoogleButton = styled.TouchableOpacity.attrs({
     border-radius: ${RFValue(5)}px;
     border-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     flex-direction: row;
     justify-content: center;
     align-items: center;

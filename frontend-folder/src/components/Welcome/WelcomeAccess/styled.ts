@@ -1,54 +1,16 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
-import Constants from 'expo-constants';
-import { MotiView } from "moti";
-
-const statusBarHeight = Constants.statusBarHeight;
-
-export const Container = styled.ScrollView`
-    flex: 1;
-    background-color: ${({ theme }) => theme.colors.bgColor};
-`;
-
-export const BackButton = styled.TouchableOpacity.attrs({
-    activeOpacity: 0.85
-})`
-    background-color: ${({ theme }) => theme.colors.highlightColor};
-    border-radius: ${RFValue(20)}px;
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: ${RFValue(16)}px;
-    left: ${RFValue(16)}px;
-`;
-
-export const ContainerView = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    margin-top: ${statusBarHeight + RFValue(80)}px;
-`;
-
-export const Logo = styled.Image.attrs({
-    resizeMode: 'contain'
-})`
-    width: ${RFValue(150)}px;
-    height: ${RFValue(130)}px;
-`;
 
 export const ContainerText = styled.View`
+    width: 100%;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin: ${RFValue(60)}px 0;
-    padding: 0 ${RFValue(16)}px;
+    margin-top: ${RFValue(40)}px;
 `;
 
 export const Title = styled.Text`
-    font-size: ${RFValue(30)}px;
-    font-weight: bold;
+    font-size: ${RFValue(60)}px;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
     color: ${({ theme }) => theme.colors.highlightColor};
 `;
 
@@ -58,11 +20,12 @@ export const NormalText = styled.Text`
     text-align: center;
 `;
 
-export const ContainerButton = styled(MotiView)`
+export const ContainerButton = styled.View`
     flex-direction: column;
     align-items: center;
     width: 100%;
     padding: 0 ${RFValue(16)}px;
+    margin-top: ${RFValue(80)}px;
 `;
 
 export const LoginButton = styled.TouchableOpacity.attrs({
@@ -87,7 +50,7 @@ export const OrContainer = styled.View`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    margin: ${RFValue(32)}px 0;
+    margin: ${RFValue(16)}px 0;
 `;
 
 export const OrLine = styled.View`
@@ -110,7 +73,6 @@ export const RegisterButton = styled.TouchableOpacity.attrs({
     border-radius: ${RFValue(5)}px;
     border-width: ${RFValue(2)}px;
     border-color: ${({ theme }) => theme.colors.highlightColor};
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     flex-direction: row;
     justify-content: center;
     align-items: center;

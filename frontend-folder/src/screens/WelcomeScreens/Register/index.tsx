@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
-import { BackButton, Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
-import { useNavigation } from '@react-navigation/native';
+import { Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { ArrowLeft, ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
+import { ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
-import Loader from '../../Loader';
-import { PropsStack } from '../../../routes';
 import useAuth from '../../../hook/useAuth';
+import BackButton from '../../../components/common/BackButton';
 
 interface fieldsProps {
   name: string;
@@ -18,7 +16,6 @@ interface fieldsProps {
 }
 
 const Register = () => {
-  const navigation = useNavigation<PropsStack>();
   const theme = useTheme();
   const { register } = useAuth();
 
@@ -64,13 +61,11 @@ const Register = () => {
 
   return (
     <Container>
-      <BackButton onPress={() => navigation.goBack()}>
-        <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
-      </BackButton>
+      <BackButton />
 
       <ContainerView>
         <ContainerText>
-          <Title>Que bom te ver aqui!</Title>
+          <Title>Bom te ver aqui!</Title>
           <NormalText>Para prosseguir realize o cadastro nos campos abaixo!</NormalText>
         </ContainerText>
 

@@ -1,11 +1,13 @@
+import WelcomeFeatures from "./WelcomeFeatures";
 import WelcomeControllers from "./WelcomeControllers";
 import WelcomeMain from "./WelcomeMain";
-import WelcomeRootImage from "./WelcomeRootImage";
-import WelcomeRootNoImage from "./WelcomeRootNoImage";
+import WelcomeRoot from "./WelcomeRoot";
+import WelcomeAccess from "./WelcomeAccess";
 
 export const WelcomeComponent = {
-    RootNoImage: WelcomeRootNoImage,
-    RootImage: WelcomeRootImage,
+    Root: WelcomeRoot,
     Main: WelcomeMain,
+    Features: WelcomeFeatures,
+    Access: WelcomeAccess,
     Controllers: WelcomeControllers,
 };

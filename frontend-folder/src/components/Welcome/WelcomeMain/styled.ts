@@ -9,9 +9,9 @@ export const Logo = styled.Image.attrs({
 `;
 
 export const ContainerText = styled.View`
+    width: 100%;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     margin-top: ${RFValue(40)}px;
 `;
 
