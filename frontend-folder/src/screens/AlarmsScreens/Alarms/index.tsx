@@ -24,10 +24,13 @@ const Alarms = ({ route }: Props) => {
     const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
     const [alarms, setAlarms] = useState<Alarm[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [nextAlarm, setNextAlarm] = useState<Alarm | null>(null);
+    const [nextAlarmDate, setNextAlarmDate] = useState<Date | null>(null);
 
     useEffect(() => {
         if (isFocused || newAlarm) {
             handleGetAlarms();
+            handleGetNextAlarm();
         }
     }, [isFocused, newAlarm]);
 
@@ -44,9 +47,21 @@ const Alarms = ({ route }: Props) => {
         }
     };
 
+    const handleGetNextAlarm = async () => {
+        try {
+            const { data } = await alarmsService.nextAlarm();
+
+            setNextAlarm(data.nextAlarm);
+            setNextAlarmDate(new Date(data.nextAlarmDate));
+        } catch (error) {
+            Alert.alert('Erro', 'Erro ao buscar próximo alarme');
+        }
+    }
+
     const onRefresh = useCallback(() => {
         setIsRefreshing(true);
         handleGetAlarms().then(() => setIsRefreshing(false));
+        handleGetNextAlarm();
     }, []);
 
     const handleDeleteAlarm = async (alarmId: string) => {
@@ -82,11 +97,16 @@ const Alarms = ({ route }: Props) => {
                 data={alarms}
                 keyExtractor={item => item._id}
                 ListHeaderComponent={
-                    <View style={{ marginHorizontal: RFValue(16) }}>      
+                    <View style={{ marginHorizontal: RFValue(16) }}>
                         <Title>Alarmes</Title>
-                        <NormalText>
-                            Próximo alarme em X horas \ minutos \ dias
-                        </NormalText>
+
+                        {nextAlarm ? (
+                            <NormalText>
+                                Próximo alarme em <DiasText>{nextAlarmDate?.toLocaleDateString()}</DiasText> às <DiasText>{nextAlarmDate?.toLocaleTimeString()}</DiasText>
+                            </NormalText>
+                        ) : (
+                            <NormalText>Nenhum alarme em progresso...</NormalText>
+                        )}
                     </View>
                 }
                 renderItem={renderItem}

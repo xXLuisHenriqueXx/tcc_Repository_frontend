@@ -100,6 +100,18 @@ const alarmsService = {
 
         return response;
     },
+
+    nextAlarm: async () => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
+
+        const response = await api.get('alarm/next', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
+    }
 };
 
 export default alarmsService;

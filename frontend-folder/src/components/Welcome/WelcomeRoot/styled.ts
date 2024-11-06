@@ -5,7 +5,7 @@ import { MotiView } from "moti";
 
 const statusBarHeight = Constants.statusBarHeight;
 
-export const Container = styled(MotiView)`
+export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.bgColor};
 `;
@@ -19,9 +19,10 @@ export const ContainerImage = styled.ImageBackground.attrs({
 export const ContainerScrollView = styled.ScrollView`
     flex: 1;
     margin-top: ${statusBarHeight + RFValue(80)}px;
+    margin-bottom: ${RFValue(140)}px;
 `;
 
-export const ContainerView = styled.View`
+export const ContainerView = styled(MotiView)`
     flex: 1;
     justify-content: center;
     align-items: center;

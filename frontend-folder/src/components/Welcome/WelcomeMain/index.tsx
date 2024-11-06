@@ -3,7 +3,7 @@ import { ContainerText, Logo, NormalText, Title } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 
-const logoImage = require("../../../assets/common/logo.png");
+const logoImage = require("../../../assets/images/common/logo.png");
 
 const WelcomeMain = () => {
     return (

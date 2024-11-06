@@ -75,7 +75,7 @@ export const LoginButton = styled.TouchableOpacity.attrs({
 `;
 
 export const LoginButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.bgColor};
     font-weight: 600;
 `;
@@ -125,7 +125,7 @@ export const GoogleButton = styled.TouchableOpacity.attrs({
 `;
 
 export const GoogleButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
     font-weight: 600;
 `;

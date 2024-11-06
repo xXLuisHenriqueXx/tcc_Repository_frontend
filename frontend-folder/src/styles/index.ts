@@ -22,12 +22,12 @@ export const darkTheme: DefaultTheme =  {
         white: "#FFFFFF",
     },
     images: {
-        bgButton: require("../assets/dark/bgButton_dark.png"),
-        catLoadingGif: require("../assets/common/cat_loading.gif"),
-        bgWelcomeAlarms: require("../assets/dark/bg_WelcomeAlarms_dark.png"),
-        bgWelcomeNotes: require("../assets/dark/bg_WelcomeNotes_dark.png"),
-        bgWelcomeTodos: require("../assets/dark/bg_WelcomeTodos_dark.png"),
-        bgWelcomeInfos: require("../assets/dark/bg_WelcomeInfos_dark.png"),
+        bgButton: require("../assets/images/dark/bgButton_dark.png"),
+        catLoadingGif: require("../assets/images/common/cat_loading.gif"),
+        bgWelcomeAlarms: require("../assets/images/dark/bg_WelcomeAlarms_dark.png"),
+        bgWelcomeNotes: require("../assets/images/dark/bg_WelcomeNotes_dark.png"),
+        bgWelcomeTodos: require("../assets/images/dark/bg_WelcomeTodos_dark.png"),
+        bgWelcomeInfos: require("../assets/images/dark/bg_WelcomeInfos_dark.png"),
     },
     fonts: {
         karantinaRegular: 'Karantina-Regular',
@@ -57,8 +57,12 @@ export const lightTheme: DefaultTheme = {
         white: "#FEFEFE",
     },
     images: {
-        bgButton: require("../assets/light/bgButton_light.png"),
-        catLoadingGif: require("../assets/common/cat_loading.gif"),
+        bgButton: require("../assets/images/light/bgButton_light.png"),
+        catLoadingGif: require("../assets/images/common/cat_loading.gif"),
+        bgWelcomeAlarms: require("../assets/images/dark/bg_WelcomeAlarms_dark.png"),
+        bgWelcomeNotes: require("../assets/images/dark/bg_WelcomeNotes_dark.png"),
+        bgWelcomeTodos: require("../assets/images/dark/bg_WelcomeTodos_dark.png"),
+        bgWelcomeInfos: require("../assets/images/dark/bg_WelcomeInfos_dark.png"),
     },
     fonts: {
         karantinaRegular: 'Karantina-Regular',

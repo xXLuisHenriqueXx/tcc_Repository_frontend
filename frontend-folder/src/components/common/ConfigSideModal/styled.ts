@@ -57,5 +57,5 @@ export const ContainerButton = styled.TouchableOpacity.attrs({
 export const ContainerButtonText = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.text};
-    font-weight: 500;
+    font-weight: 600;
 `;

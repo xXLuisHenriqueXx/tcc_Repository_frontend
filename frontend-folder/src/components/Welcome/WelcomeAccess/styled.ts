@@ -24,7 +24,6 @@ export const ContainerButton = styled.View`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 0 ${RFValue(16)}px;
     margin-top: ${RFValue(80)}px;
 `;
 
@@ -41,7 +40,7 @@ export const LoginButton = styled.TouchableOpacity.attrs({
 `;
 
 export const LoginButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.bgColor};
     font-weight: 600;
 `;
@@ -79,7 +78,7 @@ export const RegisterButton = styled.TouchableOpacity.attrs({
 `;
 
 export const RegisterButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.highlightColor};
     font-weight: 600;
 `;

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Container, ContainerImage, ContainerScrollView, ContainerView } from './styled';
-import { WelcomeComponent } from '..';
 import BackButton from '../../common/BackButton';
+import WelcomeControllers from '../WelcomeControllers';
 
 interface WelcomeRootProps {
     children: ReactNode;
@@ -19,12 +19,16 @@ const WelcomeRoot = ({ children, currentScreen, handleNext, handlePrevious, imag
                     <BackButton />
 
                     <ContainerScrollView>
-                        <ContainerView>
+                        <ContainerView
+                            from={{ translateX: -300, opacity: 0 }}
+                            animate={{ translateX: 0, opacity: 1 }}
+                            transition={{ type: 'timing', duration: 300 }}
+                        >
                             {children}
                         </ContainerView>
                     </ContainerScrollView>
 
-                    <WelcomeComponent.Controllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
+                    <WelcomeControllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
                 </Container>
             ) : (
                 <Container>
@@ -32,12 +36,16 @@ const WelcomeRoot = ({ children, currentScreen, handleNext, handlePrevious, imag
                         <BackButton />
 
                         <ContainerScrollView>
-                            <ContainerView>
+                            <ContainerView
+                                from={{ translateX: -300, opacity: 0 }}
+                                animate={{ translateX: 0, opacity: 1 }}
+                                transition={{ type: 'timing', duration: 300 }}
+                            >
                                 {children}
                             </ContainerView>
                         </ContainerScrollView>
 
-                        <WelcomeComponent.Controllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
+                        <WelcomeControllers currentScreen={currentScreen} handleNext={handleNext} handlePrevious={handlePrevious} />
                     </ContainerImage>
                 </Container>
             )}

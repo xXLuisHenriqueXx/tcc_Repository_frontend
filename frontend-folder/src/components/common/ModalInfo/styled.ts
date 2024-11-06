@@ -48,7 +48,7 @@ export const ModalButton = styled.TouchableOpacity.attrs({
 `;
 
 export const ModalButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
-    font-weight: 700;
+    font-size: ${RFValue(14)}px;
+    font-weight: 600;
     color: ${({ theme }) => theme.colors.bgModal};
 `;

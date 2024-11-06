@@ -75,7 +75,7 @@ export const UpdateButton = styled.TouchableOpacity.attrs({
 `;
 
 export const UpdateButtonText = styled.Text`
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.bgColor};
     font-weight: 600;
 `;
