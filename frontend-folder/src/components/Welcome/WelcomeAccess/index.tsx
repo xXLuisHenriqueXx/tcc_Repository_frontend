@@ -1,8 +1,9 @@
 import React from 'react';
 import { ContainerButton, ContainerText, LoginButton, LoginButtonText, NormalText, OrContainer, OrLine, OrText, RegisterButton, RegisterButtonText, Title } from './styled';
-import { ArrowRightCircle } from 'lucide-react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import * as Haptics from 'expo-haptics';
+import { ArrowRightCircle } from 'lucide-react-native';
 
 interface WelcomeAccessProps {
     handleNavigateToLogin: () => void;
@@ -22,7 +23,11 @@ const WelcomeAccess = ({ handleNavigateToLogin, handleNavigateToRegister }: Welc
             </ContainerText>
 
             <ContainerButton>
-                <LoginButton onPress={handleNavigateToLogin}>
+                <LoginButton onPress={() => {
+                    Haptics.selectionAsync();
+
+                    handleNavigateToLogin();
+                }}>
                     <LoginButtonText>ACESSAR</LoginButtonText>
                     <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                 </LoginButton>
@@ -33,7 +38,11 @@ const WelcomeAccess = ({ handleNavigateToLogin, handleNavigateToRegister }: Welc
                     <OrLine />
                 </OrContainer>
 
-                <RegisterButton onPress={handleNavigateToRegister}>
+                <RegisterButton onPress={() => {
+                    Haptics.selectionAsync();
+
+                    handleNavigateToRegister();
+                }}>
                     <RegisterButtonText>CADASTRAR</RegisterButtonText>
                     <ArrowRightCircle style={{ position: "absolute", right: RFValue(16) }} size={RFValue(26)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
                 </RegisterButton>

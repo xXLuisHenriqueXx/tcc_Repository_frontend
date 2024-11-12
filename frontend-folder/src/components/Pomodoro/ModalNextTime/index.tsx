@@ -1,6 +1,7 @@
 import React from 'react';
 import { ContainerButtons, ContainerView, ContinueButton, ContinueButtonText, FinishButton, FinishButtonText, ModalTitle, ModalTitleHighlight, ModalView } from './styled';
 import { Modal } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 interface ModalNextTimeProps {
     showModal: boolean;
@@ -29,16 +30,24 @@ const ModalNextTime = ({ showModal, setShowModal, isStudyTime, handleNext, handl
             >
                 <ModalView>
                     <ModalTitle>
-                        <ModalTitleHighlight>{isStudyTime ? 'Estudo finalizado!' : 'Descanso finalizado!'}</ModalTitleHighlight> 
+                        <ModalTitleHighlight>{isStudyTime ? 'Estudo finalizado!' : 'Descanso finalizado!'}</ModalTitleHighlight>
                         {'\n'}O que deseja fazer?
                     </ModalTitle>
 
                     <ContainerButtons>
-                        <FinishButton onPress={handleFinish}>
+                        <FinishButton onPress={() => {
+                            Haptics.selectionAsync();
+
+                            handleFinish();
+                        }}>
                             <FinishButtonText>Finalizar</FinishButtonText>
                         </FinishButton>
 
-                        <ContinueButton onPress={handleNext}>
+                        <ContinueButton onPress={() => {
+                            Haptics.selectionAsync();
+
+                            handleNext();
+                        }}>
                             <ContinueButtonText>Continuar</ContinueButtonText>
                         </ContinueButton>
                     </ContainerButtons>

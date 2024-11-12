@@ -37,6 +37,7 @@ const Todos = ({ route }: Props) => {
     try {
       const { data } = await todoService.getTodos();
       setTodos(data);
+
     } catch (error) {
       Alert.alert('Erro', 'Erro ao buscar tarefas');
     } finally {
@@ -54,7 +55,6 @@ const Todos = ({ route }: Props) => {
 
     setTodos(prevTodos => prevTodos.filter(todo => todo._id !== todoId))
   }
-
 
   const handleNavigateToCreateTodo = () => {
     navigation.navigate("CreateTodo")

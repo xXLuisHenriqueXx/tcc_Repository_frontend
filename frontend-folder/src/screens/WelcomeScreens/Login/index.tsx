@@ -4,7 +4,8 @@ import { Container, ContainerForm, ContainerText, ContainerView, ForgotPasswordB
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { FontAwesome } from '@expo/vector-icons';
-import {  ArrowRightCircle, Lock, Mail } from 'lucide-react-native';
+import * as Haptics from 'expo-haptics';
+import { ArrowRightCircle, Lock, Mail } from 'lucide-react-native';
 
 import useAuth from '../../../hook/useAuth';
 import BackButton from '../../../components/common/BackButton';
@@ -26,6 +27,8 @@ const Login = () => {
 
 
     const handleLogin = async () => {
+        Haptics.selectionAsync();
+
         setIsLoading(true);
 
         try {
@@ -38,7 +41,11 @@ const Login = () => {
             }
 
             await login(trimmedEmail, trimmedPassword);
+
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         } catch (error) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert("Erro", "Erro ao realizar login!");
         } finally {
             setIsLoading(false);
@@ -93,9 +100,7 @@ const Login = () => {
                             </>
                         ) : (
                             <ActivityIndicator size={RFValue(26)} color={theme.colors.bgColor} />
-                        )
-
-                        }
+                        )}
                     </LoginButton>
                     <ForgotPasswordButton>
                         <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
 import { DiasText, NormalText, Title } from './styled';
+import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 

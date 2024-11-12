@@ -4,6 +4,7 @@ import { Container, ContainerInputLine, ContainerInputs, ContainerInputsView, In
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
 import DefaultHeader from '../../../components/common/DefaultHeader';
@@ -50,10 +51,14 @@ const UpdateNote = ({ route }: Props) => {
                 const response = await noteService.updateNote(params);
 
                 if (response.status === 200) {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
                     navigation.navigate("Notes", { newNote: true });
                 }
             }
         } catch (error) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert("Erro", "Erro ao atualizar nota!");
         } finally {
             setIsLoading(false);

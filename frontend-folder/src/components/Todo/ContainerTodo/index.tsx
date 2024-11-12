@@ -5,6 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { MotiView } from 'moti';
+import * as Haptics from 'expo-haptics';
 import { Check } from 'lucide-react-native';
 
 import ModalDelete from '../../common/ModalDelete';
@@ -34,11 +35,15 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
       easing: Easing.ease,
       useNativeDriver: true,
     }).start(async () => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
       await deleteTodo(todo);
     });
   };
 
   const navigateToUpdateTodo = () => {
+    Haptics.selectionAsync();
+
     navigation.navigate("UpdateTodo", { todoInfo: todo });
   }
 
@@ -51,7 +56,11 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
       >
         <ContainerTodoView
           onPress={navigateToUpdateTodo}
-          onLongPress={() => setModalVisible(true)}
+          onLongPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+          
+            setModalVisible(true)
+          }}
         >
           <ContainerTitleDate>
             <TitleTodo numberOfLines={1} ellipsizeMode='tail'>{todo.title}</TitleTodo>

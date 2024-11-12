@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ContainerPomodoro, ContainerPomodoroButtons, ContainerPomodoroButtonsStartButton, ContainerPomodoroButtonsStartButtonText, ContainerPomodoroButtonsTimeBox, ContainerPomodoroButtonsTimeBoxText, ContainerPomodoroButtonsTitle, SeparatorText, Title } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Check } from 'lucide-react-native';
 
 import { TimePicker } from '../../../components/common/TimePicker';
@@ -45,6 +46,8 @@ const Pomodoro = () => {
     const navigateToPomodoroRunning = () => {
         const studyTimeInSeconds = hour * 3600 + minute * 60 + second;
         const restTimeInSeconds = restHour * 3600 + restMinute * 60 + restSecond;
+
+        Haptics.selectionAsync();
 
         navigation.navigate('PomodoroRunning', {
             studyTime: studyTimeInSeconds,

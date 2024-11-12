@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { Container, ContainerInputLine, ContainerInputs, ContainerInputsView, InputContent } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
+import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
 import DefaultHeader from '../../../components/common/DefaultHeader';
@@ -19,7 +20,7 @@ const CreateNote = () => {
 
   const handleSaveNote = async () => {
     setIsLoading(true);
-    
+
     try {
       const title = noteTitle.trim();
       const content = noteContent.trim();
@@ -38,10 +39,14 @@ const CreateNote = () => {
         const { status } = await noteService.addNote(params);
 
         if (status === 201) {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
           navigation.navigate("Notes", { newNote: true });
         }
       }
     } catch (err) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
       Alert.alert('Erro', 'Erro ao salvar nota');
     } finally {
       setIsLoading(false);

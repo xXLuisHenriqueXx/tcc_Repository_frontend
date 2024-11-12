@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { ConfigButton, Container } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Menu } from 'lucide-react-native';
 
 import Navbar from '../Navbar';
@@ -19,7 +20,11 @@ const ContainerGradient = ({ children, screen }: ContainerGradientProps) => {
 
     return (
         <Container colors={theme.colors.bgMainColor}>
-            <ConfigButton onPress={() => setModalVisible(true)}>
+            <ConfigButton onPress={() => {
+                Haptics.selectionAsync();
+
+                setModalVisible(true);
+            }}>
                 <Menu size={RFValue(26)} color={theme.colors.text} strokeWidth={RFValue(2)} />
             </ConfigButton>
 

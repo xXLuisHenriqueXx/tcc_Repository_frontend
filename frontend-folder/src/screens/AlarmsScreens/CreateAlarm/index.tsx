@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, ContainerDaysView, ContainerText, DayButton, DayButtonText } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { MotiView } from 'moti';
+import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
 import DefaultHeader from '../../../components/common/DefaultHeader';
@@ -58,12 +59,16 @@ const CreateAlarm = () => {
                 const { status } = await alarmsService.saveAlarm(params);
 
                 if (status === 201) {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
                     navigation.navigate("Alarms", { newAlarm: true });
                 }
 
                 setIsLoading(false);
             }
         } catch (err) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert('Erro', 'Erro ao salvar alarme');
         } finally {
             setIsLoading(false);

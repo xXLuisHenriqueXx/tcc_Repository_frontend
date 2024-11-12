@@ -3,6 +3,7 @@ import { BackButton, ButtonAdd, ContainerHeader, Input } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { ArrowLeft, Check } from 'lucide-react-native';
 
 import { PropsStack } from '../../../routes';
@@ -21,7 +22,11 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
 
     return (
         <ContainerHeader style={{ marginBottom: RFValue(marginBottom) }}>
-            <BackButton onPress={() => navigation.goBack()}>
+            <BackButton onPress={() => {
+                Haptics.selectionAsync();
+
+                navigation.goBack()
+            }}>
                 <ArrowLeft size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BackButton>
 
@@ -32,7 +37,11 @@ const DefaultHeader = ({ title, setTitle, handleSave, placeholderText, marginBot
                 onChangeText={setTitle}
             />
 
-            <ButtonAdd onPress={handleSave}>
+            <ButtonAdd onPress={() => {
+                Haptics.selectionAsync();
+                
+                handleSave();
+            }}>
                 <Check size={RFValue(20)} color={theme.colors.text} strokeWidth={RFValue(2)} />
             </ButtonAdd>
         </ContainerHeader>

@@ -38,7 +38,6 @@ const Notes = ({ route }: Props) => {
       const { data } = await noteService.getNotes();
 
       setNotes(data);
-
     } catch (err) {
       Alert.alert('Erro', 'Erro ao buscar notas');
 

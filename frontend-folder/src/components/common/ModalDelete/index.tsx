@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-native';
 import { ContainerButtons, ContainerView, ModalTitle, ModalTitleDestaque, ModalView, NoButton, NoButtonText, YesButton, YesButtonText } from './styled';
+import * as Haptics from 'expo-haptics';
 
 interface ModalDeleteProps {
     item: any;
@@ -17,8 +18,7 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
             visible={modalVisible}
             onRequestClose={() => {
                 setModalVisible(!modalVisible);
-            }}
-        >
+            }}>
             <ContainerView
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -33,13 +33,18 @@ const ModalDelete = ({ item, deleteItem, modalVisible, setModalVisible }: ModalD
 
                     <ContainerButtons>
                         <NoButton
-                            onPress={() => setModalVisible(false)}
-                        >
+                            onPress={() => {
+                                Haptics.selectionAsync();
+
+                                setModalVisible(false)
+                            }}>
                             <NoButtonText>Não</NoButtonText>
                         </NoButton>
 
                         <YesButton
                             onPress={() => {
+                                Haptics.selectionAsync();
+
                                 deleteItem(item._id);
                                 setModalVisible(false);
                             }}

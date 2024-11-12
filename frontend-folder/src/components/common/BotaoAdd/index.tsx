@@ -2,6 +2,7 @@ import React from 'react';
 import { BgButton, ContainerButton } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Plus } from 'lucide-react-native';
 
 interface BotaoAddProps {
@@ -12,7 +13,11 @@ const BotaoAdd = ({ navigate }: BotaoAddProps) => {
     const theme = useTheme();
 
     return (
-        <ContainerButton onPress={navigate}>
+        <ContainerButton onPress={() => {
+            Haptics.selectionAsync();
+            
+            navigate();
+            }}>
             <BgButton source={theme.images.bgButton}>
                 <Plus size={RFValue(28)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </BgButton>

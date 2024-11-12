@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { DateButton } from './styled';
 import { Platform } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { DateButton } from './styled';
-import { CalendarDays } from 'lucide-react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import * as Haptics from 'expo-haptics';
+import { CalendarDays } from 'lucide-react-native';
 
 interface DatePickerProps {
     date: Date | null;
@@ -42,7 +43,11 @@ const DatePicker = ({ date, setDate }: DatePickerProps) => {
 
     return (
         <>
-            <DateButton onPress={showDatepicker}>
+            <DateButton onPress={() => {
+                Haptics.selectionAsync();
+
+                showDatepicker();
+            }}>
                 <CalendarDays size={RFValue(22)} color={theme.colors.highlightColor} strokeWidth={RFValue(2)} />
             </DateButton>
 

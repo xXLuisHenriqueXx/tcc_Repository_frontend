@@ -3,6 +3,7 @@ import { ButtonText, Container, IconButton } from './styled';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Bell, BookmarkCheck, CircleUser, StickyNote, Timer } from 'lucide-react-native';
 
 import { PropsStack } from '../../../routes';
@@ -20,28 +21,38 @@ export default function Navbar({ screen }: NavbarProps) {
     const { token } = useAuth();
 
     const navigateToPomodoro = () => {
+        Haptics.selectionAsync();
+
         navigation.navigate("Pomodoro");
     };
 
     const navigateToAlarms = () => {
+        Haptics.selectionAsync();
+
         token === null
             ? navigation.navigate("Welcome")
             : navigation.navigate("Alarms", { newAlarm: false });
     };
 
     const navigateToNotes = () => {
+        Haptics.selectionAsync();
+
         token === null
             ? navigation.navigate("Welcome")
             : navigation.navigate("Notes", { newNote: false });
     }
 
     const navigateToTodos = () => {
+        Haptics.selectionAsync();
+
         token === null
             ? navigation.navigate("Welcome")
             : navigation.navigate("Todos", { newTodo: false });
     }
 
     const navigateToUser = () => {
+        Haptics.selectionAsync();
+
         token === null
             ? navigation.navigate("Welcome")
             : navigation.navigate("User")

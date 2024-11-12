@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { ContainerView, ModalButton, ModalButtonText, ModalText, ModalTitle, ModalView } from './styled';
 
 import { Achievement } from '../../../entities/Achievement';
@@ -34,7 +35,11 @@ const ModalInfo = ({ modalVisible, setModalVisible, selected, setSelected }: Mod
                         {selected?.expGiven} pontos de experiência.
                     </ModalText>
 
-                    <ModalButton onPress={() => setModalVisible(!modalVisible)}>
+                    <ModalButton onPress={() => {
+                        Haptics.selectionAsync();
+
+                        setModalVisible(!modalVisible)
+                    }}>
                         <ModalButtonText>Fechar</ModalButtonText>
                     </ModalButton>
                 </ModalView>

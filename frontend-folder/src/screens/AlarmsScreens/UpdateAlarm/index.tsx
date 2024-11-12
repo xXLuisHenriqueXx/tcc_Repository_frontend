@@ -4,6 +4,7 @@ import { Container, ContainerButtons, ContainerButtonsView, ContainerDays, Conta
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { MotiView } from 'moti';
+import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
 import { PropsNavigationStack, PropsStack } from '../../../routes';
@@ -84,12 +85,16 @@ const UpdateAlarm = ({ route }: Props) => {
                 const { status } = await alarmsService.updateAlarm(params);
 
                 if (status === 201) {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
                     navigation.navigate("Alarms", { newAlarm: true });
                 }
 
                 setIsLoading(false);
             }
         } catch (err) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert('Erro', 'Erro ao salvar alarme');
         } finally {
             setIsLoading(false);

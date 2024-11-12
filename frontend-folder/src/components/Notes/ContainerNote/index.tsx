@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { ContainerNoteView, ContainerTitleDate, TextContainer, TextDateNote, TitleNote } from './styled';
+import { Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 
 import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
@@ -29,11 +30,15 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
       easing: Easing.ease,
       useNativeDriver: true,
     }).start(async () => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
       await deleteNote(note);
     });
   };
 
   const navigateToUpdateNote = () => {
+    Haptics.selectionAsync();
+
     navigation.navigate("UpdateNote", { noteInfo: note });
   }
 
@@ -46,7 +51,11 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
       >
         <ContainerNoteView
           onPress={navigateToUpdateNote}
-          onLongPress={() => setModalVisible(true)}
+          onLongPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+          
+            setModalVisible(true)
+          }}
         >
           <ContainerTitleDate>
             <TitleNote numberOfLines={1} ellipsizeMode='tail'>{note.title}</TitleNote>

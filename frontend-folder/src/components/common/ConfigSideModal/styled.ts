@@ -16,7 +16,7 @@ export const ContainerSide = styled(MotiView)`
     background-color: ${({ theme }) => theme.colors.bgColor};
     align-items: center;
     padding: 0 ${RFValue(16)}px;
-    padding-top: ${RFValue(60)}px;
+    padding-top: ${RFValue(40)}px;
     z-index: 11;
 `;
 
@@ -26,19 +26,28 @@ export const ContainerUser = styled.View`
 `;
 
 export const UserImage = styled.View`
-    width: ${RFValue(100)}px;
+    width: ${RFValue(80)}px;
     aspect-ratio: 1;
     background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
     border-radius: ${RFValue(50)}px;
-    border: ${RFValue(4)}px solid ${({ theme }) => theme.colors.highlightColor};
+    border: ${RFValue(2)}px solid ${({ theme }) => theme.colors.highlightColor};
 `;
 
 export const UserName = styled.Text`
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(12)}px;
     color: ${({ theme }) => theme.colors.text};
     font-weight: 600;
     margin-top: ${RFValue(4)}px;
     text-align: center;
+`;
+
+export const ContainerButtonGroup = styled.View`
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.bgContainerColorInactive};
+    border-radius: ${RFValue(5)}px;
+    flex-direction: column;
+    padding: ${RFValue(8)}px 0;
+    margin-bottom: ${RFValue(16)}px;
 `;
 
 export const ContainerButton = styled.TouchableOpacity.attrs({
@@ -46,16 +55,21 @@ export const ContainerButton = styled.TouchableOpacity.attrs({
 })`
     flex-direction: row;
     width: 100%;
-    height: ${RFValue(50)}px;
-    border-radius: ${RFValue(5)}px;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    height: ${RFValue(40)}px;
     align-items: center;
     justify-content: center;
-    margin-bottom: ${RFValue(16)}px;
 `;
 
 export const ContainerButtonText = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.text};
     font-weight: 600;
+`;
+
+export const ContainerButtonSeparator = styled.View`
+    width: 92%;
+    height: ${RFValue(1)}px;
+    background-color: ${({ theme }) => theme.colors.textInactive};
+    align-self: center;
+    margin: ${RFValue(8)}px 0;
 `;

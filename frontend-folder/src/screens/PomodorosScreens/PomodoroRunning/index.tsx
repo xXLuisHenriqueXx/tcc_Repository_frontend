@@ -4,8 +4,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Check } from 'lucide-react-native';
 import { Audio } from 'expo-av';
+import * as Haptics from 'expo-haptics';
+import { Check } from 'lucide-react-native';
 
 import { PropsNavigationStack, PropsStack } from '../../../routes';
 import ModalNextTime from '../../../components/Pomodoro/ModalNextTime';
@@ -32,12 +33,12 @@ const PomodoroRunning = ({ route }: Props) => {
     };
 
     const playSound = async () => {
-            const { sound } = await Audio.Sound.createAsync(
-                require('../../../assets/sounds/sound_alarmPomodo.mp3')
-            );
+        const { sound } = await Audio.Sound.createAsync(
+            require('../../../assets/sounds/sound_alarmPomodo.mp3')
+        );
 
-            setSound(sound);
-            await sound.playAsync();
+        setSound(sound);
+        await sound.playAsync();
     }
 
     useEffect(() => {
@@ -94,7 +95,11 @@ const PomodoroRunning = ({ route }: Props) => {
 
                 </TimerContainer>
 
-                <TimerButton onPress={handleFinish}>
+                <TimerButton onPress={() => {
+                    Haptics.selectionAsync();
+
+                    handleFinish();
+                }}>
                     <TimerButtonText>FINALIZAR</TimerButtonText>
                     <Check style={{ position: 'absolute', right: RFValue(16) }} size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
                 </TimerButton>

@@ -3,6 +3,7 @@ import { View, Animated, Easing } from 'react-native';
 import { ContainerAlarmView, SwitchButton, TextDateAlarm, TextDiasAlarm, TextDiasAlarmHighlight, TextDiasAlarmView, TextHorarioAlarm, TextMaterialAlarm } from './styled';
 import { useTheme } from 'styled-components';
 import { MotiView } from 'moti';
+import * as Haptics from 'expo-haptics';
 
 import ModalDelete from '../../common/ModalDelete';
 import ModalInfoContainer from '../../common/ModalInfoContainer';
@@ -41,10 +42,14 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
       useNativeDriver: true,
     }).start(async () => {
       await deleteAlarm(alarm);
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     });
   };
 
   const navigateToUpdateAlarm = () => {
+    Haptics.selectionAsync();
+
     navigation.navigate("UpdateAlarm", { alarmInfo: alarm });
   }
 
@@ -57,7 +62,11 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
       >
         <ContainerAlarmView
           onPress={navigateToUpdateAlarm}
-          onLongPress={() => setModalVisible(true)}
+          onLongPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
+            setModalVisible(true)
+          }}
           switchEnabled={switchEnabled}
         >
           <View style={{ width: '80%' }}>
@@ -89,6 +98,8 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             trackColor={trackColor}
             thumbColor={theme.colors.thumbColor}
             onValueChange={async (newValue) => {
+              Haptics.selectionAsync();
+
               setSwitchEnabled(newValue);
               await toggleAlarmStatus(alarm._id);
             }}

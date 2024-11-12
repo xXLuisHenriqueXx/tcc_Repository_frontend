@@ -5,6 +5,7 @@ import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Plus, X } from 'lucide-react-native';
 
 import Loader from '../../Loader';
@@ -51,10 +52,14 @@ const UpdateTodo = ({ route }: Props) => {
                 const { status } = await todoService.updateTodo(params);
 
                 if (status === 200) {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
                     navigation.navigate("Todos", { newTodo: true });
                 }
             }
         } catch (error) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert("Erro", "Erro ao atualizar lista de tarefas!");
         } finally {
             setIsLoading(false);
@@ -62,6 +67,8 @@ const UpdateTodo = ({ route }: Props) => {
     }
 
     const handleAddTask = async () => {
+        Haptics.selectionAsync();
+
         if (taskTitle === "") {
             Alert.alert("Aviso", "Digite um título para a tarefa!");
             return;
@@ -74,6 +81,8 @@ const UpdateTodo = ({ route }: Props) => {
     }
 
     const handleUpdateTaskDone = async (index: number) => {
+        Haptics.selectionAsync();
+
         const updatedTasks = tasks.map((task, i) => {
             if (i === index) {
                 task.done = !task.done;
@@ -86,6 +95,8 @@ const UpdateTodo = ({ route }: Props) => {
     }
 
     const handleDeleteTask = async (index: number) => {
+        Haptics.selectionAsync();
+        
         const updatedTasks = tasks.filter((_, i) => i !== index);
         setTasks(updatedTasks);
     }

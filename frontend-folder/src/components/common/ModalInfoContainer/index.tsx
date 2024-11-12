@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ContainerModal, IconButton } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import * as Haptics from 'expo-haptics';
 import { Info, Trash, X } from 'lucide-react-native';
 
 interface ModalInfoContainerProps {
@@ -21,12 +22,16 @@ const ModalInfoContainer = ({ setModalVisible, setModalDeleteVisible }: ModalInf
             animate={{ opacity: isClosing ? 0 : 1 }}
         >
             <IconButton onPress={() => {
+                Haptics.selectionAsync();
+
                 setModalVisible(false)
             }}>
                 <Info size={RFValue(20)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
             </IconButton>
 
             <IconButton onPress={() => {
+                Haptics.selectionAsync();
+
                 setModalVisible(false)
                 setModalDeleteVisible(true)
             }}>
@@ -34,6 +39,8 @@ const ModalInfoContainer = ({ setModalVisible, setModalDeleteVisible }: ModalInf
             </IconButton>
 
             <IconButton onPress={() => {
+                Haptics.selectionAsync();
+
                 setIsClosing(true)
                 setTimeout(() => setModalVisible(false), 200);
             }}>

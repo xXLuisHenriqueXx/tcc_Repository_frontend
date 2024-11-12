@@ -4,6 +4,7 @@ import { AddTaskButton, AddTaskButtonText, Container, ContainerInputLine, Contai
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { Plus, X } from 'lucide-react-native';
 
 import Loader from '../../Loader';
@@ -37,10 +38,14 @@ const CreateTodo = () => {
                 const { status } = await todoService.addTodo(params);
 
                 if (status === 201) {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
                     navigation.navigate("Todos", { newTodo: true });
                 }
             }
         } catch (err) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
             Alert.alert('Erro', 'Erro ao salvar lista de tarefas');
         } finally {
             setIsLoading(false);
@@ -48,6 +53,8 @@ const CreateTodo = () => {
     }
 
     const handleAddTask = () => {
+        Haptics.selectionAsync();
+
         if (taskTitle === "") {
             Alert.alert("Aviso", "Digite um título para a tarefa!");
             return;
@@ -61,6 +68,8 @@ const CreateTodo = () => {
     }
 
     const handleUpdateTaskDone = (index: number) => {
+        Haptics.selectionAsync();
+
         const updatedTasks = tasks.map((task, i) => {
             if (i === index) {
                 task.done = !task.done;
@@ -73,6 +82,8 @@ const CreateTodo = () => {
     }
 
     const handleDeleteTask = (index: number) => {
+        Haptics.selectionAsync();
+
         const updatedTasks = tasks.filter((_, i) => i !== index);
         setTasks(updatedTasks);
     }

@@ -5,6 +5,7 @@ import { useTheme } from "styled-components/native";
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MotiView } from 'moti';
+import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
 import ModalInfo from '../../../components/common/ModalInfo';
@@ -83,6 +84,8 @@ const User = () => {
   }
 
   const handleNavigateToUpdateProfile = () => {
+    Haptics.selectionAsync();
+
     navigation.navigate("UpdateProfile", { userInfo: userInfo });
   }
 
@@ -174,6 +177,8 @@ const User = () => {
                 {achievementsAlarm?.map(achievement => (
                   userInfo?.achievements.includes(achievement._id) ? (
                     <AchievementBoxCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -181,6 +186,8 @@ const User = () => {
                     </AchievementBoxCompleted>
                   ) : (
                     <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -195,6 +202,8 @@ const User = () => {
                 {achievementsNote?.map(achievement => (
                   userInfo?.achievements.includes(achievement._id) ? (
                     <AchievementBoxCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -202,6 +211,8 @@ const User = () => {
                     </AchievementBoxCompleted>
                   ) : (
                     <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -216,6 +227,8 @@ const User = () => {
                 {achievementsTodo?.map(achievement => (
                   userInfo?.achievements.includes(achievement._id) ? (
                     <AchievementBoxCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -223,6 +236,8 @@ const User = () => {
                     </AchievementBoxCompleted>
                   ) : (
                     <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
+                      Haptics.selectionAsync();
+                      
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>

@@ -3,6 +3,7 @@ import { ActivityIndicator, Alert } from 'react-native';
 import { Container, ContainerForm, ContainerText, ContainerView, Input, InputContainer, NormalText, RegisterButton, RegisterButtonText, Title } from './styled';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
 import useAuth from '../../../hook/useAuth';
@@ -28,6 +29,8 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRegister = async () => {
+    Haptics.selectionAsync();
+    
     setIsLoading(true);
 
     try {
@@ -52,7 +55,11 @@ const Register = () => {
       }
 
       await register(trimmedName, trimmedEmail, trimmedPassword);
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } catch (error) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
       Alert.alert("Erro", "Erro ao realizar cadastro!");
     } finally {
       setIsLoading(false);

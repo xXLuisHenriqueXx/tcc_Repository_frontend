@@ -1,7 +1,8 @@
 import React from 'react';
 import { ButtonNext, ButtonPrevious, ContainerControllers, Dot, DotsContainer } from './styled';
-import { ArrowLeft, ArrowRight } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
+import * as Haptics from 'expo-haptics';
+import { ArrowLeft, ArrowRight } from 'lucide-react-native';
 
 interface WelcomeControllersProps {
     currentScreen: number;
@@ -15,7 +16,11 @@ const WelcomeControllers = ({ currentScreen, handleNext, handlePrevious }: Welco
     return (
         <>
             <ContainerControllers>
-                <ButtonPrevious onPress={handlePrevious}>
+                <ButtonPrevious onPress={() => {
+                    Haptics.selectionAsync();
+
+                    handlePrevious();
+                }}>
                     <ArrowLeft size={20} color={theme.colors.highlightColor} />
                 </ButtonPrevious>
 
@@ -25,7 +30,11 @@ const WelcomeControllers = ({ currentScreen, handleNext, handlePrevious }: Welco
                     ))}
                 </DotsContainer>
 
-                <ButtonNext onPress={handleNext}>
+                <ButtonNext onPress={() => {
+                    Haptics.selectionAsync();
+
+                    handleNext();
+                }}>
                     <ArrowRight size={20} color={theme.colors.bgColor} />
                 </ButtonNext>
             </ContainerControllers>
