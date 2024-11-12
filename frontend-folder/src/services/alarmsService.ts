@@ -92,19 +92,7 @@ const alarmsService = {
     toggleAlarmStatus: async (params: ToggleStatusParams) => {
         const token = await SecureStore.getItemAsync('luisapp-token');
 
-        const response = await api.put(`/alarm/${params._id}/status`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        return response;
-    },
-
-    nextAlarm: async () => {
-        const token = await SecureStore.getItemAsync('luisapp-token');
-
-        const response = await api.get('alarm/next', {
+        const response = await api.put(`/alarm/${params._id}/status`, {}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

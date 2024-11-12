@@ -21,16 +21,14 @@ const Alarms = ({ route }: Props) => {
     const navigation = useNavigation<PropsStack>();
     const { newAlarm } = route.params || {};
 
-    const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
     const [alarms, setAlarms] = useState<Alarm[]>([]);
+    const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [nextAlarm, setNextAlarm] = useState<Alarm | null>(null);
-    const [nextAlarmDate, setNextAlarmDate] = useState<Date | null>(null);
+    const [nextAlarm, setNextAlarm] = useState<any>(null);
 
     useEffect(() => {
         if (isFocused || newAlarm) {
             handleGetAlarms();
-            handleGetNextAlarm();
         }
     }, [isFocused, newAlarm]);
 
@@ -38,8 +36,16 @@ const Alarms = ({ route }: Props) => {
         setIsLoading(true);
         try {
             const { data } = await alarmsService.getAlarms();
-            setAlarms(data);
+            setAlarms(data.alarms);
 
+            const nextAlarmID = data.nextAlarmId;
+
+            if (nextAlarmID) {
+                const nextAlarm = data.alarms.find((alarm: Alarm) => alarm._id === nextAlarmID);
+                setNextAlarm(nextAlarm);
+            } else {
+                setNextAlarm(null);
+            }
         } catch (err) {
             Alert.alert('Erro', 'Erro ao buscar alarmes');
         } finally {
@@ -47,31 +53,31 @@ const Alarms = ({ route }: Props) => {
         }
     };
 
-    const handleGetNextAlarm = async () => {
-        try {
-            const { data } = await alarmsService.nextAlarm();
-
-            setNextAlarm(data.nextAlarm);
-            setNextAlarmDate(new Date(data.nextAlarmDate));
-        } catch (error) {
-            Alert.alert('Erro', 'Erro ao buscar próximo alarme');
-        }
-    }
-
     const onRefresh = useCallback(() => {
         setIsRefreshing(true);
         handleGetAlarms().then(() => setIsRefreshing(false));
-        handleGetNextAlarm();
     }, []);
 
     const handleDeleteAlarm = async (alarmId: string) => {
         await alarmsService.deleteAlarm({ _id: alarmId });
         const updatedAlarms = alarms.filter(alarm => alarm._id !== alarmId);
         setAlarms(updatedAlarms);
+
+        if (alarmId === nextAlarm?._id) {
+            handleGetAlarms();
+        }
     };
 
     const handleToggleAlarmStatus = async (alarmId: string) => {
-        await alarmsService.toggleAlarmStatus({ _id: alarmId });
+        const { data } = await alarmsService.toggleAlarmStatus({ _id: alarmId });
+
+        const nextAlarmID = data.nextAlarmId;
+        if (nextAlarmID) {
+            const nextAlarm = alarms.find(alarm => alarm._id === nextAlarmID);
+            setNextAlarm(nextAlarm);
+        } else {
+            setNextAlarm(null);
+        }
     };
 
     const navigateToCreateAlarm = () => {
@@ -102,7 +108,7 @@ const Alarms = ({ route }: Props) => {
 
                         {nextAlarm ? (
                             <NormalText>
-                                Próximo alarme em <DiasText>{nextAlarmDate?.toLocaleDateString()}</DiasText> às <DiasText>{nextAlarmDate?.toLocaleTimeString()}</DiasText>
+                                Próximo alarme: <DiasText>{nextAlarm?.title}</DiasText>
                             </NormalText>
                         ) : (
                             <NormalText>Nenhum alarme em progresso...</NormalText>

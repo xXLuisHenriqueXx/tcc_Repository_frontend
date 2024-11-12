@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 interface ContainerAlarmProps {
   alarm: Alarm;
   deleteAlarm: (alarm: Alarm) => Promise<void>
-  toggleAlarmStatus: (_id: string, status: boolean) => Promise<void>;
+  toggleAlarmStatus: (_id: string) => Promise<void>;
 }
 
 const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlarmProps) => {
@@ -90,7 +90,7 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             thumbColor={theme.colors.thumbColor}
             onValueChange={async (newValue) => {
               setSwitchEnabled(newValue);
-              await toggleAlarmStatus(alarm._id, alarm.status);
+              await toggleAlarmStatus(alarm._id);
             }}
             value={switchEnabled}
           />
