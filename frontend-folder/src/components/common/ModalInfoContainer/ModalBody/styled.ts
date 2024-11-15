@@ -14,6 +14,7 @@ export const ContainerModal = styled(MotiView)`
     justify-content: space-between;
     padding: 0 ${RFValue(16)}px;
     background-color: ${({ theme }) => theme.colors.highlightColor};
+    z-index: 99;
 `;
 
 export const IconButton = styled.TouchableOpacity.attrs({

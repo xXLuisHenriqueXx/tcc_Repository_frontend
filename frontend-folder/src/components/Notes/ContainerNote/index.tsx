@@ -4,12 +4,12 @@ import { Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 
-import ModalDelete from '../../common/ModalDelete';
-import ModalInfoContainer from '../../common/ModalInfoContainer';
+import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { PropsStack } from '../../../routes';
 import { Note } from '../../../entities/Note';
 import getDate from '../../../utils/getDate';
 import { MotiView } from 'moti';
+import { ModalCommon } from '../../common/ModalCommon';
 
 interface ContainerNoteProps {
   note: Note;
@@ -53,7 +53,7 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
           onPress={navigateToUpdateNote}
           onLongPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          
+
             setModalVisible(true)
           }}
         >
@@ -66,14 +66,11 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
             {note.content}
           </TextContainer>
 
-          <ModalDelete
-            item={note}
-            deleteItem={handleDelete}
-            modalVisible={modalDeleteVisible}
-            setModalVisible={setModalDeleteVisible}
-          />
-
+          <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
+            <ModalCommon.Delete item={note} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
+          </ModalCommon.Root>
         </ContainerNoteView>
+
         {modalVisible &&
           <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
         }

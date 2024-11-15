@@ -8,7 +8,6 @@ import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
 
 import Loader from '../../Loader';
-import ModalInfo from '../../../components/common/ModalInfo';
 import { User as UserEntitie } from '../../../entities/User';
 import userService from '../../../services/userService';
 import getDate from '../../../utils/getDate';
@@ -17,6 +16,7 @@ import { Achievement } from '../../../entities/Achievement';
 import achievementService from '../../../services/achievementService';
 import ContainerGradient from '../../../components/common/ContainerGradient';
 import { Bell, BookmarkCheck, Pencil, Plus, StickyNote } from 'lucide-react-native';
+import { ModalCommon } from '../../../components/common/ModalCommon';
 
 const User = () => {
   const navigation = useNavigation<PropsStack>();
@@ -237,7 +237,7 @@ const User = () => {
                   ) : (
                     <AchievementBoxNotCompleted key={achievement._id} onPress={() => {
                       Haptics.selectionAsync();
-                      
+
                       setModalVisible(true)
                       setSelectedAchievement(achievement)
                     }}>
@@ -249,14 +249,11 @@ const User = () => {
             </ContainerAchievementsGroupBox>
           </ContainerAchievements>
         </MotiView>
-
       </ScrollContainer>
-      <ModalInfo
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        selected={selectedAchievement}
-        setSelected={setSelectedAchievement}
-      />
+
+      <ModalCommon.Root modalVisible={modalVisible} setModalVisible={setModalVisible}>
+        <ModalCommon.Info item={selectedAchievement} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      </ModalCommon.Root>
     </ContainerGradient>
   )
 }

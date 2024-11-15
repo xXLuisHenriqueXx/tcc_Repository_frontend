@@ -8,11 +8,11 @@ import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
 import { Check } from 'lucide-react-native';
 
-import ModalDelete from '../../common/ModalDelete';
-import ModalInfoContainer from '../../common/ModalInfoContainer';
+import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { PropsStack } from '../../../routes';
 import { Todo } from '../../../entities/Todo';
 import getDate from '../../../utils/getDate';
+import { ModalCommon } from '../../common/ModalCommon';
 
 interface ContainerTodoProps {
   todo: Todo;
@@ -68,13 +68,11 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
           </ContainerTitleDate>
           <Check size={RFValue(32)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
 
-          <ModalDelete
-            item={todo}
-            deleteItem={handleDelete}
-            modalVisible={modalDeleteVisible}
-            setModalVisible={setModalDeleteVisible}
-          />
+          <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
+            <ModalCommon.Delete item={todo} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
+          </ModalCommon.Root>
         </ContainerTodoView>
+
         {modalVisible &&
           <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
         }

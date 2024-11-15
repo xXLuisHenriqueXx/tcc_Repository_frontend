@@ -1,24 +1,5 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { MotiView } from "moti";
-
-export const ContainerView = styled(MotiView)`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.fadeBgColor};
-    padding: 0 ${RFValue(16)}px;
-`;
-
-export const ModalView = styled.View`
-    width: 100%;
-    height: ${RFValue(200)}px;
-    background-color: ${({ theme }) => theme.colors.bgModal};
-    align-items: center;
-    padding: ${RFValue(16)}px;
-    border: ${RFValue(1)}px solid ${({ theme }) => theme.colors.bdColor};
-    border-radius: ${RFValue(5)}px;                      
-`;
 
 export const ModalTitle = styled.Text`
     font-size: ${RFValue(14)}px;
@@ -28,7 +9,8 @@ export const ModalTitle = styled.Text`
     margin-bottom: ${RFValue(16)}px;
 `;
 
-export const ModalTitleDestaque = styled.Text`
+export const ModalTitleHighlight = styled.Text`
+    font-weight: 600;
     color: ${({ theme }) => theme.colors.highlightColor};
 `;
 
@@ -40,7 +22,7 @@ export const ContainerButtons = styled.View`
     align-items: center;
 `;
 
-export const NoButton = styled.TouchableOpacity.attrs({
+export const FinishButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
     border-width: ${RFValue(2)}px;
@@ -52,7 +34,7 @@ export const NoButton = styled.TouchableOpacity.attrs({
     align-items: center;
 `;
 
-export const YesButton = styled.TouchableOpacity.attrs({
+export const ContinueButton = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
 })`
     background-color: ${({ theme }) => theme.colors.highlightColor};
@@ -63,13 +45,13 @@ export const YesButton = styled.TouchableOpacity.attrs({
     align-items: center;
 `;
 
-export const NoButtonText = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
+export const FinishButtonText = styled.Text`
+    color: ${({ theme }) => theme.colors.highlightColor};
     font-size: ${RFValue(14)}px;
     font-weight: 600;
     text-transform: uppercase;
 `;
 
-export const YesButtonText = styled(NoButtonText)`
+export const ContinueButtonText = styled(FinishButtonText)`
     color: ${({ theme }) => theme.colors.bgColor};
 `;

@@ -5,12 +5,12 @@ import { useTheme } from 'styled-components';
 import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
 
-import ModalDelete from '../../common/ModalDelete';
-import ModalInfoContainer from '../../common/ModalInfoContainer';
+import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { Alarm } from '../../../entities/Alarm';
 import getDate from '../../../utils/getDate';
 import { PropsStack } from '../../../routes';
 import { useNavigation } from '@react-navigation/native';
+import { ModalCommon } from '../../common/ModalCommon';
 
 interface ContainerAlarmProps {
   alarm: Alarm;
@@ -106,14 +106,14 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
             value={switchEnabled}
           />
 
-          <ModalDelete
-            item={alarm}
-            deleteItem={handleDelete}
-            modalVisible={modalDeleteVisible}
-            setModalVisible={setModalDeleteVisible}
-          />
+          <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
+            <ModalCommon.Delete item={alarm} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
+          </ModalCommon.Root>
         </ContainerAlarmView>
-        {modalVisible && <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />}
+
+        {modalVisible && 
+          <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+        }
       </MotiView >
     </Animated.View>
   );

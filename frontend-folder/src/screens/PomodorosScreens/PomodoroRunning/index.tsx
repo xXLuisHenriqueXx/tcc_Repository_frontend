@@ -9,8 +9,8 @@ import * as Haptics from 'expo-haptics';
 import { Check } from 'lucide-react-native';
 
 import { PropsNavigationStack, PropsStack } from '../../../routes';
-import ModalNextTime from '../../../components/Pomodoro/ModalNextTime';
 import BackButton from '../../../components/common/BackButton';
+import { ModalCommon } from '../../../components/common/ModalCommon';
 
 
 type Props = NativeStackScreenProps<PropsNavigationStack, 'PomodoroRunning'>;
@@ -105,13 +105,9 @@ const PomodoroRunning = ({ route }: Props) => {
                 </TimerButton>
             </ContainerPomodoro>
 
-            <ModalNextTime
-                showModal={showModal}
-                setShowModal={setShowModal}
-                isStudyTime={isStudyTime}
-                handleNext={handleNext}
-                handleFinish={handleFinish}
-            />
+            <ModalCommon.Root modalVisible={showModal} setModalVisible={setShowModal}>
+                <ModalCommon.NextTime isStudyTime={isStudyTime} handleFinish={handleFinish} handleNext={handleNext} />
+            </ModalCommon.Root>
         </Container>
     )
 }
