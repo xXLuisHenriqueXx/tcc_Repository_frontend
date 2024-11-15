@@ -5,7 +5,6 @@ import { useTheme } from 'styled-components';
 import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
 
-import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { Alarm } from '../../../entities/Alarm';
 import getDate from '../../../utils/getDate';
 import { PropsStack } from '../../../routes';
@@ -54,68 +53,68 @@ const ContainerAlarm = ({ alarm, deleteAlarm, toggleAlarmStatus }: ContainerAlar
   }
 
   return (
-    <Animated.View style={{ transform: [{ translateX }] }}>
-      <MotiView
-        transition={{ type: 'timing', duration: 300 }}
-        from={{ transform: modalVisible ? [{ scale: 1 }] : [{ scale: 1.05 }], }}
-        animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
-      >
-        <ContainerAlarmView
-          onPress={navigateToUpdateAlarm}
-          onLongPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-
-            setModalVisible(true)
-          }}
-          switchEnabled={switchEnabled}
+    <>
+      <Animated.View style={{ transform: [{ translateX }] }}>
+        <MotiView
+          transition={{ type: 'timing', duration: 300 }}
+          from={{ transform: modalVisible ? [{ scale: 1 }] : [{ scale: 1.05 }], }}
+          animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
         >
-          <View style={{ width: '80%' }}>
-            <TextMaterialAlarm switchEnabled={switchEnabled} numberOfLines={1} ellipsizeMode='tail'>
-              {alarm.title}
-            </TextMaterialAlarm>
-            <TextHorarioAlarm switchEnabled={switchEnabled}>
-              {new Date(alarm.hour).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </TextHorarioAlarm>
-            {hasAnyDayEnabled(alarm.days) ? (
-              <TextDiasAlarmView>
-                {alarm.days?.sunday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>D</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>D</TextDiasAlarm>}
-                {alarm.days?.monday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-                {alarm.days?.tuesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>T</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>T</TextDiasAlarm>}
-                {alarm.days?.wednesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
-                {alarm.days?.thursday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
-                {alarm.days?.friday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-                {alarm.days?.saturday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
-              </TextDiasAlarmView>
-            ) : (
-              <TextDateAlarm switchEnabled={switchEnabled}>
-                {alarm?.date ? getDate(alarm.date.toString()) : ''}
-              </TextDateAlarm>
-            )}
-          </View>
+          <ContainerAlarmView
+            onPress={navigateToUpdateAlarm}
+            onLongPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 
-          <SwitchButton
-            style={{ transform: [{ scaleX: 1.05 }, { scaleY: 1.05 }] }}
-            trackColor={trackColor}
-            thumbColor={theme.colors.thumbColor}
-            onValueChange={async (newValue) => {
-              Haptics.selectionAsync();
-
-              setSwitchEnabled(newValue);
-              await toggleAlarmStatus(alarm._id);
+              setModalVisible(true)
             }}
-            value={switchEnabled}
-          />
+            switchEnabled={switchEnabled}
+          >
+            <View style={{ width: '80%' }}>
+              <TextMaterialAlarm switchEnabled={switchEnabled} numberOfLines={1} ellipsizeMode='tail'>
+                {alarm.title}
+              </TextMaterialAlarm>
+              <TextHorarioAlarm switchEnabled={switchEnabled}>
+                {new Date(alarm.hour).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </TextHorarioAlarm>
+              {hasAnyDayEnabled(alarm.days) ? (
+                <TextDiasAlarmView>
+                  {alarm.days?.sunday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>D</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>D</TextDiasAlarm>}
+                  {alarm.days?.monday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+                  {alarm.days?.tuesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>T</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>T</TextDiasAlarm>}
+                  {alarm.days?.wednesday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
+                  {alarm.days?.thursday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>Q</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>Q</TextDiasAlarm>}
+                  {alarm.days?.friday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+                  {alarm.days?.saturday ? <TextDiasAlarmHighlight switchEnabled={switchEnabled}>S</TextDiasAlarmHighlight> : <TextDiasAlarm switchEnabled={switchEnabled}>S</TextDiasAlarm>}
+                </TextDiasAlarmView>
+              ) : (
+                <TextDateAlarm switchEnabled={switchEnabled}>
+                  {alarm?.date ? getDate(alarm.date.toString()) : ''}
+                </TextDateAlarm>
+              )}
+            </View>
 
-          <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
-            <ModalCommon.Delete item={alarm} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
-          </ModalCommon.Root>
-        </ContainerAlarmView>
+            <SwitchButton
+              style={{ transform: [{ scaleX: 1.05 }, { scaleY: 1.05 }] }}
+              trackColor={trackColor}
+              thumbColor={theme.colors.thumbColor}
+              onValueChange={async (newValue) => {
+                Haptics.selectionAsync();
 
-        {modalVisible && 
-          <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
-        }
-      </MotiView >
-    </Animated.View>
+                setSwitchEnabled(newValue);
+                await toggleAlarmStatus(alarm._id);
+              }}
+              value={switchEnabled}
+            />
+
+            <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
+              <ModalCommon.Delete item={alarm} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
+            </ModalCommon.Root>
+          </ContainerAlarmView>
+
+          {modalVisible && <ModalCommon.InfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />}
+        </MotiView >
+      </Animated.View>
+    </>
   );
 };
 

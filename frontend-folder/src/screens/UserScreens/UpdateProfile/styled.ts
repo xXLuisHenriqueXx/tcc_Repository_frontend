@@ -26,8 +26,8 @@ export const ContainerText = styled.View`
 `;
 
 export const Title = styled.Text`
-    font-size: ${RFValue(30)}px;
-    font-weight: bold;
+    font-size: ${RFValue(50)}px;
+    font-family: ${({ theme }) => theme.fonts.karantinaBold};
     color: ${({ theme }) => theme.colors.highlightColor};
     text-align: center;
 `;

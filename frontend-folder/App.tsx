@@ -54,7 +54,7 @@ export default function App() {
 
   return (
     <AuthContextProvider>
-      <StatusBar barStyle={theme === darkTheme ? 'light-content' : 'dark-content'} backgroundColor={theme === darkTheme ? '#0d0921' : '#fefefe'} />
+      <StatusBar barStyle={theme === darkTheme ? 'light-content' : 'dark-content'} backgroundColor={theme === darkTheme ? '#141424' : '#fefefe'} />
       < ThemeContext.Provider value={{ toggleTheme }}>
         <ThemeProvider theme={theme}>
           <Routes />

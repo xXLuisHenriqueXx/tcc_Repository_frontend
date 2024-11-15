@@ -8,7 +8,6 @@ export const ContainerView = styled(MotiView)`
     align-items: center;
     background-color: ${({ theme }) => theme.colors.fadeBgColor};
     padding: 0 ${RFValue(16)}px;
-    z-index: 98;
 `;
 
 export const ModalView = styled.View`

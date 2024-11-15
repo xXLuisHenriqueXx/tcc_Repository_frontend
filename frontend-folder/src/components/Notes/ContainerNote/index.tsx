@@ -4,7 +4,6 @@ import { Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 
-import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { PropsStack } from '../../../routes';
 import { Note } from '../../../entities/Note';
 import getDate from '../../../utils/getDate';
@@ -72,7 +71,7 @@ const ContainerNote = ({ note, deleteNote }: ContainerNoteProps) => {
         </ContainerNoteView>
 
         {modalVisible &&
-          <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+          <ModalCommon.InfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
         }
       </MotiView>
     </Animated.View>

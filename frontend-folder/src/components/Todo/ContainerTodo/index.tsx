@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing } from 'react-native';
 import { ContainerTitleDate, ContainerTodoView, TextDateTodo, TitleTodo } from './styled';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -8,7 +8,6 @@ import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
 import { Check } from 'lucide-react-native';
 
-import ModalInfoContainer from '../../common/ModalInfoContainer/ModalBody';
 import { PropsStack } from '../../../routes';
 import { Todo } from '../../../entities/Todo';
 import getDate from '../../../utils/getDate';
@@ -25,6 +24,7 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
+  const [todoStatus, setTodoStatus] = useState<boolean>(false);
 
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -41,6 +41,14 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
     });
   };
 
+  useEffect(() => {
+    verifyTodoStatus();
+  }, [todo.tasks]);
+
+  const verifyTodoStatus = () => {
+    todo.tasks.every(task => task.done === true) ? setTodoStatus(true) : setTodoStatus(false);
+  }
+
   const navigateToUpdateTodo = () => {
     Haptics.selectionAsync();
 
@@ -55,18 +63,19 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
         animate={{ transform: modalVisible ? [{ scale: 1.05 }] : [{ scale: 1 }] }}
       >
         <ContainerTodoView
+          isDone={todoStatus}
           onPress={navigateToUpdateTodo}
           onLongPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          
+
             setModalVisible(true)
           }}
         >
           <ContainerTitleDate>
-            <TitleTodo numberOfLines={1} ellipsizeMode='tail'>{todo.title}</TitleTodo>
-            <TextDateTodo>{getDate(todo.createdAt.toString())}</TextDateTodo>
+            <TitleTodo isDone={todoStatus} numberOfLines={1} ellipsizeMode='tail'>{todo.title}</TitleTodo>
+            <TextDateTodo isDone={todoStatus}>{getDate(todo.createdAt.toString())}</TextDateTodo>
           </ContainerTitleDate>
-          <Check size={RFValue(32)} color={theme.colors.bgColor} strokeWidth={RFValue(2)} />
+          <Check size={RFValue(32)} color={todoStatus === true ? theme.colors.highlightColor : theme.colors.textInactive} strokeWidth={RFValue(2)} />
 
           <ModalCommon.Root modalVisible={modalDeleteVisible} setModalVisible={setModalDeleteVisible}>
             <ModalCommon.Delete item={todo} deleteItem={handleDelete} setModalVisible={setModalDeleteVisible} />
@@ -74,7 +83,7 @@ const ContainerTodo = ({ todo, deleteTodo }: ContainerTodoProps) => {
         </ContainerTodoView>
 
         {modalVisible &&
-          <ModalInfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
+          <ModalCommon.InfoContainer setModalVisible={setModalVisible} setModalDeleteVisible={setModalDeleteVisible} />
         }
       </MotiView>
     </Animated.View>

@@ -1,9 +1,13 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+interface ContainerTodoViewProps {
+    isDone: boolean;
+}
+
 export const ContainerTodoView = styled.TouchableOpacity.attrs({
     activeOpacity: 0.85
-})`
+})<ContainerTodoViewProps>`
     border-radius: ${RFValue(5)}px;
     width: 90%;
     height: ${RFValue(90)}px;
@@ -15,7 +19,7 @@ export const ContainerTodoView = styled.TouchableOpacity.attrs({
     margin-bottom: ${RFValue(20)}px;
     margin-left: auto;
     margin-right: auto;
-    background-color: ${({ theme }) => theme.colors.bgContainerColorActive};
+    background-color: ${({ theme, isDone }) => isDone ? theme.colors.bgContainerColorInactive : theme.colors.bgContainerColorActive};
 `;
 
 export const ContainerTitleDate = styled.View`
@@ -23,13 +27,13 @@ export const ContainerTitleDate = styled.View`
     flex-direction: column;
 `
 
-export const TextDateTodo = styled.Text`
+export const TextDateTodo = styled.Text<ContainerTodoViewProps>`
     font-size: ${RFValue(10)}px;
-    color: ${({ theme }) => theme.colors.highlightColor};
+    color: ${({ theme, isDone }) => isDone ?  theme.colors.textInactive : theme.colors.highlightColor};
 `;  
 
-export const TitleTodo = styled.Text`
+export const TitleTodo = styled.Text<ContainerTodoViewProps>`
     font-size: ${RFValue(20)}px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme, isDone }) => isDone ? theme.colors.textInactive : theme.colors.text};
 `;

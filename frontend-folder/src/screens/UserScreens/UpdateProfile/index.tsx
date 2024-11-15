@@ -94,7 +94,7 @@ const UpdateProfile = ({ route }: Props) => {
             <ContainerView>
                 <ContainerText>
                     <Title>Edição de perfil</Title>
-                    <NormalText>Nesta tela você pode editar seus credenciais.</NormalText>
+                    <NormalText>Nesta tela você pode editar seus dados.</NormalText>
                 </ContainerText>
 
                 <ContainerForm
