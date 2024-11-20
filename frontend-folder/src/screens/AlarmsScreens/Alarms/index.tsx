@@ -3,6 +3,7 @@ import { DiasText, NormalText, Title } from './styled';
 import { Alert, FlatList, ListRenderItem, RefreshControl, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import notifee, { AndroidImportance, TimestampTrigger, TriggerType } from '@notifee/react-native';
 
 import Loader from '../../Loader';
 import ContainerAlarm from '../../../components/Alarms/ContainerAlarms';
@@ -30,7 +31,43 @@ const Alarms = ({ route }: Props) => {
         if (isFocused || newAlarm) {
             handleGetAlarms();
         }
+
+        if (nextAlarm) scheduleNotification(nextAlarm._id);
     }, [isFocused, newAlarm]);
+
+    async function scheduleNotification(_id: string) {
+        await notifee.requestPermission();
+
+        const channelId = await notifee.createChannel({
+            id: 'default',
+            name: 'Default Channel',
+            vibration: true,
+            importance: AndroidImportance.HIGH
+        });
+
+        console.log('Channel ID', channelId);
+
+        const { data } = await alarmsService.getScheduleNotificationData({ _id: nextAlarm._id });
+        const date = new Date(data.date);
+
+        const trigger: TimestampTrigger = {
+            type: TriggerType.TIMESTAMP,
+            timestamp: date.getTime()
+        };
+
+        await notifee.createTriggerNotification(
+            {
+                title: '⏰ <strong>Seu alarme está tocando!</strong>',
+                body: `🔔 Chegou a hora do seu alarme <strong>${data.title}</strong>`,
+                android: {
+                    channelId
+                },
+            },
+            trigger
+        );
+
+        console.log('Notificação agendada');
+    }
 
     const handleGetAlarms = async () => {
         setIsLoading(true);

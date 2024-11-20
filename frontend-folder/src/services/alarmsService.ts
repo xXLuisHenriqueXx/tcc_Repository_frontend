@@ -40,6 +40,10 @@ interface ToggleStatusParams {
     _id: string;
 }
 
+interface getScheduleNotificationDataParams {
+    _id: string;
+}
+
 const alarmsService = {
     getAlarms: async () => {
         const token = await SecureStore.getItemAsync('luisapp-token');
@@ -93,6 +97,18 @@ const alarmsService = {
         const token = await SecureStore.getItemAsync('luisapp-token');
 
         const response = await api.put(`/alarm/${params._id}/status`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response;
+    },
+
+    getScheduleNotificationData: async (params: getScheduleNotificationDataParams) => {
+        const token = await SecureStore.getItemAsync('luisapp-token');
+
+        const response = await api.get(`/alarm/${params._id}/notification`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
