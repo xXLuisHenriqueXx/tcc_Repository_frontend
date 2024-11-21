@@ -34,37 +34,33 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const trimmedName = fields.name.trim();
-      const trimmedEmail = fields.email.trim();
-      const trimmedPassword = fields.password.trim();
-      const trimmedConfirmPassword = fields.confirmPassword.trim();
+        const trimmedName = fields.name.trim();
+        const trimmedEmail = fields.email.trim();
+        const trimmedPassword = fields.password.trim();
+        const trimmedConfirmPassword = fields.confirmPassword.trim();
 
-      if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
-        Alert.alert("Aviso", "Preencha todos os campos!");
-        return;
-      }
+        if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
+            Alert.alert("Aviso", "Preencha todos os campos!");
+            setIsLoading(false);
+            return;
+        }
 
-      if (trimmedPassword.length < 8) {
-        Alert.alert("Aviso", "A senha deve ter no mínimo 8 caracteres!");
-        return;
-      }
+        await register(trimmedName, trimmedEmail, trimmedPassword, trimmedConfirmPassword);
 
-      if (trimmedPassword != trimmedConfirmPassword) {
-        Alert.alert("Aviso", "As senhas são diferentes!");
-        return;
-      }
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (error: any) {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
 
-      await register(trimmedName, trimmedEmail, trimmedPassword);
-
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    } catch (error) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-
-      Alert.alert("Erro", "Erro ao realizar cadastro!");
+        if (error.response && error.response.data && error.response.data.errors) {
+            const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+            Alert.alert("Erro", errorMessages);
+        } else {
+            Alert.alert("Erro", "Erro ao realizar cadastro!");
+        }
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  }
+}
 
   return (
     <Container>

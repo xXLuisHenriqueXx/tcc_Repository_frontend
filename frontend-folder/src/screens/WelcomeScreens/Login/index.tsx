@@ -28,25 +28,31 @@ const Login = () => {
 
     const handleLogin = async () => {
         Haptics.selectionAsync();
-
+    
         setIsLoading(true);
-
+    
         try {
             const trimmedEmail = fields.email.trim();
             const trimmedPassword = fields.password.trim();
-
+    
             if (!trimmedEmail || !trimmedPassword) {
                 Alert.alert("Aviso", "Preencha todos os campos!");
+                setIsLoading(false);
                 return;
             }
-
+    
             await login(trimmedEmail, trimmedPassword);
-
+    
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        } catch (error) {
+        } catch (error: any) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-
-            Alert.alert("Erro", "Erro ao realizar login!");
+    
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+                Alert.alert("Erro", errorMessages);
+            } else {
+                Alert.alert("Erro", "Erro ao realizar login!");
+            }
         } finally {
             setIsLoading(false);
         }

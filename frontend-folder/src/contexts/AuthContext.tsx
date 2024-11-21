@@ -54,6 +54,7 @@ interface AuthContextData extends AuthState {
         name: string,
         email: string,
         password: string,
+        confirmPassword: string,
     ) => Promise<void>;
 
     login: (
@@ -138,7 +139,8 @@ export function AuthContextProvider({
             register: async (
                 name: string,
                 email: string,
-                password: string
+                password: string,
+                confirmPassword: string
             ) => {
                 const params = { name, email, password };
 
