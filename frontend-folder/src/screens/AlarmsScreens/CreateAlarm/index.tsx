@@ -45,16 +45,16 @@ const CreateAlarm = () => {
         setIsLoading(true);
 
         try {
-            if (alarmTitle === "") {
+            const trimmedTitle = alarmTitle.trim();
+
+            if (trimmedTitle === "") {
                 Alert.alert("Aviso", "Digite um título para o alarme!");
                 return;
             } else {
-                const title = alarmTitle.trim();
-
                 const alarmTime = new Date();
                 alarmTime.setHours(hour, minute, 0, 0);
 
-                const params = { title, hour: alarmTime, days, date: date, status: true };
+                const params = { title: trimmedTitle, hour: alarmTime, days, date: date, status: true };
 
                 const { status } = await alarmsService.saveAlarm(params);
 
@@ -63,8 +63,6 @@ const CreateAlarm = () => {
 
                     navigation.navigate("Alarms", { newAlarm: true });
                 }
-
-                setIsLoading(false);
             }
         } catch (err) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
