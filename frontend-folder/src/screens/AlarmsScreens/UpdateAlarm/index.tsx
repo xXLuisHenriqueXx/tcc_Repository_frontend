@@ -70,17 +70,17 @@ const UpdateAlarm = ({ route }: Props) => {
         setIsLoading(true);
 
         try {
-            if (alarmTitle === "") {
+            const trimmedTitle = alarmTitle.trim(); 
+            
+            if (trimmedTitle === "") {
                 Alert.alert("Aviso", "Digite um título para o alarme!");
                 return;
             } else {
-                const title = alarmTitle.trim();
-
                 const alarmTime = new Date();
                 alarmTime.setHours(alarmHour);
                 alarmTime.setMinutes(alarmMinute);
 
-                const params = { _id: alarmInfo?._id, title, hour: alarmTime, days: alarmDays, date: alarmDate, status: true };
+                const params = { _id: alarmInfo?._id, title: trimmedTitle, hour: alarmTime, days: alarmDays, date: alarmDate, status: true };
 
                 const { status } = await alarmsService.updateAlarm(params);
 

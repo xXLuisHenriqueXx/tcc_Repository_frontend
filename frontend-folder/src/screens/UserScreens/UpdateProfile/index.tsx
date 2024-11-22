@@ -5,6 +5,7 @@ import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RFValue } from 'react-native-responsive-fontsize';
+import * as Haptics from 'expo-haptics';
 import { ArrowRightCircle, Lock, Mail, User } from 'lucide-react-native';
 
 import Loader from '../../Loader';
@@ -48,21 +49,19 @@ const UpdateProfile = ({ route }: Props) => {
         setIsLoading(true);
 
         try {
-            const name = fields.name.trim();
-            const email = fields.email.trim();
+            const trimmedName = fields.name.trim();
+            const trimmedEmail = fields.email.trim();
 
-            if (name === "") {
+            if (!trimmedName) {
                 Alert.alert("Erro", "Digite um nome!");
                 return;
-            } else if (email === "") {
+            } else if (!trimmedEmail) {
                 Alert.alert("Erro", "Digite um email!");
                 return;
             } else {
                 const params = {
-                    name: name,
-                    email: email,
-                    password: fields.password,
-                    newPassword: fields.newPassword
+                    name: trimmedName,
+                    email: trimmedEmail
                 }
 
                 const response = await userService.updateUserProfile(params);
@@ -72,14 +71,22 @@ const UpdateProfile = ({ route }: Props) => {
                     return;
                 }
 
-                if (email != userInfo?.email) {
+                if (trimmedEmail != userInfo?.email) {
                     logout();
                 }
 
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
                 navigation.navigate("Alarms", { newAlarm: false });
             }
-        } catch (error) {
-            Alert.alert("Erro", "Erro ao atualizar perfil!");
+        } catch (error: any) {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+                Alert.alert("Erro", errorMessages);
+            } else {
+                Alert.alert("Erro", "Erro ao realizar cadastro!");
+            }
         } finally {
             setIsLoading(false);
         }

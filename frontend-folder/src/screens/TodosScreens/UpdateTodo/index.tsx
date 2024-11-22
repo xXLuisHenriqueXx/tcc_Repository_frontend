@@ -41,13 +41,14 @@ const UpdateTodo = ({ route }: Props) => {
         setIsLoading(true);
 
         try {
-            if (todoTitle === "") {
+            const trimmedtitle = todoTitle.trim();
+
+            if (!trimmedtitle) {
                 Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
                 return;
 
             } else {
-                const title = todoTitle.trim();
-                const params = { _id: todoInfo?._id, title: title, tasks };
+                const params = { _id: todoInfo?._id, title: trimmedtitle, tasks };
 
                 const { status } = await todoService.updateTodo(params);
 
@@ -57,10 +58,15 @@ const UpdateTodo = ({ route }: Props) => {
                     navigation.navigate("Todos", { newTodo: true });
                 }
             }
-        } catch (error) {
+        } catch (error: any) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
 
-            Alert.alert("Erro", "Erro ao atualizar lista de tarefas!");
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+                Alert.alert("Erro", errorMessages);
+            } else {
+                Alert.alert("Erro", "Erro ao atualizar a lista de tarefas!");
+            }
         } finally {
             setIsLoading(false);
         }

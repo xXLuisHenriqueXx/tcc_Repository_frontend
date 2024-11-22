@@ -27,13 +27,14 @@ const CreateTodo = () => {
         setIsLoading(true);
 
         try {
-            if (todoTitle === "") {
+            const trimmedTitle = todoTitle.trim();
+
+            if (!trimmedTitle) {
                 Alert.alert("Aviso", "Digite um título para a lista de tarefas!");
                 return;
 
             } else {
-                const title = todoTitle.trim();
-                const params = { title, tasks }
+                const params = { title: trimmedTitle, tasks }
 
                 const { status } = await todoService.addTodo(params);
 
@@ -43,10 +44,15 @@ const CreateTodo = () => {
                     navigation.navigate("Todos", { newTodo: true });
                 }
             }
-        } catch (err) {
+        } catch (error: any) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
 
-            Alert.alert('Erro', 'Erro ao salvar lista de tarefas');
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+                Alert.alert("Erro", errorMessages);
+            } else {
+                Alert.alert("Erro", "Erro ao salvar a lista de tarefas!");
+            }
         } finally {
             setIsLoading(false);
         }

@@ -17,7 +17,7 @@ const UpdateNote = ({ route }: Props) => {
     const theme = useTheme();
     const navigation = useNavigation<PropsStack>();
     const { noteInfo } = route.params || {};
-    
+
     const [noteTitle, setNoteTitle] = useState<string>("");
     const [noteContent, setNoteContent] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,18 +35,15 @@ const UpdateNote = ({ route }: Props) => {
         setIsLoading(true);
 
         try {
-            const title = noteTitle.trim();
-            const content = noteContent.trim();
+            const trimmedtitle = noteTitle.trim();
+            const trimmedContent = noteContent.trim();
 
-            if (title === "") {
-                Alert.alert("Aviso", "Digite um título para a nota!");
+            if (!trimmedtitle || !trimmedContent) {
+                Alert.alert("Aviso", "Preencha todos os campos!");
                 return;
 
-            } else if (content === "") {
-                Alert.alert("Aviso", "Digite um conteúdo para a nota!");
-                return;
             } else {
-                const params = { _id: noteInfo?._id, title: title, content: content };
+                const params = { _id: noteInfo?._id, title: trimmedtitle, content: trimmedContent };
 
                 const response = await noteService.updateNote(params);
 
@@ -56,10 +53,15 @@ const UpdateNote = ({ route }: Props) => {
                     navigation.navigate("Notes", { newNote: true });
                 }
             }
-        } catch (error) {
+        } catch (error: any) {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
 
-            Alert.alert("Erro", "Erro ao atualizar nota!");
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorMessages = error.response.data.errors.map((err: any) => err.message).join('\n');
+                Alert.alert("Erro", errorMessages);
+            } else {
+                Alert.alert("Erro", "Erro ao atualizar a nota!");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -78,7 +80,7 @@ const UpdateNote = ({ route }: Props) => {
             >
                 <ContainerInputsView>
                     <ContainerInputLine />
-                    
+
                     <InputContent
                         style={{ textAlignVertical: "top" }}
                         placeholder="Digite o conteúdo"
