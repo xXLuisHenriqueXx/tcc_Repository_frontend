@@ -52,9 +52,7 @@ const UpdateAlarm = ({ route }: Props) => {
 
     const handleSetInfos = async () => {
         setAlarmTitle(alarmInfo?.title || "");
-        setAlarmHour(alarmInfo?.hour.getHours() || 0);
-        setAlarmMinute(alarmInfo?.hour.getMinutes() || 0);
-        setAlarmDate(alarmInfo?.hour || new Date());
+        setAlarmDate(alarmInfo?.date || new Date());
         setAlarmDays({
             sunday: alarmInfo?.days.sunday || false,
             monday: alarmInfo?.days.monday || false,
@@ -70,8 +68,8 @@ const UpdateAlarm = ({ route }: Props) => {
         setIsLoading(true);
 
         try {
-            const trimmedTitle = alarmTitle.trim(); 
-            
+            const trimmedTitle = alarmTitle.trim();
+
             if (trimmedTitle === "") {
                 Alert.alert("Aviso", "Digite um título para o alarme!");
                 return;
@@ -81,6 +79,8 @@ const UpdateAlarm = ({ route }: Props) => {
                 alarmTime.setMinutes(alarmMinute);
 
                 const params = { _id: alarmInfo?._id, title: trimmedTitle, hour: alarmTime, days: alarmDays, date: alarmDate, status: true };
+
+                console.log(params);
 
                 const { status } = await alarmsService.updateAlarm(params);
 
@@ -116,9 +116,9 @@ const UpdateAlarm = ({ route }: Props) => {
                     <ContainerButtonsView>
                         <ContainerText>{getDate(alarmDate.toString())}</ContainerText>
                         <TimePicker.Root>
-                            <TimePicker.List length={24} setPicker={setAlarmHour} />
+                            <TimePicker.List length={24} setPicker={setAlarmHour} initialValue={12} />
                             <TimePicker.Separator />
-                            <TimePicker.List length={60} setPicker={setAlarmMinute} />
+                            <TimePicker.List length={60} setPicker={setAlarmMinute} initialValue={30} />
                         </TimePicker.Root>
 
                         <DatePicker date={alarmDate} setDate={setAlarmDate} />
@@ -141,4 +141,4 @@ const UpdateAlarm = ({ route }: Props) => {
     )
 }
 
-export default UpdateAlarm
+export default UpdateAlarm;

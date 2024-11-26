@@ -63,11 +63,11 @@ const Pomodoro = () => {
                 <ContainerPomodoroButtons>
                     <ContainerPomodoroButtonsTitle>Tempo de estudo:</ContainerPomodoroButtonsTitle>
                     <TimePicker.Root>
-                        <TimePicker.List length={24} setPicker={setHour} />
+                        <TimePicker.List length={24} setPicker={setHour} initialValue={0} />
                         <TimePicker.Separator />
-                        <TimePicker.List length={60} setPicker={setMinute} />
+                        <TimePicker.List length={60} setPicker={setMinute} initialValue={25} />
                         <TimePicker.Separator />
-                        <TimePicker.List length={60} setPicker={setSecond} />
+                        <TimePicker.List length={60} setPicker={setSecond} initialValue={0} />
                     </TimePicker.Root>
 
                     <ContainerPomodoroButtonsTitle style={{ marginTop: RFValue(40) }}>Tempo de descanso:</ContainerPomodoroButtonsTitle>

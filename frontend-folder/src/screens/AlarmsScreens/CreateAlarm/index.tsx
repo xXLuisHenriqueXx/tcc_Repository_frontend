@@ -91,9 +91,9 @@ const CreateAlarm = () => {
                             : <ContainerText>Nenhuma data selecionada...</ContainerText>
                         }
                         <TimePicker.Root>
-                            <TimePicker.List length={24} setPicker={setHour} />
+                            <TimePicker.List length={24} setPicker={setHour} initialValue={12} />
                             <TimePicker.Separator />
-                            <TimePicker.List length={60} setPicker={setMinute} />
+                            <TimePicker.List length={60} setPicker={setMinute} initialValue={30} />
                         </TimePicker.Root>
 
                         <DatePicker date={date} setDate={setDate} />
