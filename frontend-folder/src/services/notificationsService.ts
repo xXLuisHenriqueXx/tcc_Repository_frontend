@@ -1,4 +1,4 @@
-import notifee, { AndroidImportance, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import notifee, { AndroidImportance, EventType, TimestampTrigger, TriggerType } from '@notifee/react-native';
 import alarmsService from './alarmsService';
 
 const notificationsService = {
@@ -22,6 +22,8 @@ const notificationsService = {
             timestamp: date.getTime()
         };
 
+        await notifee.cancelNotification(_id);
+
         await notifee.createTriggerNotification(
             {
                 id: _id,
@@ -29,6 +31,14 @@ const notificationsService = {
                 body: `🔔 Chegou a hora do seu alarme <strong>${data.title}</strong>`,
                 android: {
                     channelId,
+                    actions: [
+                        {
+                            title: 'Desligar',
+                            pressAction: {
+                                id: 'desligar',
+                            }
+                        }
+                    ]
                 },
             },
             trigger
@@ -37,5 +47,30 @@ const notificationsService = {
         console.log('Notificação agendada');
     }
 };
+
+notifee.onForegroundEvent(async ({ type, detail }) => {
+    const { notification, pressAction } = detail;
+
+    if (type === EventType.ACTION_PRESS && pressAction?.id === 'desligar') {
+        if (notification?.id) {
+            notifee.cancelNotification(notification.id);
+
+            const response = await alarmsService.toggleAlarmStatus({ _id: notification.id });
+            console.log(response);
+        }
+    }
+});
+
+notifee.onBackgroundEvent(async ({ type, detail }) => {
+    const { notification, pressAction } = detail;
+
+    if (type === EventType.ACTION_PRESS && pressAction?.id === 'desligar') {
+        if (notification?.id) {
+            notifee.cancelNotification(notification.id);
+
+            await alarmsService.toggleAlarmStatus({ _id: notification.id });
+        }
+    }
+});
 
 export default notificationsService;

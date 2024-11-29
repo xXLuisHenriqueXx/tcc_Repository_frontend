@@ -45,7 +45,7 @@ const Alarms = ({ route }: Props) => {
                 const nextAlarm = data.alarms.find((alarm: Alarm) => alarm._id === nextAlarmID);
                 setNextAlarm(nextAlarm);
 
-                await notificationsService.scheduleNotification(nextAlarmID);
+                notificationsService.scheduleNotification(nextAlarmID);
             } else {
                 setNextAlarm(null);
             }

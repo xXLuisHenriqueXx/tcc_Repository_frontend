@@ -26,8 +26,10 @@ const TimePickerList = ({ length, setPicker, initialValue }: TimePickerListProps
 
     const onViewableItemsChanged = (setFunction: (value: number) => void) => {
         return ({ viewableItems }: { viewableItems: Array<ViewToken> }) => {
-            const selectedItem = viewableItems[0].item;
-            setFunction(selectedItem);
+            if (viewableItems.length > 0) {
+                const selectedItem = viewableItems[0].item;
+                setFunction(selectedItem);
+            }
         }
     };
 

@@ -142,7 +142,7 @@ export function AuthContextProvider({
                 password: string,
                 confirmPassword: string
             ) => {
-                const params = { name, email, password };
+                const params = { name, email, password, confirmPassword };
 
                 const loginParams = { email, password };
 
